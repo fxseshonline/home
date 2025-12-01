@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -76,7 +77,12 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
         }
 
         .nav-links {
@@ -260,6 +266,15 @@
             justify-content: center;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
+            color: white;
+        }
+
+        .session-flag {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
         }
 
         .feature-card h3 {
@@ -313,6 +328,10 @@
             margin-bottom: 0.5rem;
         }
 
+        .premium-feature h4 i {
+            margin-right: 0.5rem;
+        }
+
         /* Sessions Section */
         .sessions {
             padding: 6rem 2rem;
@@ -352,8 +371,7 @@
             color: var(--text-light);
         }
 
-        .session-card .flag {
-            font-size: 2rem;
+        .session-card .flag-container {
             margin-bottom: 1rem;
         }
 
@@ -444,7 +462,10 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">FX Sesh</a>
+            <a href="#" class="logo">
+                <img src="logo.png" alt="FX Sesh Logo">
+                <span>FX Sesh</span>
+            </a>
             <ul class="nav-links">
                 <li><a href="#features">Features</a></li>
                 <li><a href="#sessions">Sessions</a></li>
@@ -461,10 +482,10 @@
             <p>Track global FX sessions in real-time, manage your trading journal, stay updated with market news, and learn from expert content—all in one powerful app.</p>
             <div class="hero-buttons">
                 <a href="#download" class="btn-primary">
-                    <span>📱</span> Download for iOS
+                    <i class="fab fa-apple"></i> Download for iOS
                 </a>
                 <a href="#download" class="btn-primary">
-                    <span>🤖</span> Download for Android
+                    <i class="fab fa-android"></i> Download for Android
                 </a>
             </div>
         </div>
@@ -479,55 +500,55 @@
 
         <div class="features-grid">
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">🕐</div>
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
                 <h3>Real-Time Session Tracking</h3>
                 <p>Monitor all four major forex sessions (Sydney, Tokyo, London, New York) with live status indicators. Know exactly when markets open and close in your timezone.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">⏰</div>
+                <div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div>
                 <h3>Digital & Analog Clocks</h3>
                 <p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays for your preferred experience.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">🔔</div>
+                <div class="feature-icon"><i class="fas fa-bell"></i></div>
                 <h3>Smart Push Notifications</h3>
                 <p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">📔</div>
+                <div class="feature-icon"><i class="fas fa-book"></i></div>
                 <h3>Trading Journal</h3>
                 <p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Filter and analyze your trading history to improve your strategy.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">📰</div>
+                <div class="feature-icon"><i class="fas fa-newspaper"></i></div>
                 <h3>Forex News Feed</h3>
                 <p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">🎓</div>
+                <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
                 <h3>Educational Content</h3>
                 <p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge at your own pace.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">🌓</div>
+                <div class="feature-icon"><i class="fas fa-palette"></i></div>
                 <h3>Multiple Themes</h3>
                 <p>Choose from Day, Night, or Original themes. Customize your app experience to match your preference and reduce eye strain during long trading sessions.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">⚙️</div>
+                <div class="feature-icon"><i class="fas fa-cog"></i></div>
                 <h3>Customizable Settings</h3>
                 <p>Set your timezone, configure notification preferences, and personalize your app experience. Everything is tailored to your trading needs.</p>
             </div>
 
             <div class="feature-card scroll-reveal">
-                <div class="feature-icon">📱</div>
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
                 <h3>Cross-Platform</h3>
                 <p>Available on both iOS and Android. Your data syncs across devices, so you can trade and track from anywhere, anytime.</p>
             </div>
@@ -544,25 +565,37 @@
 
             <div class="sessions-grid">
                 <div class="session-card scroll-reveal">
-                    <div class="flag">🇦🇺</div>
+                    <div class="flag-container">
+                        <img src="apps/forex-sesh/assets/flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
                     <h4>Sydney Session</h4>
                     <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
                 </div>
 
                 <div class="session-card scroll-reveal">
-                    <div class="flag">🇯🇵</div>
+                    <div class="flag-container">
+                        <img src="apps/forex-sesh/assets/flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
                     <h4>Tokyo Session</h4>
                     <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
                 </div>
 
                 <div class="session-card scroll-reveal">
-                    <div class="flag">🇬🇧</div>
+                    <div class="flag-container">
+                        <img src="apps/forex-sesh/assets/flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
                     <h4>London Session</h4>
                     <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
                 </div>
 
                 <div class="session-card scroll-reveal">
-                    <div class="flag">🇺🇸</div>
+                    <div class="flag-container">
+                        <img src="apps/forex-sesh/assets/flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
                     <h4>New York Session</h4>
                     <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
                 </div>
@@ -580,22 +613,22 @@
 
             <div class="premium-features">
                 <div class="premium-feature scroll-reveal">
-                    <h4>⚡ Pre-Alerts</h4>
+                    <h4><i class="fas fa-bolt"></i> Pre-Alerts</h4>
                     <p>Get notified before sessions open so you're always prepared.</p>
                 </div>
 
                 <div class="premium-feature scroll-reveal">
-                    <h4>🔄 Overlap Notifications</h4>
+                    <h4><i class="fas fa-exchange-alt"></i> Overlap Notifications</h4>
                     <p>Track high-volatility periods when sessions overlap (London-New York, Tokyo-London, Sydney-Tokyo).</p>
                 </div>
 
                 <div class="premium-feature scroll-reveal">
-                    <h4>🚫 Ad-Free Experience</h4>
+                    <h4><i class="fas fa-ban"></i> Ad-Free Experience</h4>
                     <p>Focus on trading without interruptions. Enjoy a clean, distraction-free interface.</p>
                 </div>
 
                 <div class="premium-feature scroll-reveal">
-                    <h4>📊 Advanced Analytics</h4>
+                    <h4><i class="fas fa-chart-line"></i> Advanced Analytics</h4>
                     <p>Dive deeper into your trading performance with enhanced journal analytics.</p>
                 </div>
             </div>
@@ -612,10 +645,10 @@
         <div style="text-align: center; margin-top: 3rem;">
             <div class="hero-buttons">
                 <a href="#" class="btn-primary" style="background: var(--primary-blue); color: white;">
-                    <span>🍎</span> App Store
+                    <i class="fab fa-apple"></i> App Store
                 </a>
                 <a href="#" class="btn-primary" style="background: var(--primary-blue); color: white;">
-                    <span>📱</span> Google Play
+                    <i class="fab fa-google-play"></i> Google Play
                 </a>
             </div>
         </div>
