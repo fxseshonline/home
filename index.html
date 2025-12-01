@@ -366,6 +366,14 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
         }
 
+        .navy-gradient-text {
+            background: linear-gradient(135deg, #5b8db8 0%, var(--primary-blue-light) 50%, var(--primary-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
         .premium-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -618,7 +626,7 @@
     <section class="sessions" id="sessions">
         <div class="sessions-content">
             <div class="section-header scroll-reveal">
-                <h2 style="color: var(--text-light);">Track All Major Forex Sessions</h2>
+                <h2 style="color: var(--text-light);">Track All <span class="navy-gradient-text">Major Forex Sessions</span></h2>
                 <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
             </div>
 
