@@ -713,4 +713,683 @@
     </script>
 </body>
 </html>
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #051a33 0%, var(--primary-blue) 100%);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary-blue);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(10, 43, 87, 0.85) 0%, rgba(2, 60, 105, 0.75) 100%);
+            z-index: 0;
+        }
+
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-blue);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: var(--light-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(10, 43, 87, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.15);
+            border-color: var(--primary-blue);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .session-flag {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted-light);
+            line-height: 1.8;
+        }
+
+        /* Premium Section */
+        .premium {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .premium-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .premium h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .premium-feature {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .premium-feature h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-feature h4 i {
+            margin-right: 0.5rem;
+        }
+
+        /* Sessions Section */
+        .sessions {
+            padding: 6rem 2rem;
+            background: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        .sessions-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .session-card {
+            background: var(--dark-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.3);
+        }
+
+        .session-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .session-card .flag-container {
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="logo.png" alt="FX Sesh Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#sessions">Sessions</a></li>
+                <li><a href="#premium">Premium</a></li>
+            </ul>
+            <a href="#download" class="cta-button">Download Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in-up">
+            <h1>Your Complete Forex Trading Companion</h1>
+            <p>Track global FX sessions in real-time, manage your trading journal, stay updated with market news, and learn from expert content—all in one powerful app.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-apple"></i> Download for iOS
+                </a>
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-android"></i> Download for Android
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header scroll-reveal">
+            <h2>Powerful Features for Serious Traders</h2>
+            <p>Everything you need to stay on top of the forex markets and improve your trading performance.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3>Real-Time Session Tracking</h3>
+                <p>Monitor all four major forex sessions (Sydney, Tokyo, London, New York) with live status indicators. Know exactly when markets open and close in your timezone.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div>
+                <h3>Digital & Analog Clocks</h3>
+                <p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays for your preferred experience.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                <h3>Smart Push Notifications</h3>
+                <p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-book"></i></div>
+                <h3>Trading Journal</h3>
+                <p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Filter and analyze your trading history to improve your strategy.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-newspaper"></i></div>
+                <h3>Forex News Feed</h3>
+                <p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Educational Content</h3>
+                <p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge at your own pace.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                <h3>Multiple Themes</h3>
+                <p>Choose from Day, Night, or Original themes. Customize your app experience to match your preference and reduce eye strain during long trading sessions.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-cog"></i></div>
+                <h3>Customizable Settings</h3>
+                <p>Set your timezone, configure notification preferences, and personalize your app experience. Everything is tailored to your trading needs.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Cross-Platform</h3>
+                <p>Available on both iOS and Android. Your data syncs across devices, so you can trade and track from anywhere, anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sessions Section -->
+    <section class="sessions" id="sessions">
+        <div class="sessions-content">
+            <div class="section-header scroll-reveal">
+                <h2 style="color: var(--text-light);">Track All Major Forex Sessions</h2>
+                <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
+            </div>
+
+            <div class="sessions-grid">
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>Sydney Session</h4>
+                    <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>Tokyo Session</h4>
+                    <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>London Session</h4>
+                    <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>New York Session</h4>
+                    <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section class="premium" id="premium">
+        <div class="premium-content">
+            <h2 class="scroll-reveal">Unlock Premium Features</h2>
+            <p class="scroll-reveal" style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
+                Take your trading to the next level with advanced features designed for serious traders.
+            </p>
+
+            <div class="premium-features">
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-bolt"></i> Pre-Alerts</h4>
+                    <p>Get notified before sessions open so you're always prepared.</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-exchange-alt"></i> Overlap Notifications</h4>
+                    <p>Track high-volatility periods when sessions overlap (London-New York, Tokyo-London, Sydney-Tokyo).</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-ban"></i> Ad-Free Experience</h4>
+                    <p>Focus on trading without interruptions. Enjoy a clean, distraction-free interface.</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-chart-line"></i> Advanced Analytics</h4>
+                    <p>Dive deeper into your trading performance with enhanced journal analytics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="features" id="download" style="background: var(--light-surface); padding: 6rem 2rem;">
+        <div class="section-header scroll-reveal">
+            <h2>Get Started Today</h2>
+            <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary" style="background: var(--primary-blue); color: white;">
+                    <i class="fab fa-apple"></i> App Store
+                </a>
+                <a href="#" class="btn-primary" style="background: var(--primary-blue); color: white;">
+                    <i class="fab fa-google-play"></i> Google Play
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#sessions">Sessions</a>
+                <a href="#premium">Premium</a>
+                <a href="#download">Download</a>
+            </div>
+            <p style="color: var(--text-muted); margin-top: 2rem;">
+                © 2024 FX Sesh. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
 
