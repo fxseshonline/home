@@ -70,7 +70,12 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
             align-items: center;
             gap: 2rem;
         }
@@ -408,24 +413,8 @@
             background-color: var(--dark-bg);
             padding: 6rem 2rem;
             color: var(--text-light);
-            position: relative;
         }
 
-        .sessions::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 0;
-        }
-
-        .sessions > * {
-            position: relative;
-            z-index: 1;
-        }
 
         .sessions-content {
             max-width: 1200px;
@@ -571,14 +560,16 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <a href="#top" class="logo">
-                <img src="logo.png" alt="FX Sesh Logo">
-            </a>
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#sessions">Sessions</a></li>
-                <li><a href="#premium">Premium</a></li>
-            </ul>
+            <div class="nav-left">
+                <a href="#top" class="logo">
+                    <img src="logo.png" alt="FX Sesh Logo">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#sessions">Sessions</a></li>
+                    <li><a href="#premium">Premium</a></li>
+                </ul>
+            </div>
             <a href="#download" class="cta-button">Download Now</a>
         </div>
     </nav>
