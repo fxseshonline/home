@@ -49,7 +49,11 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: linear-gradient(135deg, #051a33 0%, var(--primary-blue) 100%);
+            background-image: url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
             backdrop-filter: blur(10px);
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
             z-index: 1000;
@@ -127,6 +131,10 @@
             background-repeat: no-repeat;
             background-color: var(--primary-blue);
             color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 8rem 2rem 6rem;
             text-align: center;
             position: relative;
@@ -162,8 +170,10 @@
         }
 
         .btn-primary {
-            background: white;
-            color: var(--primary-blue);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
             padding: 1rem 2rem;
             border-radius: 12px;
             text-decoration: none;
@@ -173,28 +183,49 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .btn-secondary {
-            background: transparent;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
-            border: 2px solid white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 1rem 2rem;
             border-radius: 12px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Download section buttons - keep solid style */
+        .download-btn {
+            background: var(--primary-blue) !important;
+            color: white !important;
+            border: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-blue-light) !important;
         }
 
         /* Features Section */
@@ -631,10 +662,10 @@
 
         <div style="text-align: center; margin-top: 3rem;">
             <div class="hero-buttons">
-                <a href="#" class="btn-primary" style="background: var(--primary-blue); color: white;">
+                <a href="#" class="btn-primary download-btn">
                     <i class="fab fa-apple"></i> App Store
                 </a>
-                <a href="#" class="btn-primary" style="background: var(--primary-blue); color: white;">
+                <a href="#" class="btn-primary download-btn">
                     <i class="fab fa-google-play"></i> Google Play
                 </a>
             </div>
