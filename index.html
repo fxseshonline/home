@@ -107,20 +107,25 @@
         }
 
         .cta-button {
-            background: white;
-            color: var(--primary-blue);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
             display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .cta-button:hover {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* Hero Section */
@@ -278,30 +283,34 @@
         }
 
         .feature-card {
-            background: var(--light-surface);
+            background-image: url('headerbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
             padding: 2rem;
             border-radius: 16px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(10, 43, 87, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.15);
-            border-color: var(--primary-blue);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            background: white;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
-            color: white;
+            color: var(--primary-blue);
         }
 
         .session-flag {
@@ -315,12 +324,12 @@
         .feature-card h3 {
             font-size: 1.5rem;
             font-weight: 600;
-            color: var(--primary-blue);
+            color: white;
             margin-bottom: 1rem;
         }
 
         .feature-card p {
-            color: var(--text-muted-light);
+            color: rgba(255, 255, 255, 0.9);
             line-height: 1.8;
         }
 
@@ -528,7 +537,7 @@
     <!-- Features Section -->
     <section class="features" id="features">
         <div class="section-header scroll-reveal">
-            <h2>Powerful Features for Serious Traders</h2>
+            <h2>Access Powerful Features For Serious Traders</h2>
             <p>Everything you need to stay on top of the forex markets and improve your trading performance.</p>
         </div>
 
@@ -748,7 +757,7 @@
 
         // Typing effect
         const typingText = document.getElementById('typing-text');
-        const text = "Your Complete Forex Trading Toolkit";
+        const text = "YOUR COMPLETE FOREX TRADING TOOLKIT";
         const cursor = typingText.querySelector('.typing-cursor');
         let charIndex = 0;
 
@@ -756,7 +765,7 @@
             if (charIndex < text.length) {
                 typingText.innerHTML = text.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
                 charIndex++;
-                setTimeout(typeText, 100);
+                setTimeout(typeText, 50);
             }
         }
 
