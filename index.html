@@ -293,17 +293,17 @@
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 2rem;
             border-radius: 16px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(10, 43, 87, 0.1);
+            border: 1px solid rgba(10, 43, 87, 0.2);
         }
 
         .feature-card:hover {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.6);
             transform: translateY(-5px);
             box-shadow: 0 12px 40px rgba(10, 43, 87, 0.15);
             border-color: var(--primary-blue);
@@ -392,8 +392,12 @@
 
         /* Sessions Section */
         .sessions {
+            background-image: url('forexsessionbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--dark-bg);
             padding: 6rem 2rem;
-            background: var(--dark-bg);
             color: var(--text-light);
         }
 
