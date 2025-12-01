@@ -283,34 +283,30 @@
         }
 
         .feature-card {
-            background-image: url('headerbackground.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: var(--primary-blue);
+            background: var(--light-surface);
             padding: 2rem;
             border-radius: 16px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(10, 43, 87, 0.1);
         }
 
         .feature-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.15);
+            border-color: var(--primary-blue);
         }
 
         .feature-icon {
             width: 60px;
             height: 60px;
-            background: white;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
-            color: var(--primary-blue);
+            color: white;
         }
 
         .session-flag {
@@ -324,12 +320,12 @@
         .feature-card h3 {
             font-size: 1.5rem;
             font-weight: 600;
-            color: white;
+            color: var(--primary-blue);
             margin-bottom: 1rem;
         }
 
         .feature-card p {
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--text-muted-light);
             line-height: 1.8;
         }
 
@@ -350,6 +346,11 @@
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
+        }
+
+        .premium-gold {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
         }
 
         .premium-features {
@@ -421,8 +422,8 @@
 
         /* Footer */
         footer {
-            background: var(--dark-bg);
-            color: var(--text-light);
+            background: white;
+            color: var(--text-dark);
             padding: 3rem 2rem;
             text-align: center;
         }
@@ -441,13 +442,13 @@
         }
 
         .footer-links a {
-            color: var(--text-muted);
+            color: var(--text-muted-light);
             text-decoration: none;
             transition: color 0.3s ease;
         }
 
         .footer-links a:hover {
-            color: var(--text-light);
+            color: var(--primary-blue);
         }
 
         /* Responsive */
@@ -649,7 +650,7 @@
     <!-- Premium Section -->
     <section class="premium" id="premium">
         <div class="premium-content">
-            <h2 class="scroll-reveal">Unlock Premium Features</h2>
+            <h2 class="scroll-reveal">Unlock <span class="premium-gold">Premium</span> Features</h2>
             <p class="scroll-reveal" style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
                 Take your trading to the next level with advanced features designed for serious traders.
             </p>
@@ -679,7 +680,7 @@
     </section>
 
     <!-- Download Section -->
-    <section class="features" id="download" style="background: var(--light-surface); padding: 6rem 2rem;">
+    <section class="features" id="download" style="background: white; padding: 6rem 2rem;">
         <div class="section-header scroll-reveal">
             <h2>Get Started Today</h2>
             <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
@@ -706,7 +707,7 @@
                 <a href="#premium">Premium</a>
                 <a href="#download">Download</a>
             </div>
-            <p style="color: var(--text-muted); margin-top: 2rem;">
+            <p style="color: var(--text-muted-light); margin-top: 2rem;">
                 © 2024 FX Sesh. All rights reserved.
             </p>
         </div>
@@ -765,7 +766,7 @@
             if (charIndex < text.length) {
                 typingText.innerHTML = text.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
                 charIndex++;
-                setTimeout(typeText, 50);
+                setTimeout(typeText, 75);
             }
         }
 
