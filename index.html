@@ -422,12 +422,19 @@
             margin: 0 auto;
             display: flex;
             gap: 4rem;
-            align-items: flex-start;
+            align-items: stretch;
             margin-bottom: 0;
         }
 
-        .sessions .section-header {
+        .sessions-left {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            min-width: 0;
+        }
+
+        .sessions .section-header {
             text-align: left;
             margin-bottom: 0;
             padding-bottom: 0;
@@ -443,15 +450,15 @@
         }
 
         .sessions-image-container {
-            margin-top: 2rem;
+            margin-top: 0.5rem;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             overflow: hidden;
-            margin-bottom: 0;
-            border-radius: 12px 12px 0 0;
+            border-radius: 18px 18px 0 0;
             position: relative;
-            display: block;
+            display: flex;
             line-height: 0;
+            flex-grow: 1;
         }
 
         .sessions-image {
@@ -462,16 +469,17 @@
             display: block;
             margin: 0;
             padding: 0;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
         }
 
         .sessions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
             flex: 1;
-            max-width: 600px;
+            max-width: 560px;
+            width: 100%;
         }
 
         .session-card {
@@ -695,9 +703,11 @@
     <!-- Sessions Section -->
     <section class="sessions" id="sessions">
         <div class="sessions-content">
-            <div class="section-header scroll-reveal">
-                <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
-                <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
+            <div class="sessions-left">
+                <div class="section-header scroll-reveal">
+                    <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
+                    <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
+                </div>
                 <div class="sessions-image-container scroll-reveal">
                     <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
                 </div>
