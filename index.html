@@ -255,6 +255,16 @@
             background: var(--primary-blue-light) !important;
         }
 
+        .download-logo-wrapper {
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        .download-logo {
+            width: 150px;
+            height: auto;
+        }
+
         /* Features Section */
         .features {
             background-image: url('chartfeaturebackground.png');
@@ -350,7 +360,10 @@
 
         /* Premium Section */
         .premium {
-            background: linear-gradient(135deg, var(--primary-blue) 0%, #051a33 50%, var(--primary-blue) 100%);
+            background-image: linear-gradient(135deg, rgba(10, 43, 87, 0.95) 0%, rgba(5, 26, 51, 0.95) 50%, rgba(10, 43, 87, 0.95) 100%), url('premiumbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             color: white;
             padding: 6rem 2rem;
             text-align: center;
@@ -501,12 +514,22 @@
             margin: 0 auto;
             display: flex;
             gap: 4rem;
-            align-items: flex-start;
+            align-items: stretch;
         }
 
         .sessions .section-header {
             flex: 1;
             text-align: left;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            height: 100%;
+        }
+
+        .sessions .section-header p {
+            margin-bottom: 0;
         }
 
         .sessions .section-header h2 {
@@ -515,7 +538,7 @@
         }
 
         .sessions-image-container {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             width: 100%;
             overflow: hidden;
             margin-bottom: 0;
@@ -523,6 +546,7 @@
             position: relative;
             display: block;
             line-height: 0;
+            flex-grow: 1;
         }
 
         .sessions-image {
@@ -859,6 +883,10 @@
         <div class="section-header scroll-reveal">
             <h2><span class="navy-gradient-text">Get Started Today!</span></h2>
             <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
+        </div>
+
+        <div class="download-logo-wrapper scroll-reveal">
+            <img src="logoforbw.png" alt="FX Sesh Logo" class="download-logo">
         </div>
 
         <div style="text-align: center; margin-top: 3rem;">
