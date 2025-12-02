@@ -434,6 +434,14 @@
             min-width: 0;
         }
 
+        .sessions-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
         .sessions .section-header {
             text-align: left;
             margin-bottom: 0;
@@ -452,7 +460,7 @@
         .sessions-image-container {
             margin-top: 0.5rem;
             width: 100%;
-            max-width: 420px;
+            max-width: 460px;
             overflow: hidden;
             border-radius: 18px 18px 0 0;
             position: relative;
@@ -478,8 +486,9 @@
             grid-template-rows: repeat(2, 1fr);
             gap: 1.5rem;
             flex: 1;
-            max-width: 560px;
+            max-width: 520px;
             width: 100%;
+            margin: 0 auto;
         }
 
         .session-card {
@@ -713,41 +722,43 @@
                 </div>
             </div>
 
-            <div class="sessions-grid">
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+            <div class="sessions-right">
+                <div class="sessions-grid">
+                    <div class="session-card scroll-reveal">
+                        <div class="flag-container">
+                            <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                        </div>
+                        <h4>New York Session</h4>
+                        <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
                     </div>
-                    <h4>New York Session</h4>
-                    <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
-                </div>
 
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    <div class="session-card scroll-reveal">
+                        <div class="flag-container">
+                            <img src="flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                        </div>
+                        <h4>London Session</h4>
+                        <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
                     </div>
-                    <h4>London Session</h4>
-                    <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
-                </div>
 
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    <div class="session-card scroll-reveal">
+                        <div class="flag-container">
+                            <img src="flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                        </div>
+                        <h4>Sydney Session</h4>
+                        <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
                     </div>
-                    <h4>Sydney Session</h4>
-                    <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
-                </div>
 
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    <div class="session-card scroll-reveal">
+                        <div class="flag-container">
+                            <img src="flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                        </div>
+                        <h4>Tokyo Session</h4>
+                        <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
                     </div>
-                    <h4>Tokyo Session</h4>
-                    <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
                 </div>
             </div>
         </div>
