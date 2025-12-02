@@ -255,16 +255,6 @@
             background: var(--primary-blue-light) !important;
         }
 
-        .download-logo-wrapper {
-            text-align: center;
-            margin-top: 2.5rem;
-        }
-
-        .download-logo {
-            width: 150px;
-            height: auto;
-        }
-
         /* Features Section */
         .features {
             background-image: url('chartfeaturebackground.png');
@@ -563,10 +553,13 @@
         .sessions-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
             gap: 2rem;
             flex: 1;
-            max-width: 600px;
+            max-width: 560px;
+            align-self: center;
+            padding: 2rem 0;
+            margin: 0 auto;
         }
 
         .session-card {
@@ -885,10 +878,6 @@
             <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
         </div>
 
-        <div class="download-logo-wrapper scroll-reveal">
-            <img src="logoforbw.png" alt="FX Sesh Logo" class="download-logo">
-        </div>
-
         <div style="text-align: center; margin-top: 3rem;">
             <div class="hero-buttons">
                 <a href="#" class="btn-primary download-btn">
@@ -1015,3 +1004,4 @@
     </script>
 </body>
 </html>
+
