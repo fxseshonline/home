@@ -413,6 +413,7 @@
             background-color: var(--dark-bg);
             padding: 6rem 2rem 0;
             color: var(--text-light);
+            margin-bottom: 0;
         }
 
 
@@ -422,11 +423,14 @@
             display: flex;
             gap: 4rem;
             align-items: flex-start;
+            margin-bottom: 0;
         }
 
         .sessions .section-header {
             flex: 1;
             text-align: left;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
 
         .sessions .section-header h2 {
@@ -434,12 +438,19 @@
             line-height: 1.2;
         }
 
+        .sessions .section-header p {
+            margin-bottom: 1rem;
+        }
+
         .sessions-image-container {
-            margin-top: 2rem;
-            width: 100%;
+            width: calc(100% + 4rem);
+            margin-left: -2rem;
+            margin-right: -2rem;
             overflow: hidden;
+            margin-top: 0;
             margin-bottom: 0;
-            border-radius: 12px 12px 0 0;
+            padding: 0;
+            border-radius: 0;
             position: relative;
             display: block;
             line-height: 0;
@@ -689,9 +700,6 @@
             <div class="section-header scroll-reveal">
                 <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
                 <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
-                <div class="sessions-image-container scroll-reveal">
-                    <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
-                </div>
             </div>
 
             <div class="sessions-grid">
@@ -731,6 +739,9 @@
                     <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
                 </div>
             </div>
+        </div>
+        <div class="sessions-image-container scroll-reveal">
+            <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
         </div>
     </section>
 
