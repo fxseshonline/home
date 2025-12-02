@@ -443,14 +443,12 @@
         }
 
         .sessions-image-container {
-            width: calc(100% + 4rem);
-            margin-left: -2rem;
-            margin-right: -2rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 400px;
             overflow: hidden;
-            margin-top: 0;
             margin-bottom: 0;
-            padding: 0;
-            border-radius: 0;
+            border-radius: 12px 12px 0 0;
             position: relative;
             display: block;
             line-height: 0;
@@ -700,6 +698,9 @@
             <div class="section-header scroll-reveal">
                 <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
                 <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
+                <div class="sessions-image-container scroll-reveal">
+                    <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
+                </div>
             </div>
 
             <div class="sessions-grid">
@@ -739,9 +740,6 @@
                     <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
                 </div>
             </div>
-        </div>
-        <div class="sessions-image-container scroll-reveal">
-            <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
         </div>
     </section>
 
