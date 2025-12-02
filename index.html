@@ -136,7 +136,7 @@
 
         /* Hero Section */
         .hero {
-            background-image: url('background2.png');
+            background-image: url('background.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -402,6 +402,78 @@
 
         .premium-feature h4 i {
             margin-right: 0.5rem;
+        }
+
+        .premium-offer {
+            margin-top: 3rem;
+            padding: 2.5rem;
+            border-radius: 24px;
+            background: rgba(255, 215, 0, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-align: center;
+            color: white;
+        }
+
+        .premium-offer-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.35rem 1rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+        }
+
+        .premium-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #FFD700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+        }
+
+        .premium-price span {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+        }
+
+        .premium-offer p {
+            max-width: 420px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .premium-cta {
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2.5rem;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #ffd700 0%, #f4b100 100%);
+            color: #0a2b57;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .premium-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .download-logo-wrapper {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .download-logo {
+            width: 140px;
+            height: auto;
         }
 
         /* Sessions Section */
@@ -789,9 +861,16 @@
                 </div>
 
                 <div class="premium-feature scroll-reveal">
-                    <h4><i class="fas fa-chart-line"></i> Advanced Analytics</h4>
-                    <p>Dive deeper into your trading performance with enhanced journal analytics.</p>
+                    <h4><i class="fas fa-mobile-alt"></i> Homepage Widget</h4>
+                    <p>Glance at live session status right from your home screen with the FX Sesh widget.</p>
                 </div>
+            </div>
+
+            <div class="premium-offer scroll-reveal">
+                <div class="premium-offer-badge">Premium Access</div>
+                <div class="premium-price">$4.99 <span>one-time unlock</span></div>
+                <p>Own the complete FX Sesh toolkit—premium alerts, overlap intel, ad-free focus, and the exclusive home widget—all for a single, lifetime unlock.</p>
+                <a href="#download" class="premium-cta"><i class="fas fa-crown"></i> Upgrade Now</a>
             </div>
         </div>
     </section>
@@ -801,6 +880,10 @@
         <div class="section-header scroll-reveal">
             <h2><span class="navy-gradient-text">Get Started Today!</span></h2>
             <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
+        </div>
+
+        <div class="download-logo-wrapper scroll-reveal">
+            <img src="logo.png" alt="FX Sesh Logo" class="download-logo">
         </div>
 
         <div style="text-align: center; margin-top: 3rem;">
