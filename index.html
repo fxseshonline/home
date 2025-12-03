@@ -649,6 +649,17 @@
                 grid-template-rows: auto;
                 max-width: 100%;
             }
+
+            /* Mobile: Show full image, no cropping */
+            .sessions-image-container {
+                height: auto !important;
+                overflow: visible;
+            }
+
+            .sessions-image {
+                height: auto !important;
+                object-fit: contain !important;
+            }
         }
 
         /* Animations */
@@ -975,24 +986,32 @@
         // Start typing effect after a short delay
         setTimeout(typeText, 500);
 
-        // Clip session example image to show only top half
+        // Clip session example image to show only top half (desktop only)
         function clipSessionImage() {
             const sessionsImage = document.querySelector('.sessions-image');
             const sessionsImageContainer = document.querySelector('.sessions-image-container');
             
             if (sessionsImage && sessionsImageContainer) {
-                if (sessionsImage.complete && sessionsImage.naturalHeight > 0) {
-                    const containerWidth = sessionsImageContainer.offsetWidth;
-                    const aspectRatio = sessionsImage.naturalWidth / sessionsImage.naturalHeight;
-                    // Container height is half of what the full image height would be at this width
-                    const containerHeight = (containerWidth / aspectRatio) / 2;
-                    
-                    sessionsImageContainer.style.height = containerHeight + 'px';
-                    sessionsImage.style.height = (containerHeight * 2) + 'px';
-                    sessionsImage.style.objectPosition = 'top center';
+                // Only clip on desktop (width > 768px)
+                if (window.innerWidth > 768) {
+                    if (sessionsImage.complete && sessionsImage.naturalHeight > 0) {
+                        const containerWidth = sessionsImageContainer.offsetWidth;
+                        const aspectRatio = sessionsImage.naturalWidth / sessionsImage.naturalHeight;
+                        // Container height is half of what the full image height would be at this width
+                        const containerHeight = (containerWidth / aspectRatio) / 2;
+                        
+                        sessionsImageContainer.style.height = containerHeight + 'px';
+                        sessionsImage.style.height = (containerHeight * 2) + 'px';
+                        sessionsImage.style.objectPosition = 'top center';
+                    } else {
+                        // If image not loaded yet, wait for it
+                        sessionsImage.addEventListener('load', clipSessionImage);
+                    }
                 } else {
-                    // If image not loaded yet, wait for it
-                    sessionsImage.addEventListener('load', clipSessionImage);
+                    // Mobile: Reset to show full image
+                    sessionsImageContainer.style.height = 'auto';
+                    sessionsImage.style.height = 'auto';
+                    sessionsImage.style.objectFit = 'contain';
                 }
             }
         }
