@@ -123,7 +123,9 @@
             font-weight: 600;
             transition: all 0.3s ease;
             display: inline-block;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid transparent;
+            border-image: linear-gradient(120deg, #0A2B57, #023c69, #0A2B57) 1;
+            border-image-slice: 1;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
@@ -211,7 +213,9 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid transparent;
+            border-image: linear-gradient(120deg, #0A2B57, #023c69, #0A2B57) 1;
+            border-image-slice: 1;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             min-width: 220px;
         }
@@ -220,7 +224,6 @@
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .btn-secondary {
@@ -681,6 +684,33 @@
         }
 
         /* Scroll animations */
+        .curved-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .curved-section::before,
+        .curved-section::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            width: 130%;
+            height: 160px;
+            background: inherit;
+            border-radius: 120px;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .curved-section::before {
+            top: -120px;
+        }
+
+        .curved-section::after {
+            bottom: -120px;
+            transform: translateX(-50%) rotate(180deg);
+        }
+
         .scroll-reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -712,7 +742,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero curved-section">
         <div class="hero-content fade-in-up">
             <h1 id="typing-text"><span class="typing-cursor"></span></h1>
             <p>Track global FX sessions in real-time, manage your trading journal, stay updated with market news, and learn from expert content—all in one powerful app.</p>
@@ -728,7 +758,7 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features" id="features">
+    <section class="features curved-section" id="features">
         <div class="features-container">
             <div class="section-header scroll-reveal">
                 <h2><span class="navy-gradient-text">Access Powerful Features For Serious Traders</span></h2>
@@ -794,7 +824,7 @@
     </section>
 
     <!-- Sessions Section -->
-    <section class="sessions" id="sessions">
+    <section class="sessions curved-section" id="sessions">
         <div class="sessions-content">
             <div class="section-header scroll-reveal">
                 <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
@@ -845,7 +875,7 @@
     </section>
 
     <!-- Premium Section -->
-    <section class="premium" id="premium">
+    <section class="premium curved-section" id="premium">
         <div class="premium-content">
             <h2 class="scroll-reveal">Unlock <span class="premium-gold">Premium</span> Features</h2>
             <p class="scroll-reveal" style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">
@@ -885,7 +915,7 @@
     </section>
 
     <!-- Download Section -->
-    <section class="features" id="download" style="background: white; padding: 6rem 2rem;">
+    <section class="features curved-section" id="download" style="background: white; padding: 6rem 2rem;">
         <div class="section-header scroll-reveal">
             <h2><span class="navy-gradient-text">Get Started Today!</span></h2>
             <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
