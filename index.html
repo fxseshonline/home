@@ -135,17 +135,22 @@
             inset: -2px;
             border-radius: 8px;
             padding: 2px;
-            background: linear-gradient(135deg, #0A2B57, #2563a8);
+            background: linear-gradient(135deg, #ffffff, #2563a8);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             z-index: -1;
+            transition: background 0.3s ease;
         }
 
         .cta-button:hover {
             background: #977DFF;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover::before {
+            background: linear-gradient(135deg, #ffffff, #ffffff);
         }
 
         /* Hero Section */
@@ -238,17 +243,22 @@
             inset: -2px;
             border-radius: 12px;
             padding: 2px;
-            background: linear-gradient(135deg, #0A2B57, #2563a8);
+            background: linear-gradient(135deg, #ffffff, #2563a8);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             z-index: -1;
+            transition: background 0.3s ease;
         }
 
         .btn-primary:hover {
             background: #977DFF;
             transform: translateY(-3px);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover::before {
+            background: linear-gradient(135deg, #ffffff, #ffffff);
         }
 
         .btn-secondary {
