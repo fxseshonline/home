@@ -390,10 +390,7 @@
 
         /* Premium Section */
         .premium {
-            background-image: linear-gradient(135deg, rgba(10, 43, 87, 0.95) 0%, rgba(5, 26, 51, 0.95) 50%, rgba(10, 43, 87, 0.95) 100%), url('premiumbackground.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background: linear-gradient(135deg, #e9d5ff 0%, #c4b5fd 25%, #a78bfa 50%, #977DFF 75%, #8b5cf6 100%);
             color: white;
             padding: 6rem 2rem;
             text-align: center;
@@ -411,8 +408,8 @@
         }
 
         .premium-gold {
-            color: #FFD700;
-            text-shadow: 0 0 3px rgba(255, 215, 0, 0.4), 0 0 6px rgba(255, 215, 0, 0.3);
+            color: #ffffff;
+            text-shadow: 0 0 3px rgba(255, 255, 255, 0.4), 0 0 6px rgba(255, 255, 255, 0.3);
         }
 
         .navy-gradient-text {
@@ -431,11 +428,11 @@
         }
 
         .premium-feature {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: #8b5cf6;
             padding: 1.5rem;
             border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .premium-feature h4 {
@@ -451,43 +448,33 @@
             margin-top: 3rem;
             padding: 3rem 2.5rem;
             border-radius: 32px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+            background: #8b5cf6;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 1.25rem;
             text-align: center;
             position: relative;
-            isolation: isolate;
-            overflow: hidden;
-        }
-
-        .premium-offer::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 80% 0%, rgba(255, 215, 0, 0.6), transparent 55%);
-            opacity: 0.9;
-            z-index: -1;
         }
 
         .premium-offer-badge {
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.25);
             padding: 0.4rem 1.25rem;
             border-radius: 999px;
             font-size: 0.9rem;
             letter-spacing: 0.15rem;
             text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
+            color: #ffffff;
+            font-weight: 600;
         }
 
         .premium-price {
             font-size: 3.25rem;
             font-weight: 700;
-            color: #FFD700;
-            text-shadow: 0 0 18px rgba(255, 215, 0, 0.6);
+            color: #ffffff;
+            text-shadow: 0 0 18px rgba(255, 255, 255, 0.3);
         }
 
         .premium-price span {
@@ -510,8 +497,8 @@
             gap: 0.6rem;
             padding: 0.95rem 2.8rem;
             border-radius: 999px;
-            background: linear-gradient(120deg, #ffd700 0%, #f4b100 100%);
-            color: #0a2b57;
+            background: #ffffff;
+            color: #8b5cf6;
             font-weight: 600;
             text-decoration: none;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -520,6 +507,7 @@
         .premium-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+            background: #f3f4f6;
         }
 
         .premium-fine-print {
