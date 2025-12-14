@@ -769,7 +769,7 @@
         /* Mobile: Reduce session-intro height and match Premium intro font size */
         @media (max-width: 768px) {
             .session-intro {
-                padding: 1.2rem; /* ⬅️ 40% less padding */
+                padding: 0.6rem 1.2rem; /* ⬅️ 50% vertical reduction */
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -1042,7 +1042,10 @@
                 order: 2;
                 width: calc(100vw - 4rem);     /* MATCH session cards */
                 max-width: calc(100vw - 4rem);
-                margin: 1rem auto 1.5rem;
+                margin-left: auto;
+                margin-right: auto;   /* ⬅️ force perfect centering */
+                margin-top: 1rem;
+                margin-bottom: 1.5rem;
                 box-sizing: border-box;
             }
 
@@ -1127,7 +1130,7 @@
                 display: flex;
                 justify-content: center;
                 padding: 0 2rem 2rem 2rem; /* ⬅️ space before next section */
-                margin-top: 1.25rem;
+                margin-top: 0.6rem;    /* ⬅️ 50% less top spacing */
                 width: 100%;
                 box-sizing: border-box;
             }
