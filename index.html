@@ -568,7 +568,7 @@
         .premium-feature h4 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
-            color: var(--primary-blue);
+            color: #FFD700;
         }
 
         .premium-feature h4 i {
@@ -754,10 +754,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
+            border-radius: 16px;
         }
 
         .session-intro p {
-            font-size: 0.95rem;
+            font-size: 1.2rem; /* original section copy size */
             line-height: 1.6;
             text-align: center;
             margin: 0;
@@ -826,7 +828,7 @@
             }
 
             .hero-scroll-indicator {
-                bottom: calc(1.2rem + env(safe-area-inset-bottom)); /* more space from buttons */
+                bottom: calc(2rem + env(safe-area-inset-bottom));
             }
 
             /* Reduce hero download buttons by 5% */
@@ -1414,17 +1416,17 @@
         <div class="sessions-content">
             <div class="section-header scroll-reveal">
                 <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
+                <div class="session-card session-intro scroll-reveal">
+                    <p>
+                        Monitor the four key trading sessions that drive the global forex market.
+                    </p>
+                </div>
                 <div class="sessions-image-container scroll-reveal">
                     <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
                 </div>
             </div>
 
             <div class="sessions-grid">
-                <div class="session-card session-intro scroll-reveal">
-                    <p>
-                        Monitor the four key trading sessions that drive the global forex market.
-                    </p>
-                </div>
                 <div class="session-card scroll-reveal">
                     <div class="flag-container">
                         <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
