@@ -999,6 +999,7 @@
             /* Keep the section itself from ever widening the page */
             .sessions {
                 overflow-x: clip; /* better than hidden on modern browsers */
+                padding-bottom: 0 !important; /* attach image to section bottom */
             }
 
             .sessions-content {
@@ -1356,22 +1357,33 @@
                 box-sizing: border-box !important;
             }
 
-            /* Image: order after carousel + smaller + add breathing room at bottom */
+            /* Image: order after carousel - crop to top half, anchor to section bottom */
             .sessions-image-container{
                 order: 4 !important;
-                margin-top: 0.3rem !important;        /* reduce top padding */
-                padding: 0 2rem 1.5rem 2rem !important; /* keep bottom breathing room */
+                height: 320px;              /* crop window */
+                overflow: hidden !important;
+                display: flex !important;
+                align-items: flex-start !important;    /* ⬅️ critical: show TOP of image */
+                justify-content: center !important;
+
+                margin-top: 16px !important;
+                margin-bottom: 0 !important;
+                padding: 0 2rem !important;
+                padding-bottom: 0 !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
-                display: flex !important;
-                justify-content: center !important;
             }
 
             .sessions-image{
-                width: 78% !important;
-                max-width: 280px !important;
+                width: 92% !important;                 /* ≈ session card width */
+                max-width: 420px !important;
+
                 height: auto !important;
-                object-fit: contain !important;
+                object-fit: cover !important;
+                object-position: top !important;       /* show TOP of image */
+
+                display: block !important;
+                margin: 0 auto !important;
             }
         }
 
