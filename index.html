@@ -272,6 +272,54 @@
             line-height: 1.8;
         }
 
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translate(-50%, 0);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #977DFF;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            opacity: 0.85;
+            z-index: 2;
+            animation: floatDown 2s ease-in-out infinite;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .hero-scroll-indicator:hover {
+            opacity: 1;
+        }
+
+        .hero-scroll-indicator.hidden {
+            opacity: 0;
+            transform: translate(-50%, 12px);
+            pointer-events: none;
+        }
+
+        .hero-scroll-indicator i {
+            font-size: 0.9rem;
+        }
+
+        @keyframes floatDown {
+            0%, 100% {
+                transform: translate(-50%, 0);
+            }
+            50% {
+                transform: translate(-50%, 8px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-scroll-indicator {
+                animation: none;
+            }
+        }
+
         .hero-buttons {
             display: flex;
             gap: 1rem;
@@ -720,6 +768,11 @@
                 font-size: 1rem;
             }
 
+            .hero-scroll-indicator {
+                bottom: 1.75rem;
+                font-size: 0.85rem;
+            }
+
             .nav-links {
                 display: none;
             }
@@ -1026,13 +1079,13 @@
     <section class="hero">
         <div class="hero-content fade-in-up">
             <h1 id="hero-headline">
-                <span class="word">YOUR</span>
-                <span class="word">COMPLETE</span>
-                <span class="word">FOREX</span>
-                <span class="word">TRADING</span>
-                <span class="word">TOOLKIT</span>
+                <span class="word">TRADE</span>
+                <span class="word">WITH</span>
+                <span class="word">A</span>
+                <span class="word">PROFESSIONAL</span>
+                <span class="word">EDGE</span>
             </h1>
-            <p>Track global FX sessions in real-time, manage your trading journal, stay updated with market news, and learn from expert content—all in one powerful app.</p>
+            <p>Master session timing, reduce noise, and trade with precision like a pro.</p>
             <div class="hero-buttons">
                 <a href="#download" class="btn-primary">
                     <i class="fab fa-apple"></i> Download for iOS
@@ -1041,6 +1094,10 @@
                     <i class="fab fa-android"></i> Download for Android
                 </a>
             </div>
+        </div>
+        <div class="hero-scroll-indicator" aria-hidden="true">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-down"></i>
         </div>
     </section>
 
@@ -1496,6 +1553,48 @@
             createStrictCarousel('.features-grid', '.feature-card:not(.cloned)', 3000);
             createStrictCarousel('.sessions-grid', '.session-card', 3000);
         });
+
+        // Hero scroll indicator behavior
+        (function () {
+            const indicator = document.querySelector('.hero-scroll-indicator');
+            const hero = document.querySelector('.hero');
+            const features = document.querySelector('#features');
+
+            if (!indicator || !hero) return;
+
+            let hidden = false;
+
+            function hideIndicator() {
+                if (hidden) return;
+                hidden = true;
+                indicator.classList.add('hidden');
+            }
+
+            function showIndicator() {
+                if (!hidden) return;
+                hidden = false;
+                indicator.classList.remove('hidden');
+            }
+
+            // Hide on first meaningful scroll
+            function onScroll() {
+                if (window.scrollY > 10) {
+                    hideIndicator();
+                } else {
+                    showIndicator(); // only when fully back at top
+                }
+            }
+
+            // Click → smooth scroll + hide
+            indicator.addEventListener('click', () => {
+                hideIndicator();
+                if (features) {
+                    features.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+        })();
 
         // Clip session example image to show only top half (desktop only)
         function clipSessionImage() {
