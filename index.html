@@ -167,19 +167,18 @@
             min-height: 1.2em;
         }
 
-        .typing-cursor {
+        #hero-headline .word {
             display: inline-block;
-            width: 3px;
-            height: 1em;
-            background: white;
-            margin-left: 4px;
-            animation: blink 1s infinite;
-            vertical-align: baseline;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero p {
@@ -716,7 +715,13 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content fade-in-up">
-            <h1 id="typing-text"><span class="typing-cursor"></span></h1>
+            <h1 id="hero-headline">
+                <span class="word">YOUR</span>
+                <span class="word">COMPLETE</span>
+                <span class="word">FOREX</span>
+                <span class="word">TRADING</span>
+                <span class="word">TOOLKIT</span>
+            </h1>
             <p>Track global FX sessions in real-time, manage your trading journal, stay updated with market news, and learn from expert content—all in one powerful app.</p>
             <div class="hero-buttons">
                 <a href="#download" class="btn-primary">
@@ -973,22 +978,11 @@
             observer.observe(el);
         });
 
-        // Typing effect
-        const typingText = document.getElementById('typing-text');
-        const text = "YOUR COMPLETE FOREX TRADING TOOLKIT";
-        const cursor = typingText.querySelector('.typing-cursor');
-        let charIndex = 0;
-
-        function typeText() {
-            if (charIndex < text.length) {
-                typingText.innerHTML = text.substring(0, charIndex + 1) + '<span class="typing-cursor"></span>';
-                charIndex++;
-                setTimeout(typeText, 75);
-            }
-        }
-
-        // Start typing effect after a short delay
-        setTimeout(typeText, 500);
+        // Staggered fade + slide up animation for hero headline
+        const heroWords = document.querySelectorAll('#hero-headline .word');
+        heroWords.forEach((word, index) => {
+            word.style.animationDelay = `${0.3 + (index * 0.15)}s`;
+        });
 
         // Clip session example image to show only top half (desktop only)
         function clipSessionImage() {
