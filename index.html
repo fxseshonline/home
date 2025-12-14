@@ -783,7 +783,8 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding-top: calc(4.5rem + env(safe-area-inset-top));
+                /* header height (promo + nav) + breathing room */
+                padding-top: calc(var(--header-stack, 160px) + 24px + env(safe-area-inset-top));
                 padding-bottom: calc(3rem + env(safe-area-inset-bottom));
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
@@ -1155,12 +1156,6 @@
             white-space: nowrap;
         }
 
-        .promo-item a {
-            color: #ffffff;
-            text-decoration: underline;
-            font-weight: 600;
-        }
-
         /* Desktop alignment */
         @media (min-width: 769px) {
             .promo-item {
@@ -1173,11 +1168,11 @@
         @media (max-width: 768px) {
             .promo-bar {
                 font-size: 0.72rem;      /* ⬇️ smaller for mobile */
-                height: 90px; /* supports two lines comfortably */
+                height: 81px; /* 90px -> 81px (10% smaller) */
             }
 
             .promo-track {
-                height: 180px; /* 2 × bar height */
+                height: 162px; /* 2 × 81px */
             }
 
             .promo-item {
@@ -1185,18 +1180,14 @@
                 text-align: left;
                 line-height: 1.2;
                 padding: 0 0.75rem;      /* tighter horizontal padding */
-                height: 90px;
+                height: 81px;
                 white-space: normal;   /* allow wrapping */
                 align-items: center;
             }
 
-            .promo-item a {
-                font-weight: 600;        /* keep email readable */
-            }
-
-            /* Adjust nav position for taller promo bar on mobile */
+            /* Adjust nav position for promo bar on mobile */
             nav {
-                top: 90px;
+                top: 81px; /* 90px -> 81px */
             }
         }
 
@@ -1217,8 +1208,8 @@
                 0%   { transform: translateY(0); }
                 40%  { transform: translateY(0); }
 
-                50%  { transform: translateY(-90px); }
-                90%  { transform: translateY(-90px); }
+                50%  { transform: translateY(-81px); }
+                90%  { transform: translateY(-81px); }
 
                 100% { transform: translateY(0); }
             }
@@ -1240,7 +1231,7 @@
                 FX Sesh is currently in beta testing. Premium features are not yet available.
             </div>
             <div class="promo-item">
-                Interested in beta access? Email <a href="mailto:fxseshonline@gmail.com ">fxseshonline@gmail.com</a> to request an invite.
+                Interested in beta access? Email fxseshonline@gmail.com to request an invite.
             </div>
         </div>
     </div>
@@ -1526,6 +1517,27 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // Robust header stack measurement for mobile hero padding
+        function updateHeaderStack() {
+            const promo = document.querySelector('.promo-bar');
+            const nav = document.getElementById('navbar');
+            if (!promo || !nav) return;
+
+            const stack = promo.offsetHeight + nav.offsetHeight;
+            document.documentElement.style.setProperty('--header-stack', stack + 'px');
+        }
+
+        // call once
+        updateHeaderStack();
+
+        // update on resize (mobile browser UI changes)
+        window.addEventListener('resize', updateHeaderStack);
+
+        // update when nav padding changes (scrolled class toggles)
+        window.addEventListener('scroll', () => {
+            updateHeaderStack();
+        }, { passive: true });
 
         // Hamburger menu toggle
         const hamburgerMenu = document.querySelector('.hamburger-menu');
@@ -1813,24 +1825,25 @@
             window.addEventListener('scroll', onScroll, { passive: true });
         })();
 
-        // Mobile: Reveal nav download button after scrolling past hero
+        // Mobile: Reveal nav download button only when Sessions section is on screen
         (function () {
-            const hero = document.querySelector('.hero');
             const navDownload = document.querySelector('.nav-download');
+            const sessions = document.querySelector('#sessions');
 
-            if (!hero || !navDownload) return;
+            if (!navDownload || !sessions) return;
 
-            function onScroll() {
-                const heroBottom = hero.getBoundingClientRect().bottom;
-
-                if (heroBottom <= window.innerHeight * 0.9) {
+            const io = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting) {
                     navDownload.classList.add('visible');
                 } else {
                     navDownload.classList.remove('visible');
                 }
-            }
+            }, {
+                threshold: 0.2 // waits until ~20% of Sessions is visible
+            });
 
-            window.addEventListener('scroll', onScroll, { passive: true });
+            io.observe(sessions);
         })();
 
         // Clip session example image to show only top half (desktop only)
