@@ -568,10 +568,24 @@
         .premium-feature h4 {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
+            color: var(--primary-blue);
         }
 
         .premium-feature h4 i {
             margin-right: 0.5rem;
+        }
+
+        /* Premium intro card */
+        .premium-intro {
+            background: var(--primary-blue);
+            color: white;
+            text-align: center;
+        }
+
+        .premium-intro p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
         }
 
         .premium-offer {
@@ -733,6 +747,22 @@
             transition: all 0.3s ease;
         }
 
+        /* Sessions intro card */
+        .session-intro {
+            background: #5b8db8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .session-intro p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: center;
+            margin: 0;
+        }
+
         .session-card:hover {
             transform: translateY(-5px);
             border-color: var(--primary-blue);
@@ -796,7 +826,12 @@
             }
 
             .hero-scroll-indicator {
-                bottom: calc(2rem + env(safe-area-inset-bottom));
+                bottom: calc(1.2rem + env(safe-area-inset-bottom)); /* more space from buttons */
+            }
+
+            /* Reduce hero download buttons by 5% */
+            .hero-buttons .btn-primary {
+                transform: scale(0.95);
             }
 
             .hero h1 {
@@ -1168,26 +1203,26 @@
         @media (max-width: 768px) {
             .promo-bar {
                 font-size: 0.72rem;      /* ⬇️ smaller for mobile */
-                height: 81px; /* 90px -> 81px (10% smaller) */
+                height: 73px; /* 81px → ~10% smaller */
             }
 
             .promo-track {
-                height: 162px; /* 2 × 81px */
+                height: 146px; /* 2 × 73 */
             }
 
             .promo-item {
                 justify-content: flex-start;
                 text-align: left;
-                line-height: 1.2;
+                line-height: 1.25;
                 padding: 0 0.75rem;      /* tighter horizontal padding */
-                height: 81px;
+                height: 73px;
                 white-space: normal;   /* allow wrapping */
                 align-items: center;
             }
 
             /* Adjust nav position for promo bar on mobile */
             nav {
-                top: 81px; /* 90px -> 81px */
+                top: 73px;
             }
         }
 
@@ -1205,12 +1240,8 @@
         /* Mobile: Adjust animation for taller bar */
         @media (max-width: 768px) {
             @keyframes promoSlide {
-                0%   { transform: translateY(0); }
-                40%  { transform: translateY(0); }
-
-                50%  { transform: translateY(-81px); }
-                90%  { transform: translateY(-81px); }
-
+                0%, 40% { transform: translateY(0); }
+                50%, 90% { transform: translateY(-73px); }
                 100% { transform: translateY(0); }
             }
         }
@@ -1383,13 +1414,17 @@
         <div class="sessions-content">
             <div class="section-header scroll-reveal">
                 <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
-                <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
                 <div class="sessions-image-container scroll-reveal">
                     <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
                 </div>
             </div>
 
             <div class="sessions-grid">
+                <div class="session-card session-intro scroll-reveal">
+                    <p>
+                        Monitor the four key trading sessions that drive the global forex market.
+                    </p>
+                </div>
                 <div class="session-card scroll-reveal">
                     <div class="flag-container">
                         <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
@@ -1435,9 +1470,12 @@
             <h2 class="scroll-reveal" style="color: var(--primary-blue);">
                 Unlock Premium Features
             </h2>
-            <p class="scroll-reveal" style="color: var(--primary-blue); font-size: 1.2rem; margin-bottom: 2rem;">
-                Take your trading to the next level with advanced features designed for serious traders.
-            </p>
+
+            <div class="premium-feature premium-intro scroll-reveal">
+                <p>
+                    Take your trading to the next level with advanced features designed for serious traders.
+                </p>
+            </div>
 
             <div class="premium-features">
                 <div class="premium-feature scroll-reveal">
