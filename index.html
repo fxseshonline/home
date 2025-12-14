@@ -1010,6 +1010,1922 @@
                 line-height: 1.2;
             }
 
+            /* Keep the section itself from ever widening the page */
+            .sessions {
+                overflow-x: clip; /* better than hidden on modern browsers */
+            }
+
+            .sessions-content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* 1️⃣ Title */
+            .sessions .section-header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                order: 1;
+            }
+
+            .sessions .section-header h2 {
+                order: 1;
+                text-align: center;
+                margin-bottom: 1rem;
+                padding: 0 1.5rem;
+            }
+
+            /* 2️⃣ Monitor card */
+            .sessions .session-intro {
+                order: 2;
+                width: calc(100% - 3rem);
+                margin: 1.25rem auto 1.75rem;
+            }
+
+            /* 3️⃣ Carousel */
+            .sessions-grid {
+                order: 3;
+                display: flex;
+                gap: 1rem;
+                /* MATCH the section padding (2rem) so everything lines up */
+                padding: 0 2rem;
+                width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                overscroll-behavior-x: contain;
+                box-sizing: border-box;
+                scrollbar-width: none;
+            }
+
+            .sessions-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* Use viewport width so cards can never exceed the screen */
+            .sessions-grid .session-card {
+                display: grid;
+                grid-template-columns: 50px 1fr;
+                grid-template-rows: auto 1fr;
+                column-gap: 1rem;
+                row-gap: 0.75rem;
+                padding: 1.5rem;
+                flex: 0 0 auto;
+                width: calc(100vw - 4rem); /* 100vw minus 2rem left + 2rem right */
+                max-width: calc(100vw - 4rem);
+                scroll-snap-align: start;
+                box-sizing: border-box;
+                align-items: start;
+            }
+
+            .session-card .flag-container {
+                width: 50px;
+                height: 50px;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+
+            .session-flag {
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
+                margin: 0;
+                object-fit: cover;
+            }
+
+            .session-card h4 {
+                font-size: 1.2rem;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 2;
+                display: flex;
+                align-items: center;
+            }
+
+            .session-card p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 0;
+                grid-row: 2;
+                grid-column: 1 / 3;
+            }
+
+            /* 4️⃣ Image */
+            .sessions-image-container {
+                order: 4;
+                display: flex;
+                justify-content: center;
+                padding: 0 2rem;
+                margin-top: 1.25rem;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .sessions-image {
+                width: 78%;        /* smaller than before */
+                max-width: 280px;  /* hard cap so it never feels huge */
+                height: auto;
+                object-fit: contain;
+                display: block;
+            }
+
+            .sessions-image {
+                height: auto !important;
+                object-fit: contain !important;
+            }
+        }
+
+        /* Short-height phones (iPhone SE, small Android) */
+        @media (max-width: 768px) and (max-height: 700px) {
+            .hero {
+                min-height: 85vh;
+                padding-top: calc(3rem + env(safe-area-inset-top));
+            }
+
+            .hero-title {
+                margin-top: -0.75rem;
+            }
+
+            .hero-scroll-indicator {
+                bottom: calc(1.5rem + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Promo Bar */
+        .promo-bar {
+            background: #000000;
+            color: #ffffff;
+            height: 60px; /* ⬆️ 1.5x taller */
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* Vertical sliding container */
+        .promo-track {
+            height: 120px; /* 2 × bar height */
+            display: flex;
+            flex-direction: column;
+            animation: promoSlide 10s ease-in-out infinite;
+        }
+
+        /* Individual messages */
+        .promo-item {
+            height: 60px; /* MUST match promo-bar */
+            display: flex;
+            align-items: center;
+            justify-content: center; /* desktop default */
+            padding: 0 1.25rem;
+            white-space: nowrap;
+        }
+
+        /* Desktop alignment */
+        @media (min-width: 769px) {
+            .promo-item {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        /* Mobile alignment */
+        @media (max-width: 768px) {
+            .promo-bar {
+                font-size: 0.72rem;      /* ⬇️ smaller for mobile */
+                height: 73px; /* 81px → ~10% smaller */
+            }
+
+            .promo-track {
+                height: 146px; /* 2 × 73 */
+            }
+
+            .promo-item {
+                justify-content: flex-start;
+                text-align: left;
+                line-height: 1.25;
+                padding: 0 0.75rem;      /* tighter horizontal padding */
+                height: 73px;
+                white-space: normal;   /* allow wrapping */
+                align-items: center;
+            }
+
+            /* Adjust nav position for promo bar on mobile */
+            nav {
+                top: 73px;
+            }
+        }
+
+        /* Slide animation — ONLY ONE MESSAGE AT A TIME */
+        @keyframes promoSlide {
+            0%   { transform: translateY(0); }
+            40%  { transform: translateY(0); }
+
+            50%  { transform: translateY(-60px); }
+            90%  { transform: translateY(-60px); }
+
+            100% { transform: translateY(0); }
+        }
+
+        /* Mobile: Adjust animation for taller bar */
+        @media (max-width: 768px) {
+            @keyframes promoSlide {
+                0%, 40% { transform: translateY(0); }
+                50%, 90% { transform: translateY(-73px); }
+                100% { transform: translateY(0); }
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .promo-track {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body id="top">
+    <!-- Promo Bar -->
+    <div class="promo-bar">
+        <div class="promo-track">
+            <div class="promo-item">
+                FX Sesh is currently in beta testing. Premium features are not yet available.
+            </div>
+            <div class="promo-item">
+                Interested in beta access? Email fxseshonline@gmail.com to request an invite.
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#top" class="logo">
+                    <img src="forexseshlogowhite.png" alt="FX Sesh Logo">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#sessions">Sessions</a></li>
+                    <li><a href="#premium">Premium</a></li>
+                </ul>
+            </div>
+            <a href="#download" class="cta-button nav-download"><span class="cta-full">Download Now</span><span class="cta-short">Download</span></a>
+            <button class="hamburger-menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#sessions">Sessions</a></li>
+                <li><a href="#premium">Premium</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in-up">
+            <h1 id="hero-headline" class="hero-title">
+                <span class="hero-light">Trade with a</span>
+                <span class="hero-strong">PROFESSIONAL EDGE</span>
+            </h1>
+            <p>Master session timing, reduce noise, and trade with precision like a pro.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-apple"></i> Download for iOS
+                </a>
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-android"></i> Download for Android
+                </a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator" aria-hidden="true">
+            <svg
+                class="scroll-arrow"
+                width="200"
+                height="75"
+                viewBox="0 0 200 75"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <!-- Regular downward triangle -->
+                <polygon
+                    points="100,65 190,10 10,10"
+                    fill="#000000"
+                />
+                <!-- Stacked text -->
+                <text
+                    x="100"
+                    y="31"
+                    text-anchor="middle"
+                    fill="#FFFFFF"
+                    font-size="10"
+                    font-weight="600"
+                    letter-spacing="2"
+                >
+                    <tspan x="100" dy="0">LEARN</tspan>
+                    <tspan x="100" dy="14">MORE</tspan>
+                </text>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-header scroll-reveal">
+                <h2><span class="navy-gradient-text">Access Powerful Features For Serious Traders</span></h2>
+                <p>Everything you need to stay on top of the forex markets and improve your trading performance.</p>
+            </div>
+
+            <div class="features-grid">
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3>Real-Time Session Tracking</h3>
+                <p>Monitor all four major forex sessions (Sydney, Tokyo, London, New York) with live status indicators. Know exactly when markets open and close in your timezone.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div>
+                <h3>Digital & Analog Clocks</h3>
+                <p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays for your preferred experience.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                <h3>Smart Push Notifications</h3>
+                <p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-book"></i></div>
+                <h3>Trading Journal</h3>
+                <p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Filter and analyze your trading history to improve your strategy.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-newspaper"></i></div>
+                <h3>Forex News Feed</h3>
+                <p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Educational Content</h3>
+                <p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge at your own pace.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                <h3>Multiple Themes</h3>
+                <p>Choose from Day, Night, or Original themes. Customize your app experience to match your preference and reduce eye strain during long trading sessions.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-cog"></i></div>
+                <h3>Customizable Settings</h3>
+                <p>Set your timezone, configure notification preferences, and personalize your app experience. Everything is tailored to your trading needs.</p>
+            </div>
+
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Cross-Platform</h3>
+                <p>Available on both iOS and Android. Your data syncs across devices, so you can trade and track from anywhere, anytime.</p>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Sessions Section -->
+    <section class="sessions" id="sessions">
+        <div class="sessions-content">
+            <div class="section-header scroll-reveal">
+                <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
+                <div class="session-card session-intro scroll-reveal">
+                    <p>
+                        Monitor the four key trading sessions that drive the global forex market.
+                    </p>
+                </div>
+            </div>
+
+            <div class="sessions-grid">
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>New York Session</h4>
+                    <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>London Session</h4>
+                    <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>Sydney Session</h4>
+                    <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>Tokyo Session</h4>
+                    <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
+                </div>
+            </div>
+
+            <div class="sessions-image-container scroll-reveal">
+                <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section class="premium" id="premium">
+        <div class="premium-content">
+            <h2 class="scroll-reveal" style="color: var(--primary-blue);">
+                Unlock Premium Features
+            </h2>
+
+            <div class="premium-feature premium-intro scroll-reveal">
+                <p>
+                    Take your trading to the next level with advanced features designed for serious traders.
+                </p>
+            </div>
+
+            <div class="premium-features">
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-bolt"></i> Pre-Alerts</h4>
+                    <p>Get notified before sessions open so you're always prepared.</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-exchange-alt"></i> Overlap Notifications</h4>
+                    <p>Track high-volatility periods when sessions overlap (London-New York, Tokyo-London, Sydney-Tokyo).</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-ban"></i> Ad-Free Experience</h4>
+                    <p>Focus on trading without interruptions. Enjoy a clean, distraction-free interface.</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-mobile-alt"></i> Homepage Widget</h4>
+                    <p>Glance at live session status right from your home screen with the FX Sesh widget.</p>
+                </div>
+            </div>
+
+            <div class="premium-offer scroll-reveal">
+                <div class="premium-offer-badge">FX Sesh Premium</div>
+                <div class="premium-price">$4.99 <span>/month</span></div>
+                <p class="premium-offer-description">Unlock overlap intelligence, proactive alerts, an ad-free experience, and the exclusive FX Sesh home widget—the full toolkit for traders who demand precision.</p>
+                <a href="#download" class="premium-cta"><i class="fas fa-crown"></i> Start Premium</a>
+                <p class="premium-fine-print">Monthly subscription • Cancel anytime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="features" id="download" style="background: white; padding: 6rem 2rem;">
+        <div class="section-header scroll-reveal">
+            <h2><span class="navy-gradient-text">Get Started Today!</span></h2>
+            <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary download-btn">
+                    <i class="fab fa-apple"></i> App Store
+                </a>
+                <a href="#" class="btn-primary download-btn">
+                    <i class="fab fa-google-play"></i> Google Play
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#sessions">Sessions</a>
+                <a href="#premium">Premium</a>
+                <a href="#download">Download</a>
+                <a href="https://fxseshonline.github.io/fx-sesh-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                <a href="https://fxseshonline.github.io/fx-sesh-support/" target="_blank" rel="noopener noreferrer">Support</a>
+            </div>
+            <p style="color: var(--text-muted-light); margin-top: 2rem;">
+                © 2025 FX Sesh. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Robust header stack measurement for mobile hero padding
+        function updateHeaderStack() {
+            const promo = document.querySelector('.promo-bar');
+            const nav = document.getElementById('navbar');
+            if (!promo || !nav) return;
+
+            const stack = promo.offsetHeight + nav.offsetHeight;
+            document.documentElement.style.setProperty('--header-stack', stack + 'px');
+        }
+
+        // call once
+        updateHeaderStack();
+
+        // update on resize (mobile browser UI changes)
+        window.addEventListener('resize', updateHeaderStack);
+
+        // update when nav padding changes (scrolled class toggles)
+        window.addEventListener('scroll', () => {
+            updateHeaderStack();
+        }, { passive: true });
+
+        // Hamburger menu toggle
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerMenu.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '#top') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Hero headline animation is now handled via CSS animation delays
+        // No JavaScript needed - animations are defined in CSS
+
+        // STRICT CAROUSEL SYSTEM - Fixed with direction lock and visibility pause
+        function createStrictCarousel(gridSelector, cardSelector, speed = 3000) {
+            const grid = document.querySelector(gridSelector);
+            if (!grid) return;
+
+            let index = 0;
+            let timeout = null;
+            let resumeTimeout = null;
+            let isInteracting = false;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isHorizontalSwipe = false;
+            let lastScrollLeft = 0;
+            let settleRAF = null;
+            let isMobile = window.innerWidth <= 768;
+
+            const cards = () => Array.from(grid.querySelectorAll(cardSelector));
+
+            function scrollToIndex(i, smooth = true) {
+                const card = cards()[i];
+                if (!card) return;
+                grid.scrollTo({
+                    left: card.offsetLeft,
+                    behavior: smooth ? 'smooth' : 'auto'
+                });
+            }
+
+            function advance() {
+                if (isInteracting || !cards().length) return;
+                index = (index + 1) % cards().length;
+                scrollToIndex(index);
+            }
+
+            function scheduleNext() {
+                if (document.hidden) return;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    advance();
+                    scheduleNext(); // chain, not loop
+                }, speed);
+            }
+
+            function syncIndexToScroll() {
+                const scrollLeft = grid.scrollLeft;
+                let closestIndex = 0;
+                let minDistance = Infinity;
+
+                cards().forEach((card, i) => {
+                    const dist = Math.abs(card.offsetLeft - scrollLeft);
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestIndex = i;
+                    }
+                });
+
+                index = closestIndex;
+            }
+
+            function syncWhenSettled() {
+                cancelAnimationFrame(settleRAF);
+                let stableFrames = 0;
+
+                const check = () => {
+                    const current = grid.scrollLeft;
+                    const delta = Math.abs(current - lastScrollLeft);
+
+                    // If scrollLeft barely changes for a few frames, assume momentum ended
+                    if (delta < 0.5) stableFrames += 1;
+                    else stableFrames = 0;
+
+                    lastScrollLeft = current;
+
+                    if (stableFrames >= 6) { // ~100ms at 60fps
+                        syncIndexToScroll();
+                        isInteracting = false;
+                        scheduleNext(); // restart from the actual settled card
+                        return;
+                    }
+
+                    settleRAF = requestAnimationFrame(check);
+                };
+
+                lastScrollLeft = grid.scrollLeft;
+                settleRAF = requestAnimationFrame(check);
+            }
+
+            function init() {
+                if (window.innerWidth > 768) return;
+
+                clearTimeout(timeout);
+                clearTimeout(resumeTimeout);
+                cancelAnimationFrame(settleRAF);
+
+                index = 0;
+                scrollToIndex(0, false);
+                scheduleNext();
+            }
+
+            // ----- TOUCH HANDLERS WITH DIRECTION LOCK -----
+            grid.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                isHorizontalSwipe = false;
+
+                clearTimeout(timeout);
+                clearTimeout(resumeTimeout);
+                cancelAnimationFrame(settleRAF);
+            }, { passive: true });
+
+            grid.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                const dx = Math.abs(touch.clientX - touchStartX);
+                const dy = Math.abs(touch.clientY - touchStartY);
+
+                // Lock to horizontal intent only
+                if (dx > dy && dx > 10) {
+                    isHorizontalSwipe = true;
+                    isInteracting = true;
+                }
+            }, { passive: true });
+
+            grid.addEventListener('touchend', () => {
+                if (!isHorizontalSwipe) {
+                    // Vertical scroll — ignore completely
+                    scheduleNext();
+                    return;
+                }
+
+                // Wait for momentum to actually stop, then sync & restart timer
+                syncWhenSettled();
+            }, { passive: true });
+
+            // Optional: mouse support (desktop testing)
+            grid.addEventListener('mousedown', () => {
+                isInteracting = true;
+                clearTimeout(timeout);
+                cancelAnimationFrame(settleRAF);
+            });
+
+            grid.addEventListener('mouseup', () => {
+                syncWhenSettled();
+            });
+
+            // Visibility change handler
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    clearTimeout(timeout);
+                } else if (window.innerWidth <= 768) {
+                    scheduleNext();
+                }
+            });
+
+            init();
+
+            window.addEventListener('resize', () => {
+                const nowMobile = window.innerWidth <= 768;
+
+                // Ignore iOS/Android "resize on scroll" (height-only resizes)
+                if (nowMobile === isMobile) return;
+
+                // Only react if breakpoint changed
+                isMobile = nowMobile;
+
+                clearTimeout(timeout);
+                clearTimeout(resumeTimeout);
+                cancelAnimationFrame(settleRAF);
+
+                if (isMobile) {
+                    // Entering mobile: resume from current position (don't reset to 0)
+                    syncWhenSettled();
+                } else {
+                    // Leaving mobile: stop autoplay
+                    clearTimeout(timeout);
+                }
+            });
+        }
+
+        // Initialize carousels on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createStrictCarousel('.features-grid', '.feature-card:not(.cloned)', 3000);
+            createStrictCarousel('.sessions-grid', '.session-card', 3000);
+        });
+
+        // Hero scroll indicator behavior
+        (function () {
+            const indicator = document.querySelector('.hero-scroll-indicator');
+            const hero = document.querySelector('.hero');
+            const features = document.querySelector('#features');
+
+            if (!indicator || !hero) return;
+
+            let hidden = false;
+
+            function hideIndicator() {
+                if (hidden) return;
+                hidden = true;
+                indicator.classList.add('hidden');
+            }
+
+            function showIndicator() {
+                if (!hidden) return;
+                hidden = false;
+                indicator.classList.remove('hidden');
+            }
+
+            // Hide on first meaningful scroll
+            function onScroll() {
+                if (window.scrollY > 10) {
+                    hideIndicator();
+                } else {
+                    showIndicator(); // only when fully back at top
+                }
+            }
+
+            // Click → smooth scroll + hide
+            indicator.addEventListener('click', () => {
+                hideIndicator();
+                if (features) {
+                    features.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+        })();
+
+        // Mobile: Reveal nav download button only when Sessions section is on screen
+        (function () {
+            const navDownload = document.querySelector('.nav-download');
+            const sessions = document.querySelector('#sessions');
+
+            if (!navDownload || !sessions) return;
+
+            const io = new IntersectionObserver((entries) => {
+                const entry = entries[0];
+                if (entry.isIntersecting) {
+                    navDownload.classList.add('visible');
+                } else {
+                    navDownload.classList.remove('visible');
+                }
+            }, {
+                threshold: 0.2 // waits until ~20% of Sessions is visible
+            });
+
+            io.observe(sessions);
+        })();
+
+        // Clip session example image to show only top half (desktop only)
+        function clipSessionImage() {
+            const sessionsImage = document.querySelector('.sessions-image');
+            const sessionsImageContainer = document.querySelector('.sessions-image-container');
+            
+            if (sessionsImage && sessionsImageContainer) {
+                // Only clip on desktop (width > 768px)
+                if (window.innerWidth > 768) {
+                    if (sessionsImage.complete && sessionsImage.naturalHeight > 0) {
+                        const containerWidth = sessionsImageContainer.offsetWidth;
+                        const aspectRatio = sessionsImage.naturalWidth / sessionsImage.naturalHeight;
+                        // Container height is half of what the full image height would be at this width
+                        const containerHeight = (containerWidth / aspectRatio) / 2;
+                        
+                        sessionsImageContainer.style.height = containerHeight + 'px';
+                        sessionsImage.style.height = (containerHeight * 2) + 'px';
+                        sessionsImage.style.objectPosition = 'top center';
+                    } else {
+                        // If image not loaded yet, wait for it
+                        sessionsImage.addEventListener('load', clipSessionImage);
+                    }
+                } else {
+                    // Mobile: Reset to show full image
+                    sessionsImageContainer.style.height = 'auto';
+                    sessionsImage.style.height = 'auto';
+                    sessionsImage.style.objectFit = 'contain';
+                }
+            }
+        }
+        
+        // Run on page load
+        window.addEventListener('load', clipSessionImage);
+        // Also run on resize to adjust if needed
+        window.addEventListener('resize', clipSessionImage);
+    </script>
+</body>
+</html>
+
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--light-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 60px; /* Position below promo bar */
+            width: 100%;
+            background-image: url('headerbackground3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #977DFF;
+        }
+
+        .cta-button {
+            background: #0A2B57;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background: #977DFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-short {
+            display: none;
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .hamburger-menu span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 17, 26, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 1rem 0;
+            margin: 0;
+        }
+
+        .mobile-menu li {
+            padding: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-menu a:hover {
+            color: #977DFF;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #977DFF;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('background3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
+            color: white;
+            min-height: 100svh; /* stable viewport height */
+            min-height: 100vh; /* fallback */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            min-height: 1.2em;
+        }
+
+        .hero-title {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1.05;
+            margin-top: -1.25rem;   /* pulls title up */
+            margin-bottom: 1.5rem;
+        }
+
+        /* Top line — larger, lighter */
+        .hero-light {
+            font-size: 3.6rem;
+            font-weight: 300; /* light */
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.3s;
+        }
+
+        /* Bottom line — strong anchor */
+        .hero-strong {
+            font-size: 3.8rem;
+            font-weight: 700;
+            letter-spacing: 0.08em; /* caps need air */
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 2;
+
+            animation: arrowFloat 2.2s ease-in-out infinite;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .hero-scroll-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-50%) translateY(14px);
+        }
+
+        .scroll-arrow {
+            filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
+        }
+
+        /* Hover polish */
+        .hero-scroll-indicator:hover .scroll-arrow {
+            filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
+        }
+
+        /* Float animation */
+        @keyframes arrowFloat {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(8px);
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-scroll-indicator {
+                animation: none;
+            }
+        }
+
+        /* Desktop: Reduce top padding above hero title */
+        @media (min-width: 769px) {
+            .hero-title {
+                margin-top: -0.75rem;
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #0A2B57;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-width: 220px;
+        }
+
+        .btn-primary:hover {
+            background: #977DFF;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Download section buttons - keep solid style */
+        .download-btn {
+            background: var(--primary-blue) !important;
+            color: white !important;
+            border: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-blue-light) !important;
+        }
+
+        /* Features Section */
+        .features {
+            background-image: url('chartfeaturebackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--light-bg);
+            padding: 6rem 2rem;
+            width: 100%;
+            position: relative;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(10, 43, 87, 0.2);
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.15);
+            border-color: var(--primary-blue);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .session-flag {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted-light);
+            line-height: 1.8;
+        }
+
+        /* Premium Section */
+        .premium {
+            background: linear-gradient(135deg, rgba(233, 213, 255, 0.95) 0%, rgba(196, 181, 253, 0.95) 25%, rgba(167, 139, 250, 0.95) 50%, rgba(151, 125, 255, 0.95) 75%, rgba(139, 92, 246, 0.95) 100%), url('premiumbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .premium-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .premium h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .premium-gold {
+            color: #FFD700;
+            text-shadow: 0 0 3px rgba(255, 215, 0, 0.4), 0 0 6px rgba(255, 215, 0, 0.3);
+        }
+
+        .navy-gradient-text {
+            background: linear-gradient(to bottom, var(--primary-blue) 0%, var(--primary-blue-light) 50%, #5b8db8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .premium-feature {
+            background: var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .premium-feature:hover {
+            transform: scale(1.05);
+            border-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .premium-feature h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #FFD700;
+        }
+
+        .premium-feature h4 i {
+            margin-right: 0.5rem;
+        }
+
+        /* Premium intro card */
+        .premium-intro {
+            background: var(--primary-blue);
+            color: white;
+            text-align: center;
+        }
+
+        .premium-intro p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .premium-offer {
+            margin-top: 3rem;
+            padding: 3rem 2.5rem;
+            border-radius: 32px;
+            background: var(--primary-blue);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .premium-offer:hover {
+            transform: scale(1.02);
+            border-color: #ffffff;
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.3);
+        }
+
+        .premium-offer-badge {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 0.4rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            letter-spacing: 0.15rem;
+            text-transform: uppercase;
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        .premium-price {
+            font-size: 3.25rem;
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        .premium-price span {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        .premium-offer-description {
+            max-width: 520px;
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.8;
+        }
+
+        .premium-cta {
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.95rem 2.8rem;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #ffd700 0%, #f4b100 100%);
+            color: #0a2b57;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .premium-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+        }
+
+        .premium-fine-print {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Sessions Section */
+        .sessions {
+            background-image: url('forexsessionbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--dark-bg);
+            padding: 6rem 2rem 0;
+            color: var(--text-light);
+        }
+
+
+        .sessions-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4rem;
+            align-items: stretch;
+        }
+
+        .sessions .section-header {
+            flex: 1;
+            text-align: left;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            height: 100%;
+        }
+
+        .sessions .section-header p {
+            margin-bottom: 0;
+        }
+
+        .sessions .section-header h2 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+        }
+
+        .sessions-image-container {
+            margin-top: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 0;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            display: block;
+            line-height: 0;
+            flex-grow: 1;
+        }
+
+        .sessions-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            margin: 0;
+            padding: 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 2rem;
+            flex: 1;
+            max-width: 560px;
+            align-self: center;
+            padding: 2rem 0;
+            margin: 0 auto;
+        }
+
+        .session-card {
+            background: var(--dark-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        /* Sessions intro card */
+        .session-intro {
+            background: #5b8db8; /* same blue as "Forex Sessions" text */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+
+        .session-intro p {
+            font-size: 1.2rem; /* original size */
+            line-height: 1.6;
+            text-align: center;
+            color: #000000; /* black text */
+            margin: 0;
+        }
+
+        /* Mobile: Reduce session-intro height and match Premium intro font size */
+        @media (max-width: 768px) {
+            .session-intro {
+                padding: 1.25rem;          /* less tall */
+                margin-bottom: 1.25rem;    /* less gap below */
+                border-radius: 16px;
+            }
+
+            .session-intro p {
+                font-size: 1.1rem;         /* ⬆️ 10% larger */
+                line-height: 1.6;
+                margin: 0;
+                color: #000000;
+                text-align: center;
+            }
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.3);
+        }
+
+        .session-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .session-card .flag-container {
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            color: var(--text-dark);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                /* header height (promo + nav) + breathing room */
+                padding-top: calc(var(--header-stack, 160px) + 24px + env(safe-area-inset-top));
+                padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                min-height: 90vh;
+            }
+
+            .hero-title {
+                margin-top: -0.5rem;
+            }
+
+            .hero-scroll-indicator {
+                bottom: calc(0.5rem + env(safe-area-inset-bottom));
+            }
+
+            /* Reduce hero download buttons by 5% */
+            .hero-buttons .btn-primary {
+                transform: scale(0.95);
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+
+            .hero-light {
+                font-size: 2.3rem;
+            }
+
+            .hero-strong {
+                font-size: 2.5rem;
+                letter-spacing: 0.06em;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .scroll-arrow {
+                width: 150px;
+                height: 56px;
+            }
+
+            /* Hide nav download button until user scrolls past hero */
+            .nav-download {
+                transform: scale(0);
+                opacity: 0;
+                pointer-events: none;
+                transition: transform 0.4s ease, opacity 0.3s ease;
+                transform-origin: center;
+            }
+
+            .nav-download.visible {
+                transform: scale(1);
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-full {
+                display: none;
+            }
+
+            .cta-short {
+                display: inline;
+            }
+
+            .cta-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .nav-left {
+                gap: 1rem;
+            }
+
+            .features-grid {
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding: 0 1.5rem;
+                margin-bottom: 0;
+                scrollbar-width: none;
+                position: relative;
+                overscroll-behavior-x: contain;
+            }
+
+            .features-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .feature-card {
+                display: grid;
+                grid-template-columns: 50px 1fr;
+                grid-template-rows: auto 1fr;
+                column-gap: 1rem;
+                row-gap: 0.75rem;
+                padding: 1.5rem;
+                min-width: calc(100% - 3rem);
+                max-width: calc(100% - 3rem);
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+                flex-shrink: 0;
+                box-sizing: border-box;
+                align-items: start;
+            }
+
+            .features {
+                padding: 4rem 0 4rem 0;
+            }
+
+            .features-container {
+                padding-bottom: 0;
+            }
+
+            .section-header {
+                margin-bottom: 2rem;
+                padding: 0 1.5rem;
+            }
+
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                border-radius: 10px;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .feature-card h3 {
+                font-size: 1.2rem;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 2;
+                display: flex;
+                align-items: center;
+            }
+
+            .feature-card p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 0;
+                grid-row: 2;
+                grid-column: 1 / 3;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .sessions .section-header h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .premium h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
             .sessions {
                 display: flex;
                 flex-direction: column;
