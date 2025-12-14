@@ -1381,9 +1381,10 @@
            ============================ */
         @media (min-width: 1024px) {
 
-            /* Remove bottom space so section ends at bottom of phone */
+            /* Kill ALL bottom spacing on the section */
             .sessions {
                 padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
             }
 
             /* Two columns: left content + right grid. Two rows: top + phone row */
@@ -1392,7 +1393,9 @@
                 grid-template-columns: 460px 1fr;   /* left column width, right flexible */
                 grid-template-rows: auto 1fr;       /* row1: header/monitor, row2: phone */
                 column-gap: 3rem;
-                row-gap: 0;                         /* important: no vertical gap */
+                row-gap: 0 !important;              /* important: no vertical gap */
+                padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
                 align-items: start;
             }
 
@@ -1452,18 +1455,24 @@
                 grid-row: 2;
 
                 margin: 1.75rem 0 0 0 !important;   /* space between monitor and phone */
-                padding: 0 !important;              /* no bottom padding */
+                margin-bottom: 0 !important;
+                padding: 0 !important;              /* no padding */
+                padding-bottom: 0 !important;
                 display: flex !important;
                 justify-content: flex-start !important;
                 align-items: flex-end !important;   /* helps it "land" at section bottom */
+                overflow: hidden !important;        /* keeps crop clean */
             }
 
             .sessions-image {
                 width: 100%;
                 max-width: 420px;                   /* keep it controlled */
                 height: auto;
-                display: block;
+                object-fit: cover;                  /* allow cropping */
+                object-position: top;               /* ⬅️ THIS is the key - show top half */
+                display: block !important;         /* removes inline gap */
                 margin: 0 !important;
+                margin-bottom: 0 !important;
             }
         }
     </style>
