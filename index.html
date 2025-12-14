@@ -263,9 +263,11 @@
 
         /* Top line — larger, lighter */
         .hero-light {
-            font-size: 3.6rem;
+            font-size: 3.1rem;   /* slightly smaller than before */
             font-weight: 300; /* light */
             letter-spacing: 0.04em;
+            max-width: 90%;
+            text-align: center;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -846,7 +848,8 @@
             }
 
             .hero-light {
-                font-size: 2.3rem;
+                font-size: 2.1rem;
+                max-width: 85%;
             }
 
             .hero-strong {
@@ -1360,27 +1363,26 @@
             /* Image: order after carousel - crop to top half, anchor to section bottom */
             .sessions-image-container{
                 order: 4 !important;
-                height: 320px;              /* crop window */
+                height: 300px;                 /* crop window */
                 overflow: hidden !important;
                 display: flex !important;
-                align-items: flex-start !important;    /* ⬅️ critical: show TOP of image */
+                align-items: flex-start !important;
                 justify-content: center !important;
 
-                margin-top: 16px !important;
+                margin-top: 1rem !important;
                 margin-bottom: 0 !important;
-                padding: 0 2rem !important;
-                padding-bottom: 0 !important;
+                padding: 0 !important;         /* ⬅️ no padding at bottom */
                 width: 100% !important;
                 box-sizing: border-box !important;
             }
 
             .sessions-image{
-                width: 92% !important;                 /* ≈ session card width */
+                width: calc(100vw - 4rem);     /* same width as cards */
                 max-width: 420px !important;
-
                 height: auto !important;
+
                 object-fit: cover !important;
-                object-position: top !important;       /* show TOP of image */
+                object-position: top center !important;
 
                 display: block !important;
                 margin: 0 auto !important;
@@ -1536,7 +1538,7 @@
     <section class="hero">
         <div class="hero-content fade-in-up">
             <h1 id="hero-headline" class="hero-title">
-                <span class="hero-light">Trade with a</span>
+                <span class="hero-light">Master trading with</span>
                 <span class="hero-strong">PROFESSIONAL EDGE</span>
             </h1>
             <p>Master session timing, reduce noise, and trade with precision like a pro.</p>
@@ -2127,7 +2129,7 @@
             const sessionsImageContainer = document.querySelector('.sessions-image-container');
             
             if (sessionsImage && sessionsImageContainer) {
-                // Only clip on desktop (width > 768px)
+                // Desktop ONLY
                 if (window.innerWidth > 768) {
                     if (sessionsImage.complete && sessionsImage.naturalHeight > 0) {
                         const containerWidth = sessionsImageContainer.offsetWidth;
@@ -2142,12 +2144,8 @@
                         // If image not loaded yet, wait for it
                         sessionsImage.addEventListener('load', clipSessionImage);
                     }
-                } else {
-                    // Mobile: Reset to show full image
-                    sessionsImageContainer.style.height = 'auto';
-                    sessionsImage.style.height = 'auto';
-                    sessionsImage.style.objectFit = 'contain';
                 }
+                // ❌ REMOVE mobile reset completely - CSS handles mobile
             }
         }
         
