@@ -1374,6 +1374,98 @@
                 object-fit: contain !important;
             }
         }
+
+        /* ============================
+           DESKTOP — Sessions exact layout
+           Title+Monitor beside 2x2 cards, phone below monitor
+           ============================ */
+        @media (min-width: 1024px) {
+
+            /* Remove bottom space so section ends at bottom of phone */
+            .sessions {
+                padding-bottom: 0 !important;
+            }
+
+            /* Two columns: left content + right grid. Two rows: top + phone row */
+            .sessions-content {
+                display: grid !important;
+                grid-template-columns: 460px 1fr;   /* left column width, right flexible */
+                grid-template-rows: auto 1fr;       /* row1: header/monitor, row2: phone */
+                column-gap: 3rem;
+                row-gap: 0;                         /* important: no vertical gap */
+                align-items: start;
+            }
+
+            /* Left top: title + monitor */
+            .sessions .section-header {
+                grid-column: 1;
+                grid-row: 1;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .sessions .section-header h2 {
+                margin: 0 0 1.25rem 0 !important;
+                text-align: left !important;
+            }
+
+            .sessions .session-intro {
+                width: 100% !important;
+                max-width: 380px;
+                margin: 0 !important;
+                padding: 1.25rem 1.5rem !important;
+                text-align: left !important;
+            }
+
+            .sessions .session-intro p {
+                text-align: left !important;
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 0;
+            }
+
+            /* Right side: 2x2 grid BESIDE title/monitor, spanning both rows */
+            .sessions-grid {
+                grid-column: 2;
+                grid-row: 1 / span 2;               /* key: sits beside header AND phone */
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(240px, 1fr));
+                gap: 1.5rem;
+
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+            }
+
+            .sessions-grid .session-card {
+                width: 100% !important;
+                min-width: unset !important;
+                max-width: unset !important;
+            }
+
+            /* Left bottom: phone directly under monitor, no extra padding beneath */
+            .sessions-image-container {
+                grid-column: 1;
+                grid-row: 2;
+
+                margin: 1.75rem 0 0 0 !important;   /* space between monitor and phone */
+                padding: 0 !important;              /* no bottom padding */
+                display: flex !important;
+                justify-content: flex-start !important;
+                align-items: flex-end !important;   /* helps it "land" at section bottom */
+            }
+
+            .sessions-image {
+                width: 100%;
+                max-width: 420px;                   /* keep it controlled */
+                height: auto;
+                display: block;
+                margin: 0 !important;
+            }
+        }
     </style>
 </head>
 <body id="top">
