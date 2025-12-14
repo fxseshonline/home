@@ -1164,12 +1164,10 @@
     <!-- Premium Section -->
     <section class="premium" id="premium">
         <div class="premium-content">
-            <h2 class="scroll-reveal">
-                <span class="navy-gradient-text">Unlock</span>
-                <span class="premium-gold">Premium</span>
-                <span class="navy-gradient-text">Features</span>
+            <h2 class="scroll-reveal" style="color: var(--primary-blue);">
+                Unlock <span class="premium-gold">Premium</span> Features
             </h2>
-            <p class="scroll-reveal navy-gradient-text" style="font-size: 1.2rem; margin-bottom: 2rem;">
+            <p class="scroll-reveal" style="color: var(--primary-blue); font-size: 1.2rem; margin-bottom: 2rem;">
                 Take your trading to the next level with advanced features designed for serious traders.
             </p>
 
@@ -1315,7 +1313,7 @@
             word.style.animationDelay = `${0.3 + (index * 0.15)}s`;
         });
 
-        // STRICT CAROUSEL SYSTEM - Fixed to sync index after user interaction
+        // STRICT CAROUSEL SYSTEM - Fixed with direction lock and visibility pause
         function createStrictCarousel(gridSelector, cardSelector, speed = 3000) {
             const grid = document.querySelector(gridSelector);
             if (!grid) return;
@@ -1324,6 +1322,9 @@
             let interval = null;
             let resumeTimeout = null;
             let isInteracting = false;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isHorizontalSwipe = false;
 
             const cards = () => Array.from(grid.querySelectorAll(cardSelector));
 
@@ -1343,6 +1344,7 @@
             }
 
             function startTimer() {
+                if (document.hidden) return; // Don't start if tab is hidden
                 clearInterval(interval);
                 interval = setInterval(advance, speed);
             }
@@ -1374,19 +1376,50 @@
                 startTimer();
             }
 
-            // ----- TOUCH HANDLERS -----
-            grid.addEventListener('touchstart', () => {
-                isInteracting = true;
+            function handleVisibility() {
+                if (document.hidden) {
+                    clearInterval(interval);
+                } else if (window.innerWidth <= 768) {
+                    startTimer();
+                }
+            }
+
+            // ----- TOUCH HANDLERS WITH DIRECTION LOCK -----
+            grid.addEventListener('touchstart', (e) => {
+                const touch = e.touches[0];
+                touchStartX = touch.clientX;
+                touchStartY = touch.clientY;
+                isHorizontalSwipe = false;
+
                 clearInterval(interval);
                 clearTimeout(resumeTimeout);
             }, { passive: true });
 
+            grid.addEventListener('touchmove', (e) => {
+                const touch = e.touches[0];
+                const dx = Math.abs(touch.clientX - touchStartX);
+                const dy = Math.abs(touch.clientY - touchStartY);
+
+                // Lock to horizontal intent only
+                if (dx > dy && dx > 10) {
+                    isHorizontalSwipe = true;
+                    isInteracting = true;
+                }
+            }, { passive: true });
+
             grid.addEventListener('touchend', () => {
-                syncIndexToScroll(); // 🔑 THIS IS THE FIX - Sync index to actual scroll position
+                if (!isHorizontalSwipe) {
+                    // Vertical scroll — ignore completely
+                    startTimer();
+                    return;
+                }
+
+                syncIndexToScroll(); // 🔑 Sync index to actual scroll position
+
                 resumeTimeout = setTimeout(() => {
                     isInteracting = false;
                     startTimer(); // 🔁 restart fresh 3s timer
-                }, 100); // small delay to let momentum finish
+                }, 250); // iOS momentum settle window
             }, { passive: true });
 
             // Optional: mouse support (desktop testing)
@@ -1400,6 +1433,9 @@
                 isInteracting = false;
                 startTimer();
             });
+
+            // Visibility change handler
+            document.addEventListener('visibilitychange', handleVisibility);
 
             init();
 
