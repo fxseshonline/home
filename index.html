@@ -707,7 +707,7 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding: 6rem 1.5rem 4rem;
+                padding: 5rem 1.5rem 3rem;
                 min-height: 90vh;
             }
 
@@ -757,6 +757,7 @@
                 margin-bottom: 0;
                 scrollbar-width: none;
                 position: relative;
+                overscroll-behavior-x: contain;
             }
 
             .features-grid::-webkit-scrollbar {
@@ -1264,33 +1265,36 @@
             }
         }
 
+        function getCardWidth() {
+            const firstCard = featuresGrid.querySelector('.feature-card');
+            if (!firstCard) return featuresGrid.offsetWidth;
+            const styles = getComputedStyle(featuresGrid);
+            const gap = parseFloat(styles.columnGap || styles.gap || '0');
+            return firstCard.getBoundingClientRect().width + gap;
+        }
+
         function startCarousel() {
             if (window.innerWidth <= 768 && featuresGrid) {
                 carouselInterval = setInterval(() => {
                     if (!isCarouselPaused) {
-                        const cardWidth = featuresGrid.offsetWidth;
+                        const cardWidth = getCardWidth();
                         const currentScroll = featuresGrid.scrollLeft;
-                        const maxScroll = originalCardCount * cardWidth;
-                        
-                        // Check if we're at the end before scrolling
-                        if (currentScroll >= maxScroll - 10) {
-                            // Jump back to start instantly
+                        const loopWidth = originalCardCount * cardWidth;
+
+                        // If we've scrolled past the original set, jump forward to matching position
+                        if (currentScroll >= loopWidth) {
                             featuresGrid.style.scrollSnapType = 'none';
-                            featuresGrid.scrollTo({
-                                left: 0,
-                                behavior: 'auto'
-                            });
-                            // Re-enable snap after a brief moment
-                            setTimeout(() => {
+                            featuresGrid.scrollLeft = currentScroll - loopWidth;
+                            requestAnimationFrame(() => {
                                 featuresGrid.style.scrollSnapType = 'x mandatory';
-                            }, 50);
-                        } else {
-                            // Scroll to next card
-                            featuresGrid.scrollTo({
-                                left: currentScroll + cardWidth,
-                                behavior: 'smooth'
                             });
                         }
+
+                        // Always move forward one card
+                        featuresGrid.scrollTo({
+                            left: featuresGrid.scrollLeft + cardWidth,
+                            behavior: 'smooth'
+                        });
                     }
                 }, carouselSpeed);
             }
