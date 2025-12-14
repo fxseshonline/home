@@ -753,7 +753,8 @@
                 scroll-behavior: smooth;
                 -webkit-overflow-scrolling: touch;
                 gap: 1rem;
-                padding: 0 1.5rem 1rem 1.5rem;
+                padding: 0;
+                margin-bottom: 0;
                 scrollbar-width: none;
             }
 
@@ -767,10 +768,25 @@
                 grid-template-rows: auto auto;
                 gap: 0.75rem 1rem;
                 padding: 1.5rem;
-                min-width: calc(100vw - 5rem);
-                max-width: calc(100vw - 5rem);
-                scroll-snap-align: start;
+                min-width: 100%;
+                max-width: 100%;
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
                 flex-shrink: 0;
+                box-sizing: border-box;
+            }
+
+            .features {
+                padding: 4rem 0 2rem 0;
+            }
+
+            .features-container {
+                padding-bottom: 0;
+            }
+
+            .section-header {
+                margin-bottom: 2rem;
+                padding: 0 1.5rem;
             }
 
             .feature-icon {
@@ -1215,28 +1231,50 @@
         const featuresGrid = document.querySelector('.features-grid');
         let carouselInterval;
         let isCarouselPaused = false;
-        let carouselSpeed = 3000; // Default scroll interval in ms
-        let currentCardIndex = 0;
+        let carouselSpeed = 3000;
+        let originalCardCount = 0;
+
+        function initCarousel() {
+            if (window.innerWidth <= 768 && featuresGrid) {
+                const cards = Array.from(featuresGrid.querySelectorAll('.feature-card'));
+                originalCardCount = cards.length;
+                
+                // Clone all cards and append to create seamless loop
+                cards.forEach(card => {
+                    const clone = card.cloneNode(true);
+                    clone.classList.add('cloned');
+                    featuresGrid.appendChild(clone);
+                });
+            }
+        }
 
         function startCarousel() {
             if (window.innerWidth <= 768 && featuresGrid) {
-                const cards = featuresGrid.querySelectorAll('.feature-card');
-                
                 carouselInterval = setInterval(() => {
-                    if (!isCarouselPaused && cards.length > 0) {
-                        currentCardIndex++;
+                    if (!isCarouselPaused) {
+                        const cardWidth = featuresGrid.offsetWidth;
+                        const currentScroll = featuresGrid.scrollLeft;
+                        const maxScroll = originalCardCount * cardWidth;
                         
-                        // If we've reached the end, scroll back to the beginning
-                        if (currentCardIndex >= cards.length) {
-                            currentCardIndex = 0;
+                        // Check if we're at the end before scrolling
+                        if (currentScroll >= maxScroll - 10) {
+                            // Jump back to start instantly
+                            featuresGrid.style.scrollSnapType = 'none';
+                            featuresGrid.scrollTo({
+                                left: 0,
+                                behavior: 'auto'
+                            });
+                            // Re-enable snap after a brief moment
+                            setTimeout(() => {
+                                featuresGrid.style.scrollSnapType = 'x mandatory';
+                            }, 50);
+                        } else {
+                            // Scroll to next card
+                            featuresGrid.scrollTo({
+                                left: currentScroll + cardWidth,
+                                behavior: 'smooth'
+                            });
                         }
-                        
-                        // Scroll to the current card
-                        cards[currentCardIndex].scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'nearest',
-                            inline: 'start'
-                        });
                     }
                 }, carouselSpeed);
             }
@@ -1244,11 +1282,9 @@
 
         // Stop carousel on touch/click
         if (featuresGrid) {
-            let touchStartX = 0;
             let touchStartTime = 0;
 
             featuresGrid.addEventListener('touchstart', (e) => {
-                touchStartX = e.touches[0].clientX;
                 touchStartTime = Date.now();
                 isCarouselPaused = true;
             });
@@ -1275,7 +1311,6 @@
                 const tapLength = currentTime - lastTap;
                 
                 if (tapLength < 300 && tapLength > 0) {
-                    // Double tap detected - speed up carousel
                     carouselSpeed = Math.max(1500, carouselSpeed - 500);
                     clearInterval(carouselInterval);
                     startCarousel();
@@ -1283,20 +1318,11 @@
                 }
                 lastTap = currentTime;
             });
-
-            // Track manual scroll to update currentCardIndex
-            featuresGrid.addEventListener('scroll', () => {
-                if (window.innerWidth <= 768) {
-                    const cards = featuresGrid.querySelectorAll('.feature-card');
-                    const scrollLeft = featuresGrid.scrollLeft;
-                    const cardWidth = featuresGrid.offsetWidth;
-                    currentCardIndex = Math.round(scrollLeft / cardWidth);
-                }
-            });
         }
 
         // Initialize carousel on mobile
         if (window.innerWidth <= 768) {
+            initCarousel();
             startCarousel();
         }
 
@@ -1304,6 +1330,9 @@
         window.addEventListener('resize', () => {
             clearInterval(carouselInterval);
             if (window.innerWidth <= 768) {
+                // Remove clones first
+                document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
+                initCarousel();
                 startCarousel();
             }
         });
@@ -1345,4 +1374,5 @@
     </script>
 </body>
 </html>
+
 
