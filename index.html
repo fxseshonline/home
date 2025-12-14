@@ -1253,11 +1253,28 @@
 
         function getCardWidth() {
             if (!featuresGrid) return 0;
-            const firstCard = featuresGrid.querySelector('.feature-card:not(.cloned)');
-            if (!firstCard) return featuresGrid.offsetWidth;
-            const styles = getComputedStyle(featuresGrid);
-            const gap = parseFloat(styles.columnGap || styles.gap || '0');
-            return firstCard.getBoundingClientRect().width + gap;
+            const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+            if (cards.length < 2) {
+                // If only one card, use its width
+                const firstCard = cards[0];
+                if (!firstCard) return featuresGrid.offsetWidth;
+                const styles = getComputedStyle(featuresGrid);
+                const gap = parseFloat(styles.columnGap || styles.gap || '0');
+                return firstCard.getBoundingClientRect().width + gap;
+            }
+            
+            // Use the difference between first two cards' positions for accurate width
+            const firstCard = cards[0];
+            const secondCard = cards[1];
+            const firstRect = firstCard.getBoundingClientRect();
+            const secondRect = secondCard.getBoundingClientRect();
+            const containerRect = featuresGrid.getBoundingClientRect();
+            
+            // Calculate scroll positions
+            const firstScroll = firstCard.offsetLeft;
+            const secondScroll = secondCard.offsetLeft;
+            
+            return secondScroll - firstScroll;
         }
 
         function scrollToCard(index) {
@@ -1265,19 +1282,25 @@
             const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
             const totalCards = cards.length;
             
+            if (totalCards === 0) return;
+            
+            if (index < 0) {
+                index = totalCards - 1;
+            }
             if (index >= totalCards) {
                 index = 0; // Loop back to start
             }
             
-            const cardWidth = getCardWidth();
-            const targetScroll = index * cardWidth;
+            // Use the actual card's offsetLeft for precise positioning
+            const targetCard = cards[index];
+            if (!targetCard) return;
             
-            // Use requestAnimationFrame to ensure smooth scrolling even when out of view
-            requestAnimationFrame(() => {
-                featuresGrid.scrollTo({
-                    left: targetScroll,
-                    behavior: 'smooth'
-                });
+            const targetScroll = targetCard.offsetLeft;
+            
+            // Scroll to the target position
+            featuresGrid.scrollTo({
+                left: targetScroll,
+                behavior: 'smooth'
             });
             
             currentCardIndex = index;
@@ -1290,7 +1313,9 @@
             const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
             const totalCards = cards.length;
             
-            // Use internal state only - never read from scroll position
+            if (totalCards === 0) return;
+            
+            // Move to next card
             currentCardIndex++;
             
             // If we've reached the end, go back to start
@@ -1312,7 +1337,12 @@
                 // Start at card 0 - reset internal state
                 currentCardIndex = 0;
                 lastMoveTime = Date.now();
-                scrollToCard(0);
+                
+                // Immediately scroll to position 0 (no smooth for initial position)
+                featuresGrid.scrollTo({
+                    left: 0,
+                    behavior: 'auto'
+                });
                 
                 // Wait a moment for initial positioning, then start strict 3-second intervals
                 setTimeout(() => {
@@ -1345,11 +1375,22 @@
 
             featuresGrid.addEventListener('touchend', (e) => {
                 // Sync internal state with actual scroll position only when user finishes interaction
-                const cardWidth = getCardWidth();
-                if (cardWidth > 0) {
-                    const scrollLeft = featuresGrid.scrollLeft;
-                    currentCardIndex = Math.round(scrollLeft / cardWidth);
-                }
+                const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+                const scrollLeft = featuresGrid.scrollLeft;
+                
+                // Find the closest card to the current scroll position
+                let closestIndex = 0;
+                let minDistance = Infinity;
+                
+                cards.forEach((card, index) => {
+                    const distance = Math.abs(card.offsetLeft - scrollLeft);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                
+                currentCardIndex = closestIndex;
                 
                 // After user stops interacting, wait 2 seconds then resume strict movement
                 clearTimeout(userInteractionTimeout);
@@ -1368,11 +1409,23 @@
             });
 
             featuresGrid.addEventListener('mouseup', () => {
-                const cardWidth = getCardWidth();
-                if (cardWidth > 0) {
-                    const scrollLeft = featuresGrid.scrollLeft;
-                    currentCardIndex = Math.round(scrollLeft / cardWidth);
-                }
+                const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+                const scrollLeft = featuresGrid.scrollLeft;
+                
+                // Find the closest card to the current scroll position
+                let closestIndex = 0;
+                let minDistance = Infinity;
+                
+                cards.forEach((card, index) => {
+                    const distance = Math.abs(card.offsetLeft - scrollLeft);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                
+                currentCardIndex = closestIndex;
+                
                 clearTimeout(userInteractionTimeout);
                 userInteractionTimeout = setTimeout(() => {
                     isUserInteracting = false;
