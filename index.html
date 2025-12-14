@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -843,7 +843,16 @@
                 gap: 2rem;
             }
 
+            .sessions .section-header {
+                order: 2;
+            }
+
+            .sessions .section-header .sessions-image-container {
+                margin-top: 2rem;
+            }
+
             .sessions-grid {
+                order: 1;
                 display: flex;
                 overflow-x: auto;
                 overflow-y: hidden;
@@ -852,7 +861,7 @@
                 -webkit-overflow-scrolling: touch;
                 gap: 1rem;
                 padding: 0 1.5rem;
-                margin-bottom: 0;
+                margin-bottom: 2rem;
                 scrollbar-width: none;
                 position: relative;
                 overscroll-behavior-x: contain;
@@ -1565,15 +1574,24 @@
         let featCarousel = null, sessCarousel = null;
         function initAllCarousels() {
             if (window.innerWidth <= 768) {
+                if (featCarousel) featCarousel.stop();
+                if (sessCarousel) sessCarousel.stop();
                 featCarousel = createStrictCarousel('.features-grid', '.feature-card:not(.cloned)', 3000);
                 sessCarousel = createStrictCarousel('.sessions-grid', '.session-card', 3000);
+                if (featCarousel) featCarousel.start();
+                if (sessCarousel) sessCarousel.start();
             } else {
                 if (featCarousel) featCarousel.stop();
                 if (sessCarousel) sessCarousel.stop();
             }
         }
 
-        initAllCarousels();
+        // Initialize on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initAllCarousels);
+        } else {
+            initAllCarousels();
+        }
         window.addEventListener('resize', initAllCarousels);
 
         // Clip session example image to show only top half (desktop only)
