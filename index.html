@@ -1,218 +1,1606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FX Sesh</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FX Sesh - Track global Forex sessions with real-time alerts, trading journal, news, and educational content. Available on iOS and Android.">
+    <title>FX Sesh - Your Complete Forex Trading Companion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        :root {
+            --primary-blue: #0A2B57;
+            --primary-blue-light: #023c69;
+            --dark-bg: #0E1116;
+            --dark-surface: #151A22;
+            --light-bg: #FFFFFF;
+            --light-surface: #F5F5F5;
+            --text-light: #E6EDF3;
+            --text-dark: #1A1A1A;
+            --text-muted: #9AA4B2;
+            --text-muted-light: #6B7280;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gradient-start: #2B2198;
+            --gradient-mid: #141622;
+            --gradient-end: #2B2198;
+            --accent-purple: #977DFF;
+        }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{overflow-x:hidden;}
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--light-bg);
+            overflow-x: hidden;
+        }
 
-body{
-font-family:'Outfit',sans-serif;
-background:#fff;
-}
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-image: url('headerbackground3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
 
-/* ---------------- NAV ---------------- */
-nav{
-position:fixed;
-top:0;
-width:100%;
-z-index:1000;
-padding:1rem 2rem;
-background:#0A2B57;
-}
-.nav-container{
-max-width:1200px;
-margin:auto;
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-.logo img{height:40px}
-.nav-links{display:flex;gap:3rem;list-style:none}
-.nav-links a{color:#fff;text-decoration:none}
-.hamburger-menu{display:none;flex-direction:column;gap:5px;background:none;border:none}
-.hamburger-menu span{width:25px;height:3px;background:#fff}
+        nav.scrolled {
+            padding: 0.75rem 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+        }
 
-/* ---------------- HERO ---------------- */
-.hero{
-min-height:100vh;
-background:#0A2B57;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#fff;
-text-align:center;
-padding:8rem 2rem 5rem;
-}
-.hero h1{font-size:3.5rem}
-.hero p{margin:1.5rem 0}
-.hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* ---------------- FEATURES ---------------- */
-.features{padding:6rem 0}
-.features-container{max-width:1200px;margin:auto}
-.features-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:2rem;
-}
-.feature-card{
-background:#f5f5f5;
-padding:2rem;
-border-radius:16px;
-}
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
 
-/* ---------------- SESSIONS ---------------- */
-.sessions{
-background:#0E1116;
-color:#fff;
-padding:6rem 0;
-}
-.sessions-content{
-max-width:1200px;
-margin:auto;
-display:flex;
-gap:4rem;
-}
-.sessions-grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:2rem;
-}
-.session-card{
-background:#151A22;
-padding:2rem;
-border-radius:16px;
-}
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
 
-/* ---------------- MOBILE ---------------- */
-@media(max-width:768px){
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
 
-.nav-links{display:none}
-.hamburger-menu{display:flex}
+        .nav-links {
+            display: flex;
+            gap: 4rem;
+            list-style: none;
+        }
 
-.features-grid,
-.sessions-grid{
-display:flex;
-overflow-x:auto;
-scroll-snap-type:x mandatory;
-gap:1rem;
-padding:0;
-}
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
 
-.feature-card,
-.session-card{
-min-width:100%;
-max-width:100%;
-scroll-snap-align:center;
-flex-shrink:0;
-}
+        .nav-links a:hover {
+            color: #977DFF;
+        }
 
-.sessions,
-.sessions-content{
-overflow-x:hidden;
-}
+        .cta-button {
+            background: #0A2B57;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
 
-.hero h1{font-size:2rem}
-}
-</style>
+        .cta-button:hover {
+            background: #977DFF;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-short {
+            display: none;
+        }
+
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .hamburger-menu span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 17, 26, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            padding: 1rem 0;
+            margin: 0;
+        }
+
+        .mobile-menu li {
+            padding: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .mobile-menu a:hover {
+            color: #977DFF;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: #977DFF;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('background3.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--primary-blue);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            min-height: 1.2em;
+        }
+
+        #hero-headline .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: #0A2B57;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            min-width: 220px;
+        }
+
+        .btn-primary:hover {
+            background: #977DFF;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Download section buttons - keep solid style */
+        .download-btn {
+            background: var(--primary-blue) !important;
+            color: white !important;
+            border: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+
+        .download-btn:hover {
+            background: var(--primary-blue-light) !important;
+        }
+
+        /* Features Section */
+        .features {
+            background-image: url('chartfeaturebackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--light-bg);
+            padding: 6rem 2rem;
+            width: 100%;
+            position: relative;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-muted-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(10, 43, 87, 0.2);
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.15);
+            border-color: var(--primary-blue);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .session-flag {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted-light);
+            line-height: 1.8;
+        }
+
+        /* Premium Section */
+        .premium {
+            background: linear-gradient(135deg, rgba(233, 213, 255, 0.95) 0%, rgba(196, 181, 253, 0.95) 25%, rgba(167, 139, 250, 0.95) 50%, rgba(151, 125, 255, 0.95) 75%, rgba(139, 92, 246, 0.95) 100%), url('premiumbackground.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .premium-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .premium h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .premium-gold {
+            color: #FFD700;
+            text-shadow: 0 0 3px rgba(255, 215, 0, 0.4), 0 0 6px rgba(255, 215, 0, 0.3);
+        }
+
+        .navy-gradient-text {
+            background: linear-gradient(to bottom, var(--primary-blue) 0%, var(--primary-blue-light) 50%, #5b8db8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .premium-feature {
+            background: #8b5cf6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .premium-feature:hover {
+            transform: scale(1.05);
+            border-color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .premium-feature h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .premium-feature h4 i {
+            margin-right: 0.5rem;
+        }
+
+        .premium-offer {
+            margin-top: 3rem;
+            padding: 3rem 2.5rem;
+            border-radius: 32px;
+            background: #8b5cf6;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .premium-offer:hover {
+            transform: scale(1.02);
+            border-color: #ffffff;
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.3);
+        }
+
+        .premium-offer-badge {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 0.4rem 1.25rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            letter-spacing: 0.15rem;
+            text-transform: uppercase;
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        .premium-price {
+            font-size: 3.25rem;
+            font-weight: 700;
+            color: #FFD700;
+        }
+
+        .premium-price span {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        .premium-offer-description {
+            max-width: 520px;
+            color: rgba(255, 255, 255, 0.92);
+            line-height: 1.8;
+        }
+
+        .premium-cta {
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.95rem 2.8rem;
+            border-radius: 999px;
+            background: linear-gradient(120deg, #ffd700 0%, #f4b100 100%);
+            color: #0a2b57;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .premium-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+        }
+
+        .premium-fine-print {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Sessions Section */
+        .sessions {
+            background-image: url('forexsessionbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--dark-bg);
+            padding: 6rem 2rem 0;
+            color: var(--text-light);
+        }
+
+
+        .sessions-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4rem;
+            align-items: stretch;
+        }
+
+        .sessions .section-header {
+            flex: 1;
+            text-align: left;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            height: 100%;
+        }
+
+        .sessions .section-header p {
+            margin-bottom: 0;
+        }
+
+        .sessions .section-header h2 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+        }
+
+        .sessions-image-container {
+            margin-top: 1.5rem;
+            width: 100%;
+            overflow: hidden;
+            margin-bottom: 0;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            display: block;
+            line-height: 0;
+            flex-grow: 1;
+        }
+
+        .sessions-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            margin: 0;
+            padding: 0;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 2rem;
+            flex: 1;
+            max-width: 560px;
+            align-self: center;
+            padding: 2rem 0;
+            margin: 0 auto;
+        }
+
+        .session-card {
+            background: var(--dark-surface);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .session-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.3);
+        }
+
+        .session-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .session-card .flag-container {
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            color: var(--text-dark);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-muted-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 5rem 1.5rem 3rem;
+                min-height: 90vh;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .cta-full {
+                display: none;
+            }
+
+            .cta-short {
+                display: inline;
+            }
+
+            .cta-button {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.9rem;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .nav-left {
+                gap: 1rem;
+            }
+
+            .features-grid {
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding: 0 1.5rem;
+                margin-bottom: 0;
+                scrollbar-width: none;
+                position: relative;
+                overscroll-behavior-x: contain;
+            }
+
+            .features-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .feature-card {
+                display: grid;
+                grid-template-columns: 50px 1fr;
+                grid-template-rows: auto 1fr;
+                column-gap: 1rem;
+                row-gap: 0.75rem;
+                padding: 1.5rem;
+                min-width: calc(100% - 3rem);
+                max-width: calc(100% - 3rem);
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+                flex-shrink: 0;
+                box-sizing: border-box;
+                align-items: start;
+            }
+
+            .features {
+                padding: 4rem 0 4rem 0;
+            }
+
+            .features-container {
+                padding-bottom: 0;
+            }
+
+            .section-header {
+                margin-bottom: 2rem;
+                padding: 0 1.5rem;
+            }
+
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                border-radius: 10px;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .feature-card h3 {
+                font-size: 1.2rem;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 2;
+                display: flex;
+                align-items: center;
+            }
+
+            .feature-card p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 0;
+                grid-row: 2;
+                grid-column: 1 / 3;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .sessions .section-header h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .premium h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            .sessions-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .sessions .section-header {
+                order: 1;
+                text-align: center;
+                margin-bottom: 2rem;
+                padding: 0 1.5rem;
+            }
+
+            .sessions .section-header h2 {
+                margin-bottom: 1rem;
+            }
+
+            .sessions .section-header p {
+                margin-bottom: 0;
+            }
+
+            .sessions .section-header .sessions-image-container {
+                display: none;
+            }
+
+            .sessions-grid {
+                order: 2;
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding: 0 1.5rem;
+                margin-bottom: 2rem;
+                scrollbar-width: none;
+                position: relative;
+                overscroll-behavior-x: contain;
+            }
+
+            .sessions-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .session-card {
+                display: grid;
+                grid-template-columns: 50px 1fr;
+                grid-template-rows: auto 1fr;
+                column-gap: 1rem;
+                row-gap: 0.75rem;
+                padding: 1.5rem;
+                min-width: calc(100% - 3rem);
+                max-width: calc(100% - 3rem);
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+                flex-shrink: 0;
+                box-sizing: border-box;
+                align-items: start;
+            }
+
+            .session-card .flag-container {
+                width: 50px;
+                height: 50px;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+
+            .session-flag {
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
+                margin: 0;
+                object-fit: cover;
+            }
+
+            .session-card h4 {
+                font-size: 1.2rem;
+                margin: 0;
+                grid-row: 1;
+                grid-column: 2;
+                display: flex;
+                align-items: center;
+            }
+
+            .session-card p {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin: 0;
+                grid-row: 2;
+                grid-column: 1 / 3;
+            }
+
+            /* Mobile: Show full image, no cropping */
+            .sessions-image-container {
+                height: auto !important;
+                overflow: visible;
+            }
+
+            .sessions-image {
+                height: auto !important;
+                object-fit: contain !important;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
+<body id="top">
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#top" class="logo">
+                    <img src="forexseshlogowhite.png" alt="FX Sesh Logo">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#sessions">Sessions</a></li>
+                    <li><a href="#premium">Premium</a></li>
+                </ul>
+            </div>
+            <a href="#download" class="cta-button"><span class="cta-full">Download Now</span><span class="cta-short">Download</span></a>
+            <button class="hamburger-menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#sessions">Sessions</a></li>
+                <li><a href="#premium">Premium</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in-up">
+            <h1 id="hero-headline">
+                <span class="word">YOUR</span>
+                <span class="word">COMPLETE</span>
+                <span class="word">FOREX</span>
+                <span class="word">TRADING</span>
+                <span class="word">TOOLKIT</span>
+            </h1>
+            <p>Track global FX sessions in real-time, manage your trading journal, stay updated with market news, and learn from expert content—all in one powerful app.</p>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-apple"></i> Download for iOS
+                </a>
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-android"></i> Download for Android
+                </a>
+            </div>
+        </div>
+    </section>
 
-<nav>
-<div class="nav-container">
-<a class="logo"><img src="forexseshlogowhite.png"></a>
-<ul class="nav-links">
-<li><a href="#features">Features</a></li>
-<li><a href="#sessions">Sessions</a></li>
-</ul>
-<button class="hamburger-menu">
-<span></span><span></span><span></span>
-</button>
-</div>
-</nav>
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <div class="section-header scroll-reveal">
+                <h2><span class="navy-gradient-text">Access Powerful Features For Serious Traders</span></h2>
+                <p>Everything you need to stay on top of the forex markets and improve your trading performance.</p>
+            </div>
 
-<section class="hero">
-<div>
-<h1>YOUR COMPLETE FOREX TOOLKIT</h1>
-<p>Track sessions, journal trades, and trade smarter.</p>
-<div class="hero-buttons">
-<a class="btn">iOS</a>
-<a class="btn">Android</a>
-</div>
-</div>
-</section>
+            <div class="features-grid">
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3>Real-Time Session Tracking</h3>
+                <p>Monitor all four major forex sessions (Sydney, Tokyo, London, New York) with live status indicators. Know exactly when markets open and close in your timezone.</p>
+            </div>
 
-<section class="features" id="features">
-<div class="features-container">
-<div class="features-grid">
-<div class="feature-card">Feature 1</div>
-<div class="feature-card">Feature 2</div>
-<div class="feature-card">Feature 3</div>
-</div>
-</div>
-</section>
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div>
+                <h3>Digital & Analog Clocks</h3>
+                <p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays for your preferred experience.</p>
+            </div>
 
-<section class="sessions" id="sessions">
-<div class="sessions-content">
-<div class="sessions-grid">
-<div class="session-card">New York</div>
-<div class="session-card">London</div>
-<div class="session-card">Tokyo</div>
-<div class="session-card">Sydney</div>
-</div>
-</div>
-</section>
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                <h3>Smart Push Notifications</h3>
+                <p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p>
+            </div>
 
-<script>
-function createStrictCarousel(gridSelector, cardSelector, speed = 3000) {
-const grid = document.querySelector(gridSelector);
-if (!grid) return;
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-book"></i></div>
+                <h3>Trading Journal</h3>
+                <p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Filter and analyze your trading history to improve your strategy.</p>
+            </div>
 
-let index = 0;
-let interval = null;
-let paused = false;
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-newspaper"></i></div>
+                <h3>Forex News Feed</h3>
+                <p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p>
+            </div>
 
-const cards = () => grid.querySelectorAll(cardSelector);
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Educational Content</h3>
+                <p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge at your own pace.</p>
+            </div>
 
-function go() {
-if (paused || !cards().length) return;
-index = (index + 1) % cards().length;
-grid.scrollTo({ left: cards()[index].offsetLeft, behavior: 'smooth' });
-}
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-palette"></i></div>
+                <h3>Multiple Themes</h3>
+                <p>Choose from Day, Night, or Original themes. Customize your app experience to match your preference and reduce eye strain during long trading sessions.</p>
+            </div>
 
-function start() {
-if (window.innerWidth > 768) return;
-grid.scrollTo({ left: 0, behavior: 'auto' });
-interval = setInterval(go, speed);
-}
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-cog"></i></div>
+                <h3>Customizable Settings</h3>
+                <p>Set your timezone, configure notification preferences, and personalize your app experience. Everything is tailored to your trading needs.</p>
+            </div>
 
-grid.addEventListener('touchstart',()=>paused=true,{passive:true});
-grid.addEventListener('touchend',()=>{
-paused=false;
-},{passive:true});
+            <div class="feature-card scroll-reveal">
+                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Cross-Platform</h3>
+                <p>Available on both iOS and Android. Your data syncs across devices, so you can trade and track from anywhere, anytime.</p>
+            </div>
+        </div>
+        </div>
+    </section>
 
-start();
-window.addEventListener('resize',()=>{
-clearInterval(interval);
-start();
-});
-}
+    <!-- Sessions Section -->
+    <section class="sessions" id="sessions">
+        <div class="sessions-content">
+            <div class="section-header scroll-reveal">
+                <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
+                <p style="color: var(--text-muted);">Monitor the four key trading sessions that drive the global forex market.</p>
+                <div class="sessions-image-container scroll-reveal">
+                    <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
+                </div>
+            </div>
 
-document.addEventListener('DOMContentLoaded',()=>{
-createStrictCarousel('.features-grid','.feature-card',3000);
-createStrictCarousel('.sessions-grid','.session-card',3000);
-});
-</script>
+            <div class="sessions-grid">
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>New York Session</h4>
+                    <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
+                </div>
 
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>London Session</h4>
+                    <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>Sydney Session</h4>
+                    <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
+                </div>
+
+                <div class="session-card scroll-reveal">
+                    <div class="flag-container">
+                        <img src="flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
+                    </div>
+                    <h4>Tokyo Session</h4>
+                    <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Section -->
+    <section class="premium" id="premium">
+        <div class="premium-content">
+            <h2 class="scroll-reveal">Unlock <span class="premium-gold">Premium</span> Features</h2>
+            <p class="scroll-reveal" style="font-size: 1.2rem; margin-bottom: 2rem; color: #ffffff;">
+                Take your trading to the next level with advanced features designed for serious traders.
+            </p>
+
+            <div class="premium-features">
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-bolt"></i> Pre-Alerts</h4>
+                    <p>Get notified before sessions open so you're always prepared.</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-exchange-alt"></i> Overlap Notifications</h4>
+                    <p>Track high-volatility periods when sessions overlap (London-New York, Tokyo-London, Sydney-Tokyo).</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-ban"></i> Ad-Free Experience</h4>
+                    <p>Focus on trading without interruptions. Enjoy a clean, distraction-free interface.</p>
+                </div>
+
+                <div class="premium-feature scroll-reveal">
+                    <h4><i class="fas fa-mobile-alt"></i> Homepage Widget</h4>
+                    <p>Glance at live session status right from your home screen with the FX Sesh widget.</p>
+                </div>
+            </div>
+
+            <div class="premium-offer scroll-reveal">
+                <div class="premium-offer-badge">FX Sesh Premium</div>
+                <div class="premium-price">$4.99 <span>/month</span></div>
+                <p class="premium-offer-description">Unlock overlap intelligence, proactive alerts, an ad-free experience, and the exclusive FX Sesh home widget—the full toolkit for traders who demand precision.</p>
+                <a href="#download" class="premium-cta"><i class="fas fa-crown"></i> Start Premium</a>
+                <p class="premium-fine-print">Monthly subscription • Cancel anytime</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="features" id="download" style="background: white; padding: 6rem 2rem;">
+        <div class="section-header scroll-reveal">
+            <h2><span class="navy-gradient-text">Get Started Today!</span></h2>
+            <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary download-btn">
+                    <i class="fab fa-apple"></i> App Store
+                </a>
+                <a href="#" class="btn-primary download-btn">
+                    <i class="fab fa-google-play"></i> Google Play
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#sessions">Sessions</a>
+                <a href="#premium">Premium</a>
+                <a href="#download">Download</a>
+                <a href="https://fxseshonline.github.io/fx-sesh-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                <a href="https://fxseshonline.github.io/fx-sesh-support/" target="_blank" rel="noopener noreferrer">Support</a>
+            </div>
+            <p style="color: var(--text-muted-light); margin-top: 2rem;">
+                © 2025 FX Sesh. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Hamburger menu toggle
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        hamburgerMenu.addEventListener('click', () => {
+            hamburgerMenu.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburgerMenu.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (href === '#' || href === '#top') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Staggered fade + slide up animation for hero headline
+        const heroWords = document.querySelectorAll('#hero-headline .word');
+        heroWords.forEach((word, index) => {
+            word.style.animationDelay = `${0.3 + (index * 0.15)}s`;
+        });
+
+        // Features carousel for mobile - Strict 3-second intervals, independent of page scroll
+        const featuresGrid = document.querySelector('.features-grid');
+        let carouselInterval;
+        let isCarouselPaused = false;
+        let carouselSpeed = 3000; // Strict 3 seconds per card
+        let currentCardIndex = 0; // Internal state - never read from scroll position
+        let userInteractionTimeout;
+        let isUserInteracting = false;
+        let lastMoveTime = 0; // Track when last move happened
+
+        function getCardWidth() {
+            if (!featuresGrid) return 0;
+            const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+            if (cards.length < 2) {
+                // If only one card, use its width
+                const firstCard = cards[0];
+                if (!firstCard) return featuresGrid.offsetWidth;
+                const styles = getComputedStyle(featuresGrid);
+                const gap = parseFloat(styles.columnGap || styles.gap || '0');
+                return firstCard.getBoundingClientRect().width + gap;
+            }
+            
+            // Use the difference between first two cards' positions for accurate width
+            const firstCard = cards[0];
+            const secondCard = cards[1];
+            const firstRect = firstCard.getBoundingClientRect();
+            const secondRect = secondCard.getBoundingClientRect();
+            const containerRect = featuresGrid.getBoundingClientRect();
+            
+            // Calculate scroll positions
+            const firstScroll = firstCard.offsetLeft;
+            const secondScroll = secondCard.offsetLeft;
+            
+            return secondScroll - firstScroll;
+        }
+
+        function scrollToCard(index) {
+            if (!featuresGrid) return;
+            const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+            const totalCards = cards.length;
+            
+            if (totalCards === 0) return;
+            
+            if (index < 0) {
+                index = totalCards - 1;
+            }
+            if (index >= totalCards) {
+                index = 0; // Loop back to start
+            }
+            
+            // Use the actual card's offsetLeft for precise positioning
+            const targetCard = cards[index];
+            if (!targetCard) return;
+            
+            const targetScroll = targetCard.offsetLeft;
+            
+            // Scroll to the target position
+            featuresGrid.scrollTo({
+                left: targetScroll,
+                behavior: 'smooth'
+            });
+            
+            currentCardIndex = index;
+            lastMoveTime = Date.now();
+        }
+
+        function moveToNextCard() {
+            if (!featuresGrid || isCarouselPaused || isUserInteracting) return;
+            
+            const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+            const totalCards = cards.length;
+            
+            if (totalCards === 0) return;
+            
+            // Move to next card
+            currentCardIndex++;
+            
+            // If we've reached the end, go back to start
+            if (currentCardIndex >= totalCards) {
+                currentCardIndex = 0;
+            }
+            
+            scrollToCard(currentCardIndex);
+        }
+
+        function startCarousel() {
+            if (window.innerWidth <= 768 && featuresGrid) {
+                // Clear any existing interval
+                clearInterval(carouselInterval);
+                
+                // Remove any cloned cards
+                document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
+                
+                // Start at card 0 - reset internal state
+                currentCardIndex = 0;
+                lastMoveTime = Date.now();
+                
+                // Immediately scroll to position 0 (no smooth for initial position)
+                featuresGrid.scrollTo({
+                    left: 0,
+                    behavior: 'auto'
+                });
+                
+                // Wait a moment for initial positioning, then start strict 3-second intervals
+                setTimeout(() => {
+                    carouselInterval = setInterval(() => {
+                        // Always run - independent of page scroll or visibility
+                        if (!isCarouselPaused && !isUserInteracting) {
+                            moveToNextCard();
+                        }
+                    }, carouselSpeed);
+                }, 500);
+            }
+        }
+
+        // User interaction handlers - only pause on direct carousel interaction
+        if (featuresGrid) {
+            let touchStartTime = 0;
+
+            featuresGrid.addEventListener('touchstart', (e) => {
+                isUserInteracting = true;
+                touchStartTime = Date.now();
+                isCarouselPaused = true;
+                clearTimeout(userInteractionTimeout);
+            }, { passive: true });
+
+            featuresGrid.addEventListener('touchmove', (e) => {
+                isUserInteracting = true;
+                isCarouselPaused = true;
+                clearTimeout(userInteractionTimeout);
+            }, { passive: true });
+
+            featuresGrid.addEventListener('touchend', (e) => {
+                // Sync internal state with actual scroll position only when user finishes interaction
+                const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+                const scrollLeft = featuresGrid.scrollLeft;
+                
+                // Find the closest card to the current scroll position
+                let closestIndex = 0;
+                let minDistance = Infinity;
+                
+                cards.forEach((card, index) => {
+                    const distance = Math.abs(card.offsetLeft - scrollLeft);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                
+                currentCardIndex = closestIndex;
+                
+                // After user stops interacting, wait 2 seconds then resume strict movement
+                clearTimeout(userInteractionTimeout);
+                userInteractionTimeout = setTimeout(() => {
+                    isUserInteracting = false;
+                    isCarouselPaused = false;
+                    // Continue from current position using internal state
+                }, 2000);
+            }, { passive: true });
+
+            // Also handle mouse interactions for testing
+            featuresGrid.addEventListener('mousedown', () => {
+                isUserInteracting = true;
+                isCarouselPaused = true;
+                clearTimeout(userInteractionTimeout);
+            });
+
+            featuresGrid.addEventListener('mouseup', () => {
+                const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
+                const scrollLeft = featuresGrid.scrollLeft;
+                
+                // Find the closest card to the current scroll position
+                let closestIndex = 0;
+                let minDistance = Infinity;
+                
+                cards.forEach((card, index) => {
+                    const distance = Math.abs(card.offsetLeft - scrollLeft);
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestIndex = index;
+                    }
+                });
+                
+                currentCardIndex = closestIndex;
+                
+                clearTimeout(userInteractionTimeout);
+                userInteractionTimeout = setTimeout(() => {
+                    isUserInteracting = false;
+                    isCarouselPaused = false;
+                }, 2000);
+            });
+        }
+
+        // OLD CAROUSEL DISABLED - Using new strict carousel system below
+        // Initialize carousel on mobile - runs independently of page scroll
+        // if (window.innerWidth <= 768 && featuresGrid) {
+        //     document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
+        //     startCarousel();
+        // }
+
+        // OLD RESIZE HANDLER DISABLED - Using new carousel system below
+        // Restart carousel on window resize if mobile
+        // window.addEventListener('resize', () => {
+        //     clearInterval(carouselInterval);
+        //     clearTimeout(userInteractionTimeout);
+        //     if (window.innerWidth <= 768 && featuresGrid) {
+        //         document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
+        //         startCarousel();
+        //     }
+        // });
+
+        // SIMPLIFIED STRICT CAROUSEL SYSTEM (Based on provided reference)
+        function createStrictCarousel(gridSelector, cardSelector, speed = 3000) {
+            const grid = document.querySelector(gridSelector);
+            if (!grid) return;
+
+            let index = 0;
+            let interval = null;
+            let paused = false;
+
+            const cards = () => grid.querySelectorAll(cardSelector);
+
+            function go() {
+                if (paused || !cards().length) return;
+                index = (index + 1) % cards().length;
+                grid.scrollTo({ 
+                    left: cards()[index].offsetLeft, 
+                    behavior: 'smooth' 
+                });
+            }
+
+            function start() {
+                if (window.innerWidth > 768) return;
+                clearInterval(interval);
+                index = 0;
+                paused = false;
+                grid.scrollTo({ left: 0, behavior: 'auto' });
+                interval = setInterval(go, speed);
+            }
+
+            grid.addEventListener('touchstart', () => {
+                paused = true;
+            }, { passive: true });
+
+            grid.addEventListener('touchend', () => {
+                paused = false;
+            }, { passive: true });
+
+            // Also handle mouse for testing
+            grid.addEventListener('mousedown', () => {
+                paused = true;
+            });
+
+            grid.addEventListener('mouseup', () => {
+                paused = false;
+            });
+
+            start();
+            window.addEventListener('resize', () => {
+                clearInterval(interval);
+                start();
+            });
+        }
+
+        // Initialize carousels on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createStrictCarousel('.features-grid', '.feature-card:not(.cloned)', 3000);
+            createStrictCarousel('.sessions-grid', '.session-card', 3000);
+        });
+
+        // Clip session example image to show only top half (desktop only)
+        function clipSessionImage() {
+            const sessionsImage = document.querySelector('.sessions-image');
+            const sessionsImageContainer = document.querySelector('.sessions-image-container');
+            
+            if (sessionsImage && sessionsImageContainer) {
+                // Only clip on desktop (width > 768px)
+                if (window.innerWidth > 768) {
+                    if (sessionsImage.complete && sessionsImage.naturalHeight > 0) {
+                        const containerWidth = sessionsImageContainer.offsetWidth;
+                        const aspectRatio = sessionsImage.naturalWidth / sessionsImage.naturalHeight;
+                        // Container height is half of what the full image height would be at this width
+                        const containerHeight = (containerWidth / aspectRatio) / 2;
+                        
+                        sessionsImageContainer.style.height = containerHeight + 'px';
+                        sessionsImage.style.height = (containerHeight * 2) + 'px';
+                        sessionsImage.style.objectPosition = 'top center';
+                    } else {
+                        // If image not loaded yet, wait for it
+                        sessionsImage.addEventListener('load', clipSessionImage);
+                    }
+                } else {
+                    // Mobile: Reset to show full image
+                    sessionsImageContainer.style.height = 'auto';
+                    sessionsImage.style.height = 'auto';
+                    sessionsImage.style.objectFit = 'contain';
+                }
+            }
+        }
+        
+        // Run on page load
+        window.addEventListener('load', clipSessionImage);
+        // Also run on resize to adjust if needed
+        window.addEventListener('resize', clipSessionImage);
+    </script>
 </body>
 </html>
+
