@@ -1287,34 +1287,39 @@
             }
         }
 
-        /* MOBILE ONLY — hard center the Monitor card and fix spacing */
+        /* MOBILE ONLY — force true centering of Monitor card */
         @media (max-width: 768px) {
             .sessions .section-header {
-                align-items: center; /* override inherited alignment */
+                align-items: center !important;
             }
 
             .sessions .session-intro {
-                align-self: center;              /* ⬅️ THIS is the missing piece */
+                align-self: center !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
-                width: calc(100vw - 4rem);
-                max-width: calc(100vw - 4rem);
+                width: calc(100vw - 4rem) !important;
+                max-width: calc(100vw - 4rem) !important;
             }
 
+            /* MOBILE ONLY — reduce Monitor card vertical padding */
             .session-intro {
-                padding-top: 0.3rem;   /* ⬅️ 50% less */
-                padding-bottom: 0.3rem;
+                padding-top: 0.3rem !important;
+                padding-bottom: 0.3rem !important;
                 padding-left: 1.2rem;
                 padding-right: 1.2rem;
             }
 
+            /* MOBILE ONLY — match Monitor card font to session cards */
             .session-intro p {
-                font-size: 1rem;      /* matches .session-card p */
+                font-size: 0.95rem !important;
                 line-height: 1.6;
+                text-align: center;
             }
 
+            /* MOBILE ONLY — reduce image spacing */
             .sessions-image-container {
-                margin-top: 0.3rem; /* ⬅️ 50% reduction */
+                margin-top: 0.3rem !important;
+                padding-bottom: 1.5rem !important;
             }
         }
     </style>
