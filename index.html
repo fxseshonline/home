@@ -1241,28 +1241,23 @@
             word.style.animationDelay = `${0.3 + (index * 0.15)}s`;
         });
 
-        // Features carousel for mobile - Strict 3-second intervals
+        // Features carousel for mobile - Strict 3-second intervals, independent of page scroll
         const featuresGrid = document.querySelector('.features-grid');
         let carouselInterval;
         let isCarouselPaused = false;
         let carouselSpeed = 3000; // Strict 3 seconds per card
-        let currentCardIndex = 0;
+        let currentCardIndex = 0; // Internal state - never read from scroll position
         let userInteractionTimeout;
         let isUserInteracting = false;
+        let lastMoveTime = 0; // Track when last move happened
 
         function getCardWidth() {
+            if (!featuresGrid) return 0;
             const firstCard = featuresGrid.querySelector('.feature-card:not(.cloned)');
             if (!firstCard) return featuresGrid.offsetWidth;
             const styles = getComputedStyle(featuresGrid);
             const gap = parseFloat(styles.columnGap || styles.gap || '0');
             return firstCard.getBoundingClientRect().width + gap;
-        }
-
-        function getCurrentCardIndex() {
-            if (!featuresGrid) return 0;
-            const cardWidth = getCardWidth();
-            const scrollLeft = featuresGrid.scrollLeft;
-            return Math.round(scrollLeft / cardWidth);
         }
 
         function scrollToCard(index) {
@@ -1277,12 +1272,16 @@
             const cardWidth = getCardWidth();
             const targetScroll = index * cardWidth;
             
-            featuresGrid.scrollTo({
-                left: targetScroll,
-                behavior: 'smooth'
+            // Use requestAnimationFrame to ensure smooth scrolling even when out of view
+            requestAnimationFrame(() => {
+                featuresGrid.scrollTo({
+                    left: targetScroll,
+                    behavior: 'smooth'
+                });
             });
             
             currentCardIndex = index;
+            lastMoveTime = Date.now();
         }
 
         function moveToNextCard() {
@@ -1291,7 +1290,7 @@
             const cards = featuresGrid.querySelectorAll('.feature-card:not(.cloned)');
             const totalCards = cards.length;
             
-            currentCardIndex = getCurrentCardIndex();
+            // Use internal state only - never read from scroll position
             currentCardIndex++;
             
             // If we've reached the end, go back to start
@@ -1310,13 +1309,15 @@
                 // Remove any cloned cards
                 document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
                 
-                // Start at card 0
+                // Start at card 0 - reset internal state
                 currentCardIndex = 0;
+                lastMoveTime = Date.now();
                 scrollToCard(0);
                 
                 // Wait a moment for initial positioning, then start strict 3-second intervals
                 setTimeout(() => {
                     carouselInterval = setInterval(() => {
+                        // Always run - independent of page scroll or visibility
                         if (!isCarouselPaused && !isUserInteracting) {
                             moveToNextCard();
                         }
@@ -1325,44 +1326,39 @@
             }
         }
 
-        // User interaction handlers
+        // User interaction handlers - only pause on direct carousel interaction
         if (featuresGrid) {
             let touchStartTime = 0;
-            let isTouching = false;
 
             featuresGrid.addEventListener('touchstart', (e) => {
-                isTouching = true;
                 isUserInteracting = true;
                 touchStartTime = Date.now();
                 isCarouselPaused = true;
-                
-                // Clear any pending resume timeout
                 clearTimeout(userInteractionTimeout);
-            });
+            }, { passive: true });
 
             featuresGrid.addEventListener('touchmove', (e) => {
                 isUserInteracting = true;
                 isCarouselPaused = true;
                 clearTimeout(userInteractionTimeout);
-            });
+            }, { passive: true });
 
             featuresGrid.addEventListener('touchend', (e) => {
-                isTouching = false;
-                const touchEndTime = Date.now();
-                const touchDuration = touchEndTime - touchStartTime;
-                
-                // Update current card index based on final scroll position
-                currentCardIndex = getCurrentCardIndex();
+                // Sync internal state with actual scroll position only when user finishes interaction
+                const cardWidth = getCardWidth();
+                if (cardWidth > 0) {
+                    const scrollLeft = featuresGrid.scrollLeft;
+                    currentCardIndex = Math.round(scrollLeft / cardWidth);
+                }
                 
                 // After user stops interacting, wait 2 seconds then resume strict movement
                 clearTimeout(userInteractionTimeout);
                 userInteractionTimeout = setTimeout(() => {
                     isUserInteracting = false;
                     isCarouselPaused = false;
-                    // Resume from current position
-                    currentCardIndex = getCurrentCardIndex();
+                    // Continue from current position using internal state
                 }, 2000);
-            });
+            }, { passive: true });
 
             // Also handle mouse interactions for testing
             featuresGrid.addEventListener('mousedown', () => {
@@ -1372,19 +1368,21 @@
             });
 
             featuresGrid.addEventListener('mouseup', () => {
-                currentCardIndex = getCurrentCardIndex();
+                const cardWidth = getCardWidth();
+                if (cardWidth > 0) {
+                    const scrollLeft = featuresGrid.scrollLeft;
+                    currentCardIndex = Math.round(scrollLeft / cardWidth);
+                }
                 clearTimeout(userInteractionTimeout);
                 userInteractionTimeout = setTimeout(() => {
                     isUserInteracting = false;
                     isCarouselPaused = false;
-                    currentCardIndex = getCurrentCardIndex();
                 }, 2000);
             });
         }
 
-        // Initialize carousel on mobile
+        // Initialize carousel on mobile - runs independently of page scroll
         if (window.innerWidth <= 768 && featuresGrid) {
-            // Remove any cloned cards first
             document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
             startCarousel();
         }
