@@ -551,7 +551,7 @@
         }
 
         .premium-feature {
-            background: #8b5cf6;
+            background: var(--primary-blue);
             padding: 1.5rem;
             border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -592,7 +592,7 @@
             margin-top: 3rem;
             padding: 3rem 2.5rem;
             border-radius: 32px;
-            background: #8b5cf6;
+            background: var(--primary-blue);
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
             display: flex;
@@ -749,19 +749,20 @@
 
         /* Sessions intro card */
         .session-intro {
-            background: #5b8db8;
-            color: white;
+            background: #5b8db8; /* same blue as "Forex Sessions" text */
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
             border-radius: 16px;
+            margin-bottom: 2rem;
         }
 
         .session-intro p {
-            font-size: 1.2rem; /* original section copy size */
+            font-size: 1.2rem; /* original size */
             line-height: 1.6;
             text-align: center;
+            color: #000000; /* black text */
             margin: 0;
         }
 
@@ -828,7 +829,7 @@
             }
 
             .hero-scroll-indicator {
-                bottom: calc(2rem + env(safe-area-inset-bottom));
+                bottom: calc(0.5rem + env(safe-area-inset-bottom));
             }
 
             /* Reduce hero download buttons by 5% */
