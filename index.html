@@ -1287,39 +1287,102 @@
             }
         }
 
-        /* MOBILE ONLY — force true centering of Monitor card */
+        /* ✅ FINAL MOBILE SESSIONS OVERRIDE — paste at VERY END of CSS */
         @media (max-width: 768px) {
-            .sessions .section-header {
+
+            /* Keep the section from ever widening the page */
+            .sessions { overflow-x: clip !important; }
+
+            /* Ensure we are using the "ordered column" system */
+            .sessions-content {
+                display: flex !important;
+                flex-direction: column !important;
+            }
+
+            /* Title container must exist (undo display: contents conflicts) */
+            .sessions .section-header{
+                display: flex !important;
+                flex-direction: column !important;
                 align-items: center !important;
+                order: 1 !important;
+
+                /* match carousel padding so everything aligns */
+                padding: 0 2rem !important;
+                box-sizing: border-box !important;
+                width: 100% !important;
             }
 
-            .sessions .session-intro {
-                align-self: center !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
-                width: calc(100vw - 4rem) !important;
+            .sessions .section-header h2{
+                order: 1 !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 0 1rem 0 !important;
+                text-align: center !important;
+            }
+
+            /* Monitor card: centered + full content width (NO 100vw math inside padded parent) */
+            .sessions .session-intro{
+                order: 2 !important;
+
+                width: 100% !important;
+                max-width: none !important;
+
+                margin: 1rem 0 1.25rem 0 !important;
+                align-self: stretch !important;
+
+                /* reduce vertical padding ~50% */
+                padding: 0.5rem 1rem !important;
+
+                box-sizing: border-box !important;
+            }
+
+            /* Make text +10% larger + keep centered */
+            .sessions .session-intro p{
+                font-size: 1.05rem !important; /* 0.95rem → +10% */
+                line-height: 1.6 !important;
+                text-align: center !important;
+                margin: 0 !important;
+            }
+
+            /* Carousel: contains overflow and aligns with the same 2rem gutters */
+            .sessions-grid{
+                order: 3 !important;
+                padding: 0 2rem !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                overscroll-behavior-x: contain !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
+            /* IMPORTANT: kill the old min-width:100% rule that can cause leakage */
+            .sessions-grid .session-card{
+                min-width: unset !important;
+                max-width: unset !important;
+
+                width: calc(100vw - 4rem) !important;     /* matches 2rem + 2rem gutters */
                 max-width: calc(100vw - 4rem) !important;
+                box-sizing: border-box !important;
             }
 
-            /* MOBILE ONLY — reduce Monitor card vertical padding */
-            .session-intro {
-                padding-top: 0.3rem !important;
-                padding-bottom: 0.3rem !important;
-                padding-left: 1.2rem;
-                padding-right: 1.2rem;
+            /* Image: order after carousel + smaller + add breathing room at bottom */
+            .sessions-image-container{
+                order: 4 !important;
+                margin-top: 0.3rem !important;        /* reduce top padding ~50% */
+                padding: 0 2rem 2rem 2rem !important; /* add bottom space */
+                width: 100% !important;
+                box-sizing: border-box !important;
+                display: flex !important;
+                justify-content: center !important;
             }
 
-            /* MOBILE ONLY — match Monitor card font to session cards */
-            .session-intro p {
-                font-size: 0.95rem !important;
-                line-height: 1.6;
-                text-align: center;
-            }
-
-            /* MOBILE ONLY — reduce image spacing */
-            .sessions-image-container {
-                margin-top: 0.3rem !important;
-                padding-bottom: 1.5rem !important;
+            .sessions-image{
+                width: 78% !important;
+                max-width: 280px !important;
+                height: auto !important;
+                object-fit: contain !important;
             }
         }
     </style>
