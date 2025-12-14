@@ -1327,6 +1327,7 @@
             let isHorizontalSwipe = false;
             let lastScrollLeft = 0;
             let settleRAF = null;
+            let isMobile = window.innerWidth <= 768;
 
             const cards = () => Array.from(grid.querySelectorAll(cardSelector));
 
@@ -1468,12 +1469,23 @@
             init();
 
             window.addEventListener('resize', () => {
+                const nowMobile = window.innerWidth <= 768;
+
+                // Ignore iOS/Android "resize on scroll" (height-only resizes)
+                if (nowMobile === isMobile) return;
+
+                // Only react if breakpoint changed
+                isMobile = nowMobile;
+
                 clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
                 cancelAnimationFrame(settleRAF);
-                if (window.innerWidth <= 768) {
-                    init();
+
+                if (isMobile) {
+                    // Entering mobile: resume from current position (don't reset to 0)
+                    syncWhenSettled();
                 } else {
+                    // Leaving mobile: stop autoplay
                     clearTimeout(timeout);
                 }
             });
