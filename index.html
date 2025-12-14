@@ -47,7 +47,7 @@
         /* Navigation */
         nav {
             position: fixed;
-            top: 0;
+            top: 40px; /* Position below promo bar */
             width: 100%;
             background-image: url('headerbackground3.jpg');
             background-size: cover;
@@ -1107,9 +1107,96 @@
             opacity: 1;
             transform: translateY(0);
         }
+        /* Promo Bar */
+        .promo-bar {
+            background: #000000;
+            color: #ffffff;
+            height: 40px;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* Vertical centering container */
+        .promo-track {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: promoSlide 8s ease-in-out infinite;
+        }
+
+        /* Individual messages */
+        .promo-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* desktop default */
+            padding: 0 1rem;
+            white-space: nowrap;
+        }
+
+        .promo-item a {
+            color: #ffffff;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        /* Desktop alignment */
+        @media (min-width: 769px) {
+            .promo-item {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        /* Mobile alignment */
+        @media (max-width: 768px) {
+            .promo-item {
+                justify-content: flex-start;
+                text-align: left;
+            }
+        }
+
+        /* Slide animation */
+        @keyframes promoSlide {
+            0%   { transform: translateY(0); }
+            40%  { transform: translateY(0); }
+
+            50%  { transform: translateY(-40px); }
+            90%  { transform: translateY(-40px); }
+
+            100% { transform: translateY(0); }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .promo-track {
+                animation: none;
+            }
+        }
     </style>
 </head>
 <body id="top">
+    <!-- Promo Bar -->
+    <div class="promo-bar">
+        <div class="promo-track">
+            <div class="promo-item">
+                FX Sesh is currently in beta testing. Premium features are not yet available.
+            </div>
+            <div class="promo-item">
+                Interested in beta access? Email 
+                <a href="mailto:fxseshonline@gmail.com">fxseshonline@gmail.com</a> 
+                to request an invite.
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -1172,7 +1259,7 @@
                 <!-- Stacked text -->
                 <text
                     x="100"
-                    y="38"
+                    y="31"
                     text-anchor="middle"
                     fill="#FFFFFF"
                     font-size="10"
