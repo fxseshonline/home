@@ -833,15 +833,33 @@
                 line-height: 1.2;
             }
 
+            .premium h2 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
             .sessions-content {
                 flex-direction: column;
                 gap: 2rem;
             }
 
             .sessions-grid {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto;
-                max-width: 100%;
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding: 0 1.5rem;
+                margin-bottom: 0;
+                scrollbar-width: none;
+                position: relative;
+                overscroll-behavior-x: contain;
+            }
+
+            .sessions-grid::-webkit-scrollbar {
+                display: none;
             }
 
             .session-card {
@@ -849,7 +867,13 @@
                 grid-template-columns: 40px 1fr;
                 grid-template-rows: auto auto;
                 gap: 0.75rem 1rem;
-                padding: 1.25rem;
+                padding: 1.5rem;
+                min-width: calc(100% - 3rem);
+                max-width: calc(100% - 3rem);
+                scroll-snap-align: center;
+                scroll-snap-stop: always;
+                flex-shrink: 0;
+                box-sizing: border-box;
             }
 
             .session-card .flag-container {
@@ -1434,21 +1458,123 @@
             });
         }
 
+        // OLD CAROUSEL DISABLED - Using new strict carousel system below
         // Initialize carousel on mobile - runs independently of page scroll
-        if (window.innerWidth <= 768 && featuresGrid) {
-            document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
-            startCarousel();
+        // if (window.innerWidth <= 768 && featuresGrid) {
+        //     document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
+        //     startCarousel();
+        // }
+
+        // OLD RESIZE HANDLER DISABLED - Using new carousel system below
+        // Restart carousel on window resize if mobile
+        // window.addEventListener('resize', () => {
+        //     clearInterval(carouselInterval);
+        //     clearTimeout(userInteractionTimeout);
+        //     if (window.innerWidth <= 768 && featuresGrid) {
+        //         document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
+        //         startCarousel();
+        //     }
+        // });
+
+        // NEW STRICT CAROUSEL SYSTEM
+        function createStrictCarousel(gridSelector, cardSelector, speed = 3000) {
+            const grid = document.querySelector(gridSelector);
+            if (!grid) return null;
+
+            let interval = null;
+            let isPaused = false;
+            let isInteracting = false;
+            let currentIdx = 0;
+            let resumeTimeout = null;
+            let nextMove = 0;
+
+            function getCards() { return grid.querySelectorAll(cardSelector); }
+
+            function goToIndex(idx) {
+                const cards = getCards();
+                if (!cards.length) return;
+                if (idx >= cards.length) idx = 0;
+                if (idx < 0) idx = cards.length - 1;
+                const card = cards[idx];
+                if (!card) return;
+                grid.scrollTo({ left: card.offsetLeft, behavior: 'smooth' });
+                currentIdx = idx;
+            }
+
+            function advance() {
+                if (isPaused || isInteracting) return;
+                const cards = getCards();
+                if (!cards.length) return;
+                currentIdx = (currentIdx + 1) % cards.length;
+                goToIndex(currentIdx);
+                nextMove = Date.now() + speed;
+            }
+
+            function start() {
+                if (window.innerWidth > 768) return;
+                clearInterval(interval);
+                clearTimeout(resumeTimeout);
+                const cards = getCards();
+                if (!cards.length) return;
+                currentIdx = 0;
+                isPaused = false;
+                isInteracting = false;
+                grid.scrollTo({ left: 0, behavior: 'auto' });
+                setTimeout(() => {
+                    nextMove = Date.now() + speed;
+                    interval = setInterval(() => {
+                        if (!isPaused && !isInteracting && Date.now() >= nextMove - 50) {
+                            advance();
+                        }
+                    }, 50);
+                }, 500);
+            }
+
+            grid.addEventListener('touchstart', () => {
+                isInteracting = true;
+                isPaused = true;
+                clearTimeout(resumeTimeout);
+            }, { passive: true });
+
+            grid.addEventListener('touchmove', () => {
+                isInteracting = true;
+                isPaused = true;
+                clearTimeout(resumeTimeout);
+            }, { passive: true });
+
+            grid.addEventListener('touchend', () => {
+                const cards = getCards();
+                const scroll = grid.scrollLeft;
+                let closest = 0, minDist = Infinity;
+                cards.forEach((c, i) => {
+                    const d = Math.abs(c.offsetLeft - scroll);
+                    if (d < minDist) { minDist = d; closest = i; }
+                });
+                currentIdx = closest;
+                clearTimeout(resumeTimeout);
+                resumeTimeout = setTimeout(() => {
+                    isInteracting = false;
+                    isPaused = false;
+                    nextMove = Date.now() + speed;
+                }, 2000);
+            }, { passive: true });
+
+            return { start, stop: () => clearInterval(interval) };
         }
 
-        // Restart carousel on window resize if mobile
-        window.addEventListener('resize', () => {
-            clearInterval(carouselInterval);
-            clearTimeout(userInteractionTimeout);
-            if (window.innerWidth <= 768 && featuresGrid) {
-                document.querySelectorAll('.feature-card.cloned').forEach(el => el.remove());
-                startCarousel();
+        let featCarousel = null, sessCarousel = null;
+        function initAllCarousels() {
+            if (window.innerWidth <= 768) {
+                featCarousel = createStrictCarousel('.features-grid', '.feature-card:not(.cloned)', 3000);
+                sessCarousel = createStrictCarousel('.sessions-grid', '.session-card', 3000);
+            } else {
+                if (featCarousel) featCarousel.stop();
+                if (sessCarousel) sessCarousel.stop();
             }
-        });
+        }
+
+        initAllCarousels();
+        window.addEventListener('resize', initAllCarousels);
 
         // Clip session example image to show only top half (desktop only)
         function clipSessionImage() {
