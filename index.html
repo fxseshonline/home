@@ -1165,7 +1165,7 @@
     <section class="premium" id="premium">
         <div class="premium-content">
             <h2 class="scroll-reveal" style="color: var(--primary-blue);">
-                Unlock <span class="premium-gold">Premium</span> Features
+                Unlock Premium Features
             </h2>
             <p class="scroll-reveal" style="color: var(--primary-blue); font-size: 1.2rem; margin-bottom: 2rem;">
                 Take your trading to the next level with advanced features designed for serious traders.
@@ -1319,7 +1319,7 @@
             if (!grid) return;
 
             let index = 0;
-            let interval = null;
+            let timeout = null;
             let resumeTimeout = null;
             let isInteracting = false;
             let touchStartX = 0;
@@ -1343,10 +1343,13 @@
                 scrollToIndex(index);
             }
 
-            function startTimer() {
-                if (document.hidden) return; // Don't start if tab is hidden
-                clearInterval(interval);
-                interval = setInterval(advance, speed);
+            function scheduleNext() {
+                if (document.hidden) return;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    advance();
+                    scheduleNext(); // chain, not loop
+                }, speed);
             }
 
             function syncIndexToScroll() {
@@ -1368,20 +1371,12 @@
             function init() {
                 if (window.innerWidth > 768) return;
 
-                clearInterval(interval);
+                clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
 
                 index = 0;
                 scrollToIndex(0, false);
-                startTimer();
-            }
-
-            function handleVisibility() {
-                if (document.hidden) {
-                    clearInterval(interval);
-                } else if (window.innerWidth <= 768) {
-                    startTimer();
-                }
+                scheduleNext();
             }
 
             // ----- TOUCH HANDLERS WITH DIRECTION LOCK -----
@@ -1391,7 +1386,7 @@
                 touchStartY = touch.clientY;
                 isHorizontalSwipe = false;
 
-                clearInterval(interval);
+                clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
             }, { passive: true });
 
@@ -1410,7 +1405,7 @@
             grid.addEventListener('touchend', () => {
                 if (!isHorizontalSwipe) {
                     // Vertical scroll — ignore completely
-                    startTimer();
+                    scheduleNext();
                     return;
                 }
 
@@ -1418,34 +1413,40 @@
 
                 resumeTimeout = setTimeout(() => {
                     isInteracting = false;
-                    startTimer(); // 🔁 restart fresh 3s timer
+                    scheduleNext(); // 🔑 adopts user-selected card
                 }, 250); // iOS momentum settle window
             }, { passive: true });
 
             // Optional: mouse support (desktop testing)
             grid.addEventListener('mousedown', () => {
                 isInteracting = true;
-                clearInterval(interval);
+                clearTimeout(timeout);
             });
 
             grid.addEventListener('mouseup', () => {
                 syncIndexToScroll();
                 isInteracting = false;
-                startTimer();
+                scheduleNext();
             });
 
             // Visibility change handler
-            document.addEventListener('visibilitychange', handleVisibility);
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    clearTimeout(timeout);
+                } else if (window.innerWidth <= 768) {
+                    scheduleNext();
+                }
+            });
 
             init();
 
             window.addEventListener('resize', () => {
-                clearInterval(interval);
+                clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
                 if (window.innerWidth <= 768) {
                     init();
                 } else {
-                    clearInterval(interval);
+                    clearTimeout(timeout);
                 }
             });
         }
