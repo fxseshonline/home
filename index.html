@@ -821,15 +821,16 @@
                 height: 56px;
             }
 
-            /* Hide download buttons until user scrolls past hero */
-            .hero-downloads {
+            /* Hide nav download button until user scrolls past hero */
+            .nav-download {
                 transform: scale(0);
                 opacity: 0;
                 pointer-events: none;
                 transition: transform 0.4s ease, opacity 0.3s ease;
+                transform-origin: center;
             }
 
-            .hero-downloads.visible {
+            .nav-download.visible {
                 transform: scale(1);
                 opacity: 1;
                 pointer-events: auto;
@@ -1172,6 +1173,11 @@
         @media (max-width: 768px) {
             .promo-bar {
                 font-size: 0.72rem;      /* ⬇️ smaller for mobile */
+                height: 90px; /* supports two lines comfortably */
+            }
+
+            .promo-track {
+                height: 180px; /* 2 × bar height */
             }
 
             .promo-item {
@@ -1179,10 +1185,18 @@
                 text-align: left;
                 line-height: 1.2;
                 padding: 0 0.75rem;      /* tighter horizontal padding */
+                height: 90px;
+                white-space: normal;   /* allow wrapping */
+                align-items: center;
             }
 
             .promo-item a {
                 font-weight: 600;        /* keep email readable */
+            }
+
+            /* Adjust nav position for taller promo bar on mobile */
+            nav {
+                top: 90px;
             }
         }
 
@@ -1195,6 +1209,19 @@
             90%  { transform: translateY(-60px); }
 
             100% { transform: translateY(0); }
+        }
+
+        /* Mobile: Adjust animation for taller bar */
+        @media (max-width: 768px) {
+            @keyframes promoSlide {
+                0%   { transform: translateY(0); }
+                40%  { transform: translateY(0); }
+
+                50%  { transform: translateY(-90px); }
+                90%  { transform: translateY(-90px); }
+
+                100% { transform: translateY(0); }
+            }
         }
 
         /* Reduced motion */
@@ -1231,7 +1258,7 @@
                     <li><a href="#premium">Premium</a></li>
                 </ul>
             </div>
-            <a href="#download" class="cta-button"><span class="cta-full">Download Now</span><span class="cta-short">Download</span></a>
+            <a href="#download" class="cta-button nav-download"><span class="cta-full">Download Now</span><span class="cta-short">Download</span></a>
             <button class="hamburger-menu" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -1255,15 +1282,13 @@
                 <span class="hero-strong">PROFESSIONAL EDGE</span>
             </h1>
             <p>Master session timing, reduce noise, and trade with precision like a pro.</p>
-            <div class="hero-downloads">
-                <div class="hero-buttons">
-                    <a href="#download" class="btn-primary">
-                        <i class="fab fa-apple"></i> Download for iOS
-                    </a>
-                    <a href="#download" class="btn-primary">
-                        <i class="fab fa-android"></i> Download for Android
-                    </a>
-                </div>
+            <div class="hero-buttons">
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-apple"></i> Download for iOS
+                </a>
+                <a href="#download" class="btn-primary">
+                    <i class="fab fa-android"></i> Download for Android
+                </a>
             </div>
         </div>
         <div class="hero-scroll-indicator" aria-hidden="true">
@@ -1788,20 +1813,20 @@
             window.addEventListener('scroll', onScroll, { passive: true });
         })();
 
-        // Mobile: Reveal download buttons after scrolling past hero
+        // Mobile: Reveal nav download button after scrolling past hero
         (function () {
             const hero = document.querySelector('.hero');
-            const downloads = document.querySelector('.hero-downloads');
+            const navDownload = document.querySelector('.nav-download');
 
-            if (!hero || !downloads) return;
+            if (!hero || !navDownload) return;
 
             function onScroll() {
                 const heroBottom = hero.getBoundingClientRect().bottom;
 
                 if (heroBottom <= window.innerHeight * 0.9) {
-                    downloads.classList.add('visible');
+                    navDownload.classList.add('visible');
                 } else {
-                    downloads.classList.remove('visible');
+                    navDownload.classList.remove('visible');
                 }
             }
 
