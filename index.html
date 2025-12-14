@@ -226,7 +226,8 @@
             background-repeat: no-repeat;
             background-color: var(--primary-blue);
             color: white;
-            min-height: 100vh;
+            min-height: 100svh; /* stable viewport height */
+            min-height: 100vh; /* fallback */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -256,7 +257,8 @@
             flex-direction: column;
             align-items: center;
             line-height: 1.05;
-            margin-bottom: 1.75rem;
+            margin-top: -1.25rem;   /* pulls title up */
+            margin-bottom: 1.5rem;
         }
 
         /* Top line — larger, lighter */
@@ -314,12 +316,12 @@
         }
 
         .scroll-arrow {
-            filter: drop-shadow(0 14px 36px rgba(151, 125, 255, 0.45));
+            filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.35));
         }
 
         /* Hover polish */
         .hero-scroll-indicator:hover .scroll-arrow {
-            filter: drop-shadow(0 18px 44px rgba(151, 125, 255, 0.6));
+            filter: drop-shadow(0 16px 32px rgba(0, 0, 0, 0.45));
         }
 
         /* Float animation */
@@ -774,8 +776,19 @@
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                padding: 5rem 1.5rem 3rem;
+                padding-top: calc(3.5rem + env(safe-area-inset-top));
+                padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
                 min-height: 90vh;
+            }
+
+            .hero-title {
+                margin-top: -0.5rem;
+            }
+
+            .hero-scroll-indicator {
+                bottom: calc(2rem + env(safe-area-inset-bottom));
             }
 
             .hero h1 {
@@ -796,13 +809,9 @@
                 font-size: 1rem;
             }
 
-            .hero-scroll-indicator {
-                bottom: 1.75rem;
-            }
-
             .scroll-arrow {
-                width: 100px;
-                height: 58px;
+                width: 140px;
+                height: 80px;
             }
 
             .nav-links {
@@ -1048,6 +1057,22 @@
             }
         }
 
+        /* Short-height phones (iPhone SE, small Android) */
+        @media (max-width: 768px) and (max-height: 700px) {
+            .hero {
+                min-height: 85vh;
+                padding-top: calc(3rem + env(safe-area-inset-top));
+            }
+
+            .hero-title {
+                margin-top: -0.75rem;
+            }
+
+            .hero-scroll-indicator {
+                bottom: calc(1.5rem + env(safe-area-inset-bottom));
+            }
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -1127,26 +1152,26 @@
         <div class="hero-scroll-indicator" aria-hidden="true">
             <svg
                 class="scroll-arrow"
-                width="120"
-                height="70"
-                viewBox="0 0 120 70"
+                width="160"
+                height="92"
+                viewBox="0 0 160 92"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
-                    d="M10 10 
-                       Q60 -5 110 10
-                       Q120 30 60 65
-                       Q0 30 10 10 Z"
-                    fill="#977DFF"
+                    d="M14 14
+                       Q80 -6 146 14
+                       Q160 38 80 86
+                       Q0 38 14 14 Z"
+                    fill="#000000"
                 />
                 <text
-                    x="60"
-                    y="38"
+                    x="80"
+                    y="52"
                     text-anchor="middle"
                     fill="#FFFFFF"
-                    font-size="12"
+                    font-size="14"
                     font-weight="600"
-                    letter-spacing="2"
+                    letter-spacing="2.5"
                 >
                     LEARN MORE
                 </text>
@@ -1683,4 +1708,5 @@
     </script>
 </body>
 </html>
+
 
