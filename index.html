@@ -47,7 +47,7 @@
         /* Navigation */
         nav {
             position: fixed;
-            top: 40px; /* Position below promo bar */
+            top: 60px; /* Position below promo bar */
             width: 100%;
             background-image: url('headerbackground3.jpg');
             background-size: cover;
@@ -1111,33 +1111,32 @@
         .promo-bar {
             background: #000000;
             color: #ffffff;
-            height: 40px;
+            height: 60px; /* ⬆️ 1.5x taller */
             overflow: hidden;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1001;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             font-weight: 500;
             letter-spacing: 0.02em;
         }
 
-        /* Vertical centering container */
+        /* Vertical sliding container */
         .promo-track {
-            height: 100%;
+            height: 120px; /* 2 × bar height */
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            animation: promoSlide 8s ease-in-out infinite;
+            animation: promoSlide 10s ease-in-out infinite;
         }
 
         /* Individual messages */
         .promo-item {
-            height: 40px;
+            height: 60px; /* MUST match promo-bar */
             display: flex;
             align-items: center;
             justify-content: center; /* desktop default */
-            padding: 0 1rem;
+            padding: 0 1.25rem;
             white-space: nowrap;
         }
 
@@ -1163,13 +1162,13 @@
             }
         }
 
-        /* Slide animation */
+        /* Slide animation — ONLY ONE MESSAGE AT A TIME */
         @keyframes promoSlide {
             0%   { transform: translateY(0); }
             40%  { transform: translateY(0); }
 
-            50%  { transform: translateY(-40px); }
-            90%  { transform: translateY(-40px); }
+            50%  { transform: translateY(-60px); }
+            90%  { transform: translateY(-60px); }
 
             100% { transform: translateY(0); }
         }
@@ -1190,9 +1189,7 @@
                 FX Sesh is currently in beta testing. Premium features are not yet available.
             </div>
             <div class="promo-item">
-                Interested in beta access? Email 
-                <a href="mailto:fxseshonline@gmail.com">fxseshonline@gmail.com</a> 
-                to request an invite.
+                Interested in beta access? Email <a href="mailto:fxseshonline@gmail.com">fxseshonline@gmail.com</a> to request an invite.
             </div>
         </div>
     </div>
