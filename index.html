@@ -1325,6 +1325,8 @@
             let touchStartX = 0;
             let touchStartY = 0;
             let isHorizontalSwipe = false;
+            let lastScrollLeft = 0;
+            let settleRAF = null;
 
             const cards = () => Array.from(grid.querySelectorAll(cardSelector));
 
@@ -1368,11 +1370,40 @@
                 index = closestIndex;
             }
 
+            function syncWhenSettled() {
+                cancelAnimationFrame(settleRAF);
+                let stableFrames = 0;
+
+                const check = () => {
+                    const current = grid.scrollLeft;
+                    const delta = Math.abs(current - lastScrollLeft);
+
+                    // If scrollLeft barely changes for a few frames, assume momentum ended
+                    if (delta < 0.5) stableFrames += 1;
+                    else stableFrames = 0;
+
+                    lastScrollLeft = current;
+
+                    if (stableFrames >= 6) { // ~100ms at 60fps
+                        syncIndexToScroll();
+                        isInteracting = false;
+                        scheduleNext(); // restart from the actual settled card
+                        return;
+                    }
+
+                    settleRAF = requestAnimationFrame(check);
+                };
+
+                lastScrollLeft = grid.scrollLeft;
+                settleRAF = requestAnimationFrame(check);
+            }
+
             function init() {
                 if (window.innerWidth > 768) return;
 
                 clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
+                cancelAnimationFrame(settleRAF);
 
                 index = 0;
                 scrollToIndex(0, false);
@@ -1388,6 +1419,7 @@
 
                 clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
+                cancelAnimationFrame(settleRAF);
             }, { passive: true });
 
             grid.addEventListener('touchmove', (e) => {
@@ -1409,24 +1441,19 @@
                     return;
                 }
 
-                syncIndexToScroll(); // 🔑 Sync index to actual scroll position
-
-                resumeTimeout = setTimeout(() => {
-                    isInteracting = false;
-                    scheduleNext(); // 🔑 adopts user-selected card
-                }, 250); // iOS momentum settle window
+                // Wait for momentum to actually stop, then sync & restart timer
+                syncWhenSettled();
             }, { passive: true });
 
             // Optional: mouse support (desktop testing)
             grid.addEventListener('mousedown', () => {
                 isInteracting = true;
                 clearTimeout(timeout);
+                cancelAnimationFrame(settleRAF);
             });
 
             grid.addEventListener('mouseup', () => {
-                syncIndexToScroll();
-                isInteracting = false;
-                scheduleNext();
+                syncWhenSettled();
             });
 
             // Visibility change handler
@@ -1443,6 +1470,7 @@
             window.addEventListener('resize', () => {
                 clearTimeout(timeout);
                 clearTimeout(resumeTimeout);
+                cancelAnimationFrame(settleRAF);
                 if (window.innerWidth <= 768) {
                     init();
                 } else {
