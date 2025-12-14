@@ -1316,30 +1316,30 @@
                 order: 1 !important;
                 width: 100% !important;
                 padding: 0 !important;
-                margin: 0 0 1rem 0 !important;
+                margin: 0 0 0.75rem 0 !important; /* tighter vertical spacing */
                 text-align: center !important;
             }
 
-            /* Monitor card: centered + full content width (NO 100vw math inside padded parent) */
+            /* Monitor card: EXACT same width as carousel cards */
             .sessions .session-intro{
                 order: 2 !important;
 
-                width: 100% !important;
-                max-width: none !important;
+                width: calc(100vw - 4rem) !important;   /* EXACT same width as carousel cards */
+                max-width: calc(100vw - 4rem) !important;
 
-                margin: 1rem 0 1.25rem 0 !important;
-                align-self: stretch !important;
+                margin: 0.75rem auto 1rem auto !important; /* tighter vertical spacing */
+                align-self: center !important;
 
-                /* reduce vertical padding ~50% */
-                padding: 0.5rem 1rem !important;
+                /* reduced padding */
+                padding: 0.6rem 1rem !important;
 
                 box-sizing: border-box !important;
             }
 
-            /* Make text +10% larger + keep centered */
+            /* Make text slightly larger to match session cards */
             .sessions .session-intro p{
-                font-size: 1.05rem !important; /* 0.95rem → +10% */
-                line-height: 1.6 !important;
+                font-size: 1.05rem !important;   /* ~10% larger than session cards */
+                line-height: 1.55 !important;
                 text-align: center !important;
                 margin: 0 !important;
             }
@@ -1349,6 +1349,7 @@
                 order: 3 !important;
                 padding: 0 2rem !important;
                 width: 100% !important;
+                margin-bottom: 0.75rem !important; /* tighter vertical spacing */
                 box-sizing: border-box !important;
 
                 overflow-x: auto !important;
@@ -1370,8 +1371,8 @@
             /* Image: order after carousel + smaller + add breathing room at bottom */
             .sessions-image-container{
                 order: 4 !important;
-                margin-top: 0.3rem !important;        /* reduce top padding ~50% */
-                padding: 0 2rem 2rem 2rem !important; /* add bottom space */
+                margin-top: 0.4rem !important;        /* tighter vertical spacing */
+                padding: 0 2rem 1.5rem 2rem !important; /* add bottom space */
                 width: 100% !important;
                 box-sizing: border-box !important;
                 display: flex !important;
