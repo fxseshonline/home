@@ -1460,8 +1460,9 @@
                 padding-bottom: 0 !important;
                 display: flex !important;
                 justify-content: flex-start !important;
-                align-items: flex-end !important;   /* helps it "land" at section bottom */
+                align-items: flex-start !important; /* ⬅️ critical - align to top */
                 overflow: hidden !important;        /* keeps crop clean */
+                height: 520px;                      /* crop window */
             }
 
             .sessions-image {
@@ -1469,7 +1470,7 @@
                 max-width: 420px;                   /* keep it controlled */
                 height: auto;
                 object-fit: cover;                  /* allow cropping */
-                object-position: top;               /* ⬅️ THIS is the key - show top half */
+                object-position: top;               /* ⬅️ show TOP of image */
                 display: block !important;         /* removes inline gap */
                 margin: 0 !important;
                 margin-bottom: 0 !important;
