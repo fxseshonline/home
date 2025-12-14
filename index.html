@@ -341,6 +341,13 @@
             }
         }
 
+        /* Desktop: Reduce top padding above hero title */
+        @media (min-width: 769px) {
+            .hero-title {
+                margin-top: -0.75rem;
+            }
+        }
+
         .hero-buttons {
             display: flex;
             gap: 1rem;
@@ -811,7 +818,7 @@
 
             .scroll-arrow {
                 width: 105px;
-                height: 60px;
+                height: 90px;
             }
 
             .nav-links {
@@ -1152,28 +1159,28 @@
         <div class="hero-scroll-indicator" aria-hidden="true">
             <svg
                 class="scroll-arrow"
-                width="120"
-                height="69"
-                viewBox="0 0 160 92"
+                width="140"
+                height="120"
+                viewBox="0 0 140 120"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <path
-                    d="M14 14
-                       Q80 -6 146 14
-                       Q160 38 80 86
-                       Q0 38 14 14 Z"
+                <!-- Regular downward triangle -->
+                <polygon
+                    points="70,115 135,15 5,15"
                     fill="#000000"
                 />
+                <!-- Stacked text -->
                 <text
-                    x="80"
-                    y="52"
+                    x="70"
+                    y="55"
                     text-anchor="middle"
                     fill="#FFFFFF"
-                    font-size="7"
+                    font-size="14"
                     font-weight="600"
-                    letter-spacing="1.25"
+                    letter-spacing="2"
                 >
-                    LEARN MORE
+                    <tspan x="70" dy="0">LEARN</tspan>
+                    <tspan x="70" dy="18">MORE</tspan>
                 </text>
             </svg>
         </div>
