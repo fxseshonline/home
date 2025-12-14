@@ -775,8 +775,11 @@
             }
 
             .session-intro p {
-                font-size: 1rem;           /* match Premium intro exactly */
+                font-size: 1.1rem;         /* ⬆️ 10% larger */
                 line-height: 1.6;
+                margin: 0;
+                color: #000000;
+                text-align: center;
             }
         }
 
@@ -1008,6 +1011,8 @@
             }
 
             .sessions {
+                display: flex;
+                flex-direction: column;
                 overflow-x: hidden;
             }
 
@@ -1017,10 +1022,14 @@
                 overflow-x: hidden;
             }
 
-            .sessions .section-header {
+            .sessions-content {
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+            }
+
+            /* 1️⃣ Title */
+            .sessions .section-header {
+                display: contents;
             }
 
             .sessions .section-header h2 {
@@ -1030,21 +1039,17 @@
                 padding: 0 1.5rem;
             }
 
-            .sessions .section-header .session-intro {
+            /* 2️⃣ Monitor card */
+            .sessions .session-intro {
                 order: 2;
                 width: calc(100% - 3rem);
+                margin: 1.25rem auto 1.75rem;
             }
 
-            .sessions .section-header .sessions-image-container {
-                display: block;
-                order: 4;
-                margin-top: 2rem;
-                width: 100%;
-                padding: 0 1.5rem;
-            }
-
+            /* 3️⃣ Carousel */
             .sessions-grid {
                 order: 3;
+                margin-bottom: 2rem;
                 margin-bottom: 0;
                 display: flex;
                 padding: 0;
@@ -1119,11 +1124,16 @@
                 grid-column: 1 / 3;
             }
 
-            /* Mobile: Show full image, no cropping */
+            /* 4️⃣ Image */
             .sessions-image-container {
+                order: 4;
                 height: auto !important;
                 overflow: visible;
                 margin-bottom: 2rem;
+                display: block;
+                margin-top: 2rem;
+                width: 100%;
+                padding: 0 1.5rem;
             }
 
             .sessions-image {
