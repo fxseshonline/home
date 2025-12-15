@@ -172,9 +172,10 @@
         .mobile-menu {
             display: none;
             position: fixed;
-            top: 70px;
+            top: calc(var(--header-stack, 140px)); /* EXACTLY below promo + nav */
             left: 0;
             right: 0;
+            margin: 0;
             background: rgba(10, 17, 26, 0.98);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -193,7 +194,7 @@
 
         .mobile-menu ul {
             list-style: none;
-            padding: 1rem 0;
+            padding: 0.5rem 0;
             margin: 0;
         }
 
