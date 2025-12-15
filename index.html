@@ -172,18 +172,27 @@
         .mobile-menu {
             display: none;
             position: fixed;
-            top: var(--nav-bottom, 140px);
+            
+            /* Cover the whole viewport so there is never a "gap" */
+            top: 0;
             left: 0;
             right: 0;
-            bottom: 0;              /* fills from nav bottom to viewport bottom */
+            bottom: 0;
+            
+            /* Push the menu items below the promo+nav stack */
+            padding-top: var(--header-stack, 140px);
+            
+            overflow-y: auto;
+            
+            /* Put it behind the nav (nav stays clickable/visible) */
+            z-index: 999;
+            
             background: rgba(10, 17, 26, 0.98);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            overflow-y: auto;
             opacity: 0;
             transform: translateY(-8px);
             transition: opacity 0.25s ease, transform 0.25s ease;
-            z-index: 1000;
         }
 
         .mobile-menu.active {
@@ -1811,23 +1820,15 @@
             const promoH = promo.getBoundingClientRect().height;
             const navRect = nav.getBoundingClientRect();
 
-            // Total "header stack" (promo + nav) - for hero spacing
+            // Total "header stack" (promo + nav) - for hero spacing and menu padding
             const headerStack = promoH + navRect.height;
             document.documentElement.style.setProperty('--header-stack', `${headerStack}px`);
-
-            // Bottom edge of nav in the viewport (this is what the menu should sit under)
-            // Only update when menu is NOT active to avoid instability during transitions
-            const menuEl = document.querySelector('.mobile-menu');
-            if (!menuEl || !menuEl.classList.contains('active')) {
-                const navBottom = navRect.bottom;
-                document.documentElement.style.setProperty('--nav-bottom', `${navBottom}px`);
-            }
         }
 
-        // Run immediately and keep it updated
+        // Run immediately and keep it updated (but NOT on scroll to avoid instability)
         window.addEventListener('load', updateHeaderStack, { passive: true });
         window.addEventListener('resize', updateHeaderStack, { passive: true });
-        window.addEventListener('scroll', updateHeaderStack, { passive: true });
+        window.addEventListener('orientationchange', updateHeaderStack, { passive: true });
         
         // Also run on DOMContentLoaded for early initialization
         if (document.readyState === 'loading') {
@@ -1841,13 +1842,9 @@
         const mobileMenu = document.querySelector('.mobile-menu');
         
         function setMenuOpen(open) {
-            // Calculate position BEFORE opening (when nav is stable)
+            // Ensure header stack is up to date before opening menu
             if (open) {
-                const nav = document.querySelector('nav');
-                if (nav) {
-                    const navBottom = nav.getBoundingClientRect().bottom;
-                    document.documentElement.style.setProperty('--nav-bottom', `${navBottom}px`);
-                }
+                updateHeaderStack();
             }
             
             hamburgerMenu.classList.toggle('active', open);
