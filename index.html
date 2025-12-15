@@ -1806,50 +1806,56 @@
         // Robust header stack measurement for mobile hero padding
         function updateHeaderStack() {
             const promo = document.querySelector('.promo-bar');
-            const nav = document.getElementById('navbar');
-            if (!promo || !nav) return;
+            const nav = document.querySelector('nav');
 
-            // keep this if you still want it for hero spacing
-            const stack = promo.offsetHeight + nav.offsetHeight;
-            document.documentElement.style.setProperty('--header-stack', stack + 'px');
+            const promoH = promo ? promo.getBoundingClientRect().height : 0;
+            const navRect = nav ? nav.getBoundingClientRect() : { top: 0, bottom: 0, height: 0 };
 
-            // ✅ NEW: exact on-screen nav bottom (this fixes the menu gap)
-            const navBottom = nav.getBoundingClientRect().bottom;
-            document.documentElement.style.setProperty('--nav-bottom', navBottom + 'px');
+            // Total "header stack" (promo + nav)
+            const headerStack = promoH + navRect.height;
+
+            // Bottom edge of nav in the viewport (this is what the menu should sit under)
+            const navBottom = navRect.bottom;
+
+            document.documentElement.style.setProperty('--header-stack', `${headerStack}px`);
+            document.documentElement.style.setProperty('--nav-bottom', `${navBottom}px`);
         }
 
-        // call once
-        updateHeaderStack();
-
-        // update on resize (mobile browser UI changes)
-        window.addEventListener('resize', updateHeaderStack);
-
-        // update when nav padding changes (scrolled class toggles)
-        window.addEventListener('scroll', () => {
+        // Run immediately and keep it updated
+        window.addEventListener('load', updateHeaderStack, { passive: true });
+        window.addEventListener('resize', updateHeaderStack, { passive: true });
+        window.addEventListener('scroll', updateHeaderStack, { passive: true });
+        
+        // Also run on DOMContentLoaded for early initialization
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', updateHeaderStack);
+        } else {
             updateHeaderStack();
-        }, { passive: true });
+        }
 
         // Hamburger menu toggle
         const hamburgerMenu = document.querySelector('.hamburger-menu');
         const mobileMenu = document.querySelector('.mobile-menu');
         
         function setMenuOpen(open) {
+            // Update position BEFORE opening to ensure correct placement
+            updateHeaderStack();
+            
             hamburgerMenu.classList.toggle('active', open);
             mobileMenu.classList.toggle('active', open);
             document.body.style.overflow = open ? 'hidden' : '';
-            updateHeaderStack(); // ✅ ensure --nav-bottom is correct when menu opens
+            
+            // recalc after the menu state changes (double-check)
+            requestAnimationFrame(updateHeaderStack);
         }
 
-        hamburgerMenu.addEventListener('click', () => {
-            const open = !mobileMenu.classList.contains('active');
-            setMenuOpen(open);
+        hamburgerMenu?.addEventListener('click', () => {
+            setMenuOpen(!mobileMenu.classList.contains('active'));
         });
 
         // Close mobile menu when clicking on a link
-        document.querySelectorAll('.mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                setMenuOpen(false);
-            });
+        mobileMenu?.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => setMenuOpen(false));
         });
 
         // Smooth scrolling
