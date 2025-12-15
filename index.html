@@ -175,17 +175,15 @@
             top: var(--nav-bottom, 140px);
             left: 0;
             right: 0;
-            height: calc(100dvh - var(--nav-bottom, 140px));
-            overflow-y: auto;
-            margin: 0;
+            bottom: 0;              /* fills from nav bottom to viewport bottom */
             background: rgba(10, 17, 26, 0.98);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1000;
+            overflow-y: auto;
             opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.3s ease;
+            transform: translateY(-8px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            z-index: 1000;
         }
 
         .mobile-menu.active {
@@ -1808,17 +1806,22 @@
             const promo = document.querySelector('.promo-bar');
             const nav = document.querySelector('nav');
 
-            const promoH = promo ? promo.getBoundingClientRect().height : 0;
-            const navRect = nav ? nav.getBoundingClientRect() : { top: 0, bottom: 0, height: 0 };
+            if (!promo || !nav) return;
 
-            // Total "header stack" (promo + nav)
+            const promoH = promo.getBoundingClientRect().height;
+            const navRect = nav.getBoundingClientRect();
+
+            // Total "header stack" (promo + nav) - for hero spacing
             const headerStack = promoH + navRect.height;
+            document.documentElement.style.setProperty('--header-stack', `${headerStack}px`);
 
             // Bottom edge of nav in the viewport (this is what the menu should sit under)
-            const navBottom = navRect.bottom;
-
-            document.documentElement.style.setProperty('--header-stack', `${headerStack}px`);
-            document.documentElement.style.setProperty('--nav-bottom', `${navBottom}px`);
+            // Only update when menu is NOT active to avoid instability during transitions
+            const menuEl = document.querySelector('.mobile-menu');
+            if (!menuEl || !menuEl.classList.contains('active')) {
+                const navBottom = navRect.bottom;
+                document.documentElement.style.setProperty('--nav-bottom', `${navBottom}px`);
+            }
         }
 
         // Run immediately and keep it updated
@@ -1838,15 +1841,18 @@
         const mobileMenu = document.querySelector('.mobile-menu');
         
         function setMenuOpen(open) {
-            // Update position BEFORE opening to ensure correct placement
-            updateHeaderStack();
+            // Calculate position BEFORE opening (when nav is stable)
+            if (open) {
+                const nav = document.querySelector('nav');
+                if (nav) {
+                    const navBottom = nav.getBoundingClientRect().bottom;
+                    document.documentElement.style.setProperty('--nav-bottom', `${navBottom}px`);
+                }
+            }
             
             hamburgerMenu.classList.toggle('active', open);
             mobileMenu.classList.toggle('active', open);
             document.body.style.overflow = open ? 'hidden' : '';
-            
-            // recalc after the menu state changes (double-check)
-            requestAnimationFrame(updateHeaderStack);
         }
 
         hamburgerMenu?.addEventListener('click', () => {
