@@ -180,14 +180,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            height: calc(100vh - var(--header-stack, 140px));
 
             background: rgba(10, 17, 26, 0.97);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
 
             display: none;
-            z-index: 2000; /* ✅ ABOVE promo + nav + hero */
+            z-index: 3000; /* ✅ ABOVE promo + nav + hero */
             overflow-y: auto;
         }
 
@@ -1534,14 +1533,16 @@
                 <span></span>
             </button>
         </div>
-        <div class="mobile-menu">
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#sessions">Sessions</a></li>
-                <li><a href="#premium">Premium</a></li>
-            </ul>
-        </div>
     </nav>
+
+    <!-- Mobile Menu (outside nav to avoid stacking context issues) -->
+    <div class="mobile-menu">
+        <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#sessions">Sessions</a></li>
+            <li><a href="#premium">Premium</a></li>
+        </ul>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
