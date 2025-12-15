@@ -176,7 +176,11 @@
         /* Mobile menu — SIMPLE & RELIABLE */
         .mobile-menu {
             position: fixed;
-            inset: 0;
+            top: var(--header-stack, 140px);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: calc(100vh - var(--header-stack, 140px));
 
             background: rgba(10, 17, 26, 0.97);
             backdrop-filter: blur(10px);
@@ -191,14 +195,11 @@
             display: block;
         }
 
-        /* Push menu content below promo + nav */
+        /* Menu content - small breathing room under nav (no double offset) */
         .mobile-menu ul {
             list-style: none;
             margin: 0;
-            padding-top: calc(var(--header-stack, 140px) + 1.5rem);
-            padding-left: 24px;
-            padding-right: 24px;
-            padding-bottom: 18px;
+            padding: 18px 24px;
         }
 
         .mobile-menu li {
