@@ -50,8 +50,7 @@
 
         /* Navigation */
         nav {
-            position: fixed;
-            top: 60px; /* Position below promo bar */
+            position: relative;
             width: 100%;
             background-image: url('headerbackground3.jpg');
             background-size: cover;
@@ -176,7 +175,7 @@
         /* Mobile menu — SIMPLE & RELIABLE */
         .mobile-menu {
             position: fixed;
-            top: var(--header-stack, 140px);
+            top: 0;
             left: 0;
             right: 0;
             bottom: 0;
@@ -230,12 +229,12 @@
             background-repeat: no-repeat;
             background-color: var(--primary-blue);
             color: white;
-            min-height: 100svh; /* stable viewport height */
-            min-height: 100vh; /* fallback */
+            min-height: 100svh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 7rem 2rem 6rem;
+            padding: 4rem 2rem 6rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -456,11 +455,57 @@
             margin: 0 auto;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+        .features-marquee {
+            overflow-x: clip;
+            overflow-y: visible;
+            display: flex;
+            flex-direction: column;
             gap: 1.5rem;
             margin-bottom: 3rem;
+            padding: 0.75rem 0;
+            mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+        }
+
+        .features-track {
+            display: flex;
+            gap: 1.5rem;
+            width: max-content;
+            will-change: transform;
+        }
+
+        .features-track--left {
+            animation: marqueeLeft 50s linear infinite;
+        }
+
+        .features-track--right {
+            animation: marqueeRight 50s linear infinite;
+        }
+
+        .features-marquee:hover .features-track {
+            animation-play-state: paused;
+        }
+
+        @keyframes marqueeLeft {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        @keyframes marqueeRight {
+            from { transform: translateX(-50%); }
+            to   { transform: translateX(0); }
+        }
+
+        .features-track .feature-card {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .features-track--left,
+            .features-track--right {
+                animation-play-state: paused;
+            }
         }
 
         .feature-card {
@@ -516,29 +561,137 @@
 
         /* Premium Section */
         .premium {
-            background: linear-gradient(135deg, rgba(233, 213, 255, 0.95) 0%, rgba(196, 181, 253, 0.95) 25%, rgba(167, 139, 250, 0.95) 50%, rgba(151, 125, 255, 0.95) 75%, rgba(139, 92, 246, 0.95) 100%), url('premiumbackground.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: white;
-            padding: 6rem 2rem;
-            text-align: center;
+            background: #f6f0e8;
+            color: var(--text-dark);
+            padding: 7rem 2rem;
+            text-align: left;
         }
 
         .premium-content {
-            max-width: 800px;
+            max-width: 1100px;
             margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .premium-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .premium-kicker {
+            font-size: 0.85rem;
+            letter-spacing: 0.18rem;
+            text-transform: uppercase;
+            color: #977DFF;
+            font-weight: 600;
         }
 
         .premium h2 {
-            font-size: 2.5rem;
+            font-size: clamp(2.8rem, 5vw, 4.6rem);
             font-weight: 700;
-            margin-bottom: 1.5rem;
+            line-height: 0.96;
+            letter-spacing: -0.04em;
+            margin: 0;
+            color: var(--primary-blue);
         }
 
-        .premium-gold {
-            color: #FFD700;
-            text-shadow: 0 0 3px rgba(255, 215, 0, 0.4), 0 0 6px rgba(255, 215, 0, 0.3);
+        .premium-lead {
+            max-width: 28rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-muted-light);
+        }
+
+        .premium-plan {
+            margin-top: 0.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(10, 43, 87, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+
+        .premium-plan-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.14rem;
+            text-transform: uppercase;
+            color: var(--text-muted-light);
+            font-weight: 600;
+        }
+
+        .premium-price {
+            font-size: clamp(3rem, 7vw, 5rem);
+            line-height: 0.95;
+            font-weight: 700;
+            color: #977DFF;
+        }
+
+        .premium-price span {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            color: var(--text-muted-light);
+            font-weight: 500;
+        }
+
+        .premium-plan-note {
+            max-width: 30rem;
+            color: var(--text-muted-light);
+            line-height: 1.8;
+        }
+
+        .premium-cta {
+            margin-top: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.95rem 2rem;
+            border-radius: 999px;
+            background: #977DFF;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            width: fit-content;
+        }
+
+        .premium-cta:hover {
+            transform: translateY(-2px);
+            background: #7d5ce6;
+            box-shadow: 0 18px 36px rgba(151, 125, 255, 0.35);
+        }
+
+        .premium-fine-print {
+            font-size: 0.88rem;
+            color: var(--text-muted-light);
+        }
+
+        .premium-list {
+            border-top: 1px solid rgba(10, 43, 87, 0.15);
+        }
+
+        .premium-row {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 1.5rem;
+            align-items: start;
+            padding: 1.4rem 0;
+            border-bottom: 1px solid rgba(10, 43, 87, 0.15);
+        }
+
+        .premium-row-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #977DFF;
+        }
+
+        .premium-row-copy {
+            color: var(--text-muted-light);
+            line-height: 1.8;
         }
 
         .navy-gradient-text {
@@ -549,144 +702,18 @@
             display: inline-block;
         }
 
-        .premium-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .premium-feature {
-            background: var(--primary-blue);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .premium-feature:hover {
-            transform: scale(1.05);
-            border-color: #ffffff;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .premium-feature h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: #FFD700;
-        }
-
-        .premium-feature h4 i {
-            margin-right: 0.5rem;
-        }
-
-        /* Premium intro card */
-        .premium-intro {
-            background: var(--primary-blue);
-            color: white;
-            text-align: center;
-        }
-
-        .premium-intro p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .premium-offer {
-            margin-top: 3rem;
-            padding: 3rem 2.5rem;
-            border-radius: 32px;
-            background: var(--primary-blue);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.25rem;
-            text-align: center;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .premium-offer:hover {
-            transform: scale(1.02);
-            border-color: #ffffff;
-            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.3);
-        }
-
-        .premium-offer-badge {
-            background: rgba(255, 215, 0, 0.2);
-            padding: 0.4rem 1.25rem;
-            border-radius: 999px;
-            font-size: 0.9rem;
-            letter-spacing: 0.15rem;
-            text-transform: uppercase;
-            color: #FFD700;
-            font-weight: 600;
-        }
-
-        .premium-price {
-            font-size: 3.25rem;
-            font-weight: 700;
-            color: #FFD700;
-        }
-
-        .premium-price span {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.85);
-            font-weight: 500;
-            margin-left: 0.5rem;
-        }
-
-        .premium-offer-description {
-            max-width: 520px;
-            color: rgba(255, 255, 255, 0.92);
-            line-height: 1.8;
-        }
-
-        .premium-cta {
-            margin-top: 0.5rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            padding: 0.95rem 2.8rem;
-            border-radius: 999px;
-            background: linear-gradient(120deg, #ffd700 0%, #f4b100 100%);
-            color: #0a2b57;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .premium-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
-        }
-
-        .premium-fine-print {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
         /* Sessions Section */
         .sessions {
-            background-image: url('forexsessionbackground.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: var(--dark-bg);
-            padding: 6rem 2rem 0;
+            background: #000000 url('forexsessionbackground.png') center / cover no-repeat;
+            padding: 7rem 3rem 0 6rem;
             color: var(--text-light);
         }
 
-
         .sessions-content {
-            max-width: 1200px;
+            max-width: 1520px;
             margin: 0 auto;
             display: flex;
-            gap: 4rem;
+            gap: 0;
             align-items: stretch;
         }
 
@@ -706,8 +733,9 @@
         }
 
         .sessions .section-header h2 {
-            font-size: 3.5rem;
-            line-height: 1.2;
+            font-size: clamp(2.6rem, 4.85vw, 4.26rem);
+            line-height: 0.95;
+            letter-spacing: -0.05em;
         }
 
         .sessions-image-container {
@@ -730,103 +758,182 @@
             display: block;
             margin: 0;
             padding: 0;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .sessions-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, auto);
-            gap: 2rem;
-            flex: 1;
-            max-width: 560px;
-            align-self: center;
-            padding: 2rem 0;
-            margin: 0 auto;
-        }
-
-        .session-card {
-            background: var(--dark-surface);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            filter: drop-shadow(0 28px 40px rgba(0, 0, 0, 0.5));
         }
 
         /* Sessions intro card */
         .session-intro {
-            background: #5b8db8; /* same blue as "Forex Sessions" text */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            border-radius: 16px;
-            margin-bottom: 2rem;
+            background: transparent;
+            display: block;
+            padding: 0;
+            border-radius: 0;
+            margin-bottom: 0;
         }
 
         .session-intro p {
-            font-size: 1.2rem; /* original size */
-            line-height: 1.6;
-            text-align: center;
-            color: #000000; /* black text */
+            max-width: 42ch;
+            font-size: 1.68rem;
+            line-height: 1.8;
+            text-align: left;
+            color: #ffffff;
             margin: 0;
         }
 
-        /* Mobile: Reduce session-intro height and match Premium intro font size */
-        /* REMOVED: Conflicting mobile block - now handled by FINAL MOBILE SESSIONS OVERRIDE at end of CSS */
+        /* Horizontal session bars */
+        .sessions-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            flex: 1;
+            align-self: center;
+            padding: 2rem 0;
+            width: 100%;
+        }
 
-        .session-card:hover {
-            transform: translateY(-5px);
+        .session-bar {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: var(--dark-surface);
+            padding: 1.1rem 1.5rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .session-bar:hover {
+            transform: translateX(6px);
             border-color: var(--primary-blue);
-            box-shadow: 0 12px 40px rgba(10, 43, 87, 0.3);
+            box-shadow: 0 6px 24px rgba(10, 43, 87, 0.35);
         }
 
-        .session-card h4 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+        .session-bar .session-flag {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .session-bar-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
             color: var(--text-light);
+            margin-bottom: 0.2rem;
         }
 
-        .session-card .flag-container {
-            margin-bottom: 1rem;
+        .session-bar-info p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin: 0;
         }
 
         /* Footer */
         footer {
-            background: white;
-            color: var(--text-dark);
-            padding: 3rem 2rem;
-            text-align: center;
+            background: #050505;
+            color: #ffffff;
+            padding: 5rem 2rem 2rem;
+            text-align: left;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-mark {
+            display: block;
+            text-decoration: none;
+            line-height: 0;
+        }
+
+        .footer-mark img {
+            height: 48px;
+            width: auto;
+            display: block;
+        }
+
+        .footer-tagline {
+            max-width: 20rem;
+            color: rgba(255, 255, 255, 0.72);
+            line-height: 1.7;
+        }
+
+        .footer-email {
+            color: #977DFF;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-heading {
+            font-size: 0.85rem;
+            letter-spacing: 0.14rem;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.45);
+            font-weight: 600;
         }
 
         .footer-links {
             display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0.8rem;
         }
 
-        .footer-links a {
-            color: var(--text-muted-light);
+        .footer-links a,
+        .footer-downloads a {
+            color: rgba(255, 255, 255, 0.82);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.25s ease;
         }
 
-        .footer-links a:hover {
-            color: var(--primary-blue);
+        .footer-links a:hover,
+        .footer-downloads a:hover,
+        .footer-email:hover {
+            color: #977DFF;
+        }
+
+        .footer-downloads {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
-                /* header height (promo + nav) + breathing room */
-                padding-top: calc(var(--header-stack, 160px) + 24px + env(safe-area-inset-top));
+                padding-top: calc(3rem + env(safe-area-inset-top));
                 padding-bottom: calc(3rem + env(safe-area-inset-bottom));
                 padding-left: 1.5rem;
                 padding-right: 1.5rem;
@@ -910,43 +1017,25 @@
                 gap: 1rem;
             }
 
-            .features-grid {
-                display: flex;
-                overflow-x: auto;
-                overflow-y: hidden;
-                scroll-snap-type: x mandatory;
-                scroll-behavior: smooth;
-                -webkit-overflow-scrolling: touch;
+            .features-marquee {
                 gap: 1rem;
-                padding: 0 1.5rem;
-                margin-bottom: 0;
-                scrollbar-width: none;
-                position: relative;
-                overscroll-behavior-x: contain;
+                margin-bottom: 2rem;
+                mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+                -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
             }
 
-            .features-grid::-webkit-scrollbar {
-                display: none;
+            .features-track {
+                gap: 1rem;
             }
 
-            .feature-card {
-                display: grid;
-                grid-template-columns: 50px 1fr;
-                grid-template-rows: auto 1fr;
-                column-gap: 1rem;
-                row-gap: 0.75rem;
-                padding: 1.5rem;
-                min-width: calc(100% - 3rem);
-                max-width: calc(100% - 3rem);
-                scroll-snap-align: center;
-                scroll-snap-stop: always;
-                flex-shrink: 0;
-                box-sizing: border-box;
-                align-items: start;
+            .features-track .feature-card {
+                width: 210px;
+                min-width: 210px;
+                max-width: 210px;
             }
 
             .features {
-                padding: 4rem 0 4rem 0;
+                padding: 4rem 2rem;
             }
 
             .features-container {
@@ -959,33 +1048,20 @@
             }
 
             .feature-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.5rem;
-                border-radius: 10px;
-                margin: 0;
-                grid-row: 1;
-                grid-column: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+                margin-bottom: 0.9rem;
             }
 
             .feature-card h3 {
-                font-size: 1.2rem;
-                margin: 0;
-                grid-row: 1;
-                grid-column: 2;
-                display: flex;
-                align-items: center;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
             }
 
             .feature-card p {
-                font-size: 0.95rem;
+                font-size: 0.85rem;
                 line-height: 1.6;
-                margin: 0;
-                grid-row: 2;
-                grid-column: 1 / 3;
             }
 
             .section-header h2 {
@@ -1078,42 +1154,17 @@
                 align-items: start;
             }
 
-            .session-card .flag-container {
-                width: 50px;
-                height: 50px;
-                margin: 0;
-                grid-row: 1;
-                grid-column: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                overflow: hidden;
-                border-radius: 10px;
+            .session-bar .session-flag {
+                width: 40px;
+                height: 40px;
             }
 
-            .session-flag {
-                width: 50px;
-                height: 50px;
-                border-radius: 10px;
-                margin: 0;
-                object-fit: cover;
-            }
-
-            .session-card h4 {
-                font-size: 1.2rem;
-                margin: 0;
-                grid-row: 1;
-                grid-column: 2;
-                display: flex;
-                align-items: center;
-            }
-
-            .session-card p {
+            .session-bar-info h4 {
                 font-size: 0.95rem;
-                line-height: 1.6;
-                margin: 0;
-                grid-row: 2;
-                grid-column: 1 / 3;
+            }
+
+            .session-bar-info p {
+                font-size: 0.82rem;
             }
 
             /* 4️⃣ Image */
@@ -1121,18 +1172,21 @@
                 order: 4;
                 display: flex;
                 justify-content: center;
-                padding: 0 2rem 2rem 2rem; /* ⬅️ space before next section */
-                margin-top: 0.6rem;    /* ⬅️ 50% less top spacing */
+                align-items: flex-end;
+                padding: 0 2rem 0 2rem;
+                margin-top: 0.6rem;
                 width: 100%;
                 box-sizing: border-box;
+                overflow: hidden;
             }
 
             .sessions-image {
-                width: 78%;        /* smaller than before */
-                max-width: 280px;  /* hard cap so it never feels huge */
+                width: 88%;
+                max-width: 340px;
                 height: auto;
                 object-fit: contain;
                 display: block;
+                transform: translateY(20px);
             }
 
             .sessions-image {
@@ -1188,10 +1242,9 @@
         .promo-bar {
             background: #000000;
             color: #ffffff;
-            height: 60px; /* ⬆️ 1.5x taller */
+            height: 60px;
             overflow: hidden;
-            position: fixed;
-            top: 0;
+            position: relative;
             width: 100%;
             z-index: 1001;
             font-size: 0.9rem;
@@ -1246,10 +1299,6 @@
                 align-items: center;
             }
 
-            /* Adjust nav position for promo bar on mobile */
-            nav {
-                top: 73px;
-            }
         }
 
         /* Slide animation — ONLY ONE MESSAGE AT A TIME */
@@ -1295,7 +1344,7 @@
             .sessions .section-header{
                 display: flex !important;
                 flex-direction: column !important;
-                align-items: center !important;
+                align-items: flex-start !important;
                 order: 1 !important;
 
                 /* Remove padding to prevent double gutter effect */
@@ -1309,8 +1358,8 @@
                 order: 1 !important;
                 width: 100% !important;
                 padding: 0 !important;
-                margin: 0 0 0.6rem 0 !important; /* reduce by ~15% */
-                text-align: center !important;
+                margin: 0 0 0.6rem 0 !important;
+                text-align: left !important;
             }
 
             /* Monitor card: SAME width as carousel card, centered */
@@ -1340,54 +1389,27 @@
                 margin: 0 !important;
             }
 
-            /* Carousel: contains overflow and aligns with the same 2rem gutters */
-            .sessions-grid{
-                order: 3 !important;
-                padding: 0 2rem !important;
-                width: 100% !important;
-                margin-bottom: 0.6rem !important; /* reduce by ~15% */
-                box-sizing: border-box !important;
-
-                overflow-x: auto !important;
-                overflow-y: hidden !important;
-                overscroll-behavior-x: contain !important;
-                -webkit-overflow-scrolling: touch !important;
-            }
-
-            /* IMPORTANT: kill the old min-width:100% rule that can cause leakage */
-            .sessions-grid .session-card{
-                min-width: unset !important;
-                max-width: unset !important;
-
-                width: calc(100vw - 4rem) !important;     /* matches 2rem + 2rem gutters */
-                max-width: calc(100vw - 4rem) !important;
-                box-sizing: border-box !important;
-            }
-
-            /* Image: order after carousel - crop to top half, anchor to section bottom */
+            /* Image: full width below title on mobile */
             .sessions-image-container{
-                order: 4 !important;
-                height: 300px;                 /* crop window */
+                order: 2 !important;
+                min-height: 460px;
                 overflow: hidden !important;
                 display: flex !important;
-                align-items: flex-start !important;
+                align-items: flex-end !important;
                 justify-content: center !important;
-
-                margin-top: 1rem !important;
+                margin-top: 1.5rem !important;
                 margin-bottom: 0 !important;
-                padding: 0 !important;         /* ⬅️ no padding at bottom */
+                padding: 0 !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
             }
 
             .sessions-image{
-                width: calc(100vw - 4rem);     /* same width as cards */
-                max-width: 420px !important;
+                width: 92% !important;
+                max-width: 800px !important;
                 height: auto !important;
-
-                object-fit: cover !important;
-                object-position: top center !important;
-
+                object-fit: contain !important;
+                object-position: bottom center !important;
                 display: block !important;
                 margin: 0 auto !important;
             }
@@ -1399,104 +1421,156 @@
         }
 
         /* ============================
-           DESKTOP — Sessions exact layout
-           Title+Monitor beside 2x2 cards, phone below monitor
+           DESKTOP — Sessions: title | phone only, phone fills vertical space
            ============================ */
         @media (min-width: 1024px) {
 
-            /* Kill ALL bottom spacing on the section */
             .sessions {
                 padding-bottom: 0 !important;
                 margin-bottom: 0 !important;
             }
 
-            /* Two columns: left content + right grid. Two rows: top + phone row */
             .sessions-content {
                 display: grid !important;
-                grid-template-columns: 460px 1fr;   /* left column width, right flexible */
-                grid-template-rows: auto 1fr;       /* row1: header/monitor, row2: phone */
-                column-gap: 3rem;
-                row-gap: 0 !important;              /* important: no vertical gap */
+                grid-template-columns: minmax(0, 0.72fr) minmax(640px, 1.28fr);
+                grid-template-rows: minmax(520px, 72vh);
+                column-gap: 0 !important;
+                row-gap: 0 !important;
                 padding-bottom: 0 !important;
                 margin-bottom: 0 !important;
-                align-items: start;
+                align-items: end;
             }
 
-            /* Left top: title + monitor */
+            /* Col 1: title text — shifted right toward phone, overlaps into phone zone */
             .sessions .section-header {
                 grid-column: 1;
                 grid-row: 1;
                 display: flex !important;
                 flex-direction: column !important;
                 align-items: flex-start !important;
+                align-self: center !important;
                 padding: 0 !important;
-                margin: 0 !important;
+                margin: 0 -22% 0 22% !important;
+                text-align: left !important;
+                max-width: 125%;
+                z-index: 1;
             }
 
             .sessions .section-header h2 {
                 margin: 0 0 1.25rem 0 !important;
                 text-align: left !important;
+                font-size: clamp(2.82rem, 5.65vw, 4.83rem) !important;
             }
 
             .sessions .session-intro {
                 width: 100% !important;
-                max-width: 380px;
                 margin: 0 !important;
-                padding: 1.25rem 1.5rem !important;
+                padding: 0 !important;
                 text-align: left !important;
             }
 
             .sessions .session-intro p {
                 text-align: left !important;
-                font-size: 0.95rem;
+                font-size: 1.44rem;
                 line-height: 1.6;
                 margin: 0;
             }
 
-            /* Right side: 2x2 grid BESIDE title/monitor, spanning both rows */
-            .sessions-grid {
-                grid-column: 2;
-                grid-row: 1 / span 2;               /* key: sits beside header AND phone */
-                display: grid !important;
-                grid-template-columns: repeat(2, minmax(240px, 1fr));
-                gap: 1.5rem;
-
-                padding: 0 !important;
-                margin: 0 !important;
-                overflow: visible !important;
-            }
-
-            .sessions-grid .session-card {
-                width: 100% !important;
-                min-width: unset !important;
-                max-width: unset !important;
-            }
-
-            /* Left bottom: phone directly under monitor, no extra padding beneath */
+            /* Col 2: phone image — fills column height, pinned to bottom, flush left */
             .sessions-image-container {
-                grid-column: 1;
-                grid-row: 2;
-
-                margin: 1.75rem 0 0 0 !important;   /* space between monitor and phone */
-                margin-bottom: 0 !important;
-                padding: 0 !important;              /* no padding */
-                padding-bottom: 0 !important;
+                grid-column: 2;
+                grid-row: 1;
+                align-self: stretch !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 display: flex !important;
                 justify-content: flex-start !important;
-                align-items: flex-start !important; /* ⬅️ critical - align to top */
-                overflow: hidden !important;        /* keeps crop clean */
-                height: 520px;                      /* crop window */
+                align-items: flex-end !important;
+                overflow: hidden !important;
             }
 
             .sessions-image {
                 width: 100%;
-                max-width: 420px;                   /* keep it controlled */
+                max-width: 1040px;
                 height: auto;
-                object-fit: cover;                  /* allow cropping */
-                object-position: top;               /* ⬅️ show TOP of image */
-                display: block !important;         /* removes inline gap */
+                max-height: 100%;
+                object-fit: contain;
+                object-position: bottom center;
+                display: block !important;
                 margin: 0 !important;
-                margin-bottom: 0 !important;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .premium-content,
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .premium-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sessions {
+                padding-top: 5rem;
+            }
+
+            .sessions .section-header h2 {
+                font-size: 2.25rem !important;
+                line-height: 0.98 !important;
+            }
+
+            .session-intro p,
+            .sessions .session-intro p {
+                max-width: none;
+                font-size: 1.6rem !important;
+                line-height: 1.75 !important;
+                text-align: left !important;
+            }
+
+            .sessions-image-container {
+                min-height: 460px !important;
+                align-items: flex-end !important;
+            }
+
+            .sessions-image {
+                width: 92% !important;
+                max-width: 800px !important;
+                height: auto !important;
+                object-fit: contain !important;
+                object-position: bottom center !important;
+            }
+
+            .premium {
+                padding: 5rem 1.5rem;
+            }
+
+            .premium h2 {
+                font-size: 2.5rem !important;
+            }
+
+            .premium-copy,
+            .premium-content {
+                gap: 2rem;
+            }
+
+            .premium-row-title {
+                font-size: 1rem;
+            }
+
+            footer {
+                padding: 4rem 1.5rem 2rem;
+            }
+
+            .footer-top {
+                gap: 2rem;
+            }
+
+            .footer-mark img {
+                height: 40px;
             }
         }
     </style>
@@ -1527,7 +1601,7 @@
                     <li><a href="#premium">Premium</a></li>
                 </ul>
             </div>
-            <a href="#download" class="cta-button nav-download"><span class="cta-full">Download Now</span><span class="cta-short">Download</span></a>
+            <a href="#premium" class="cta-button nav-download"><span class="cta-full">Download Now</span><span class="cta-short">Download</span></a>
             <button class="hamburger-menu" aria-label="Menu">
                 <span></span>
                 <span></span>
@@ -1554,10 +1628,10 @@
             </h1>
             <p>Ace session timing, reduce noise, and trade with precision like a pro.</p>
             <div class="hero-buttons">
-                <a href="#download" class="btn-primary">
+                <a href="#premium" class="btn-primary">
                     <i class="fab fa-apple"></i> Download for iOS
                 </a>
-                <a href="#download" class="btn-primary">
+                <a href="#premium" class="btn-primary">
                     <i class="fab fa-android"></i> Download for Android
                 </a>
             </div>
@@ -1600,61 +1674,55 @@
                 <p>Everything you need to stay on top of the forex markets and improve your trading performance.</p>
             </div>
 
-            <div class="features-grid">
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-clock"></i></div>
-                <h3>Real-Time Session Tracking</h3>
-                <p>Monitor all four major forex sessions (Sydney, Tokyo, London, New York) with live status indicators. Know exactly when markets open and close in your timezone.</p>
-            </div>
+            <div class="features-marquee">
 
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div>
-                <h3>Digital & Analog Clocks</h3>
-                <p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays for your preferred experience.</p>
-            </div>
+                <!-- Row 1 — scrolls left (cards 1 → 9, duplicated) -->
+                <div class="features-track features-track--left">
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>Real-Time Session Tracking</h3><p>Monitor all four major forex sessions with live status indicators. Know exactly when markets open and close in your timezone.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div><h3>Digital &amp; Analog Clocks</h3><p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Smart Push Notifications</h3><p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-book"></i></div><h3>Trading Journal</h3><p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Analyze your history.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-newspaper"></i></div><h3>Forex News Feed</h3><p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-graduation-cap"></i></div><h3>Educational Content</h3><p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Multiple Themes</h3><p>Choose from Day, Night, or Original themes. Customize your app experience to reduce eye strain during long trading sessions.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-cog"></i></div><h3>Customizable Settings</h3><p>Set your timezone, configure notification preferences, and personalize your app experience to your trading needs.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>Cross-Platform</h3><p>Available on both iOS and Android. Your data syncs across devices so you can trade and track from anywhere, anytime.</p></div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>Real-Time Session Tracking</h3><p>Monitor all four major forex sessions with live status indicators. Know exactly when markets open and close in your timezone.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div><h3>Digital &amp; Analog Clocks</h3><p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Smart Push Notifications</h3><p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-book"></i></div><h3>Trading Journal</h3><p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Analyze your history.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-newspaper"></i></div><h3>Forex News Feed</h3><p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-graduation-cap"></i></div><h3>Educational Content</h3><p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Multiple Themes</h3><p>Choose from Day, Night, or Original themes. Customize your app experience to reduce eye strain during long trading sessions.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-cog"></i></div><h3>Customizable Settings</h3><p>Set your timezone, configure notification preferences, and personalize your app experience to your trading needs.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>Cross-Platform</h3><p>Available on both iOS and Android. Your data syncs across devices so you can trade and track from anywhere, anytime.</p></div>
+                </div>
 
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-bell"></i></div>
-                <h3>Smart Push Notifications</h3>
-                <p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p>
-            </div>
+                <!-- Row 2 — scrolls right (cards 9 → 1, duplicated) -->
+                <div class="features-track features-track--right">
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>Cross-Platform</h3><p>Available on both iOS and Android. Your data syncs across devices so you can trade and track from anywhere, anytime.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-cog"></i></div><h3>Customizable Settings</h3><p>Set your timezone, configure notification preferences, and personalize your app experience to your trading needs.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Multiple Themes</h3><p>Choose from Day, Night, or Original themes. Customize your app experience to reduce eye strain during long trading sessions.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-graduation-cap"></i></div><h3>Educational Content</h3><p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-newspaper"></i></div><h3>Forex News Feed</h3><p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-book"></i></div><h3>Trading Journal</h3><p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Analyze your history.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Smart Push Notifications</h3><p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div><h3>Digital &amp; Analog Clocks</h3><p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>Real-Time Session Tracking</h3><p>Monitor all four major forex sessions with live status indicators. Know exactly when markets open and close in your timezone.</p></div>
+                    <!-- duplicate for seamless loop -->
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-mobile-alt"></i></div><h3>Cross-Platform</h3><p>Available on both iOS and Android. Your data syncs across devices so you can trade and track from anywhere, anytime.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-cog"></i></div><h3>Customizable Settings</h3><p>Set your timezone, configure notification preferences, and personalize your app experience to your trading needs.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-palette"></i></div><h3>Multiple Themes</h3><p>Choose from Day, Night, or Original themes. Customize your app experience to reduce eye strain during long trading sessions.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-graduation-cap"></i></div><h3>Educational Content</h3><p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-newspaper"></i></div><h3>Forex News Feed</h3><p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-book"></i></div><h3>Trading Journal</h3><p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Analyze your history.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-bell"></i></div><h3>Smart Push Notifications</h3><p>Get instant alerts when sessions open or close. Customize notifications for each session and never miss a trading opportunity.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-clock-rotate-left"></i></div><h3>Digital &amp; Analog Clocks</h3><p>Beautiful, customizable clock views showing your local time and active sessions. Swipe between digital and analog displays.</p></div>
+                    <div class="feature-card" aria-hidden="true"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>Real-Time Session Tracking</h3><p>Monitor all four major forex sessions with live status indicators. Know exactly when markets open and close in your timezone.</p></div>
+                </div>
 
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-book"></i></div>
-                <h3>Trading Journal</h3>
-                <p>Track your trades with detailed entries including currency pairs, outcomes, notes, tags, and images. Filter and analyze your trading history to improve your strategy.</p>
             </div>
-
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-newspaper"></i></div>
-                <h3>Forex News Feed</h3>
-                <p>Stay informed with the latest forex market news and updates. Get real-time information that impacts currency movements.</p>
-            </div>
-
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-graduation-cap"></i></div>
-                <h3>Educational Content</h3>
-                <p>Access curated YouTube playlists organized by skill level. Learn from expert traders and improve your forex knowledge at your own pace.</p>
-            </div>
-
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-palette"></i></div>
-                <h3>Multiple Themes</h3>
-                <p>Choose from Day, Night, or Original themes. Customize your app experience to match your preference and reduce eye strain during long trading sessions.</p>
-            </div>
-
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-cog"></i></div>
-                <h3>Customizable Settings</h3>
-                <p>Set your timezone, configure notification preferences, and personalize your app experience. Everything is tailored to your trading needs.</p>
-            </div>
-
-            <div class="feature-card scroll-reveal">
-                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
-                <h3>Cross-Platform</h3>
-                <p>Available on both iOS and Android. Your data syncs across devices, so you can trade and track from anywhere, anytime.</p>
-            </div>
-        </div>
         </div>
     </section>
 
@@ -1663,53 +1731,15 @@
         <div class="sessions-content">
             <div class="section-header scroll-reveal">
                 <h2 style="color: var(--text-light);">Track All <span style="color: #5b8db8;">Major Forex Sessions</span></h2>
-                <div class="session-card session-intro scroll-reveal">
+                <div class="session-intro scroll-reveal">
                     <p>
                         Monitor the four key trading sessions that drive the global forex market.
                     </p>
                 </div>
             </div>
 
-            <div class="sessions-grid">
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/usa.png" alt="United States" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
-                    </div>
-                    <h4>New York Session</h4>
-                    <p>High volume and volatility, especially during the London-New York overlap. USD pairs dominate.</p>
-                </div>
-
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/uk.png" alt="United Kingdom" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
-                    </div>
-                    <h4>London Session</h4>
-                    <p>The most liquid session with high volatility. GBP, EUR, and USD pairs see major movements.</p>
-                </div>
-
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/australia.png" alt="Australia" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
-                    </div>
-                    <h4>Sydney Session</h4>
-                    <p>Kick off the trading day with the Asian-Pacific markets. Known for AUD and NZD volatility.</p>
-                </div>
-
-                <div class="session-card scroll-reveal">
-                    <div class="flag-container">
-                        <img src="flags/japan.png" alt="Japan" class="session-flag" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                        <i class="fas fa-flag" style="display:none; font-size: 2rem; color: var(--text-muted);"></i>
-                    </div>
-                    <h4>Tokyo Session</h4>
-                    <p>The Asian trading hub featuring JPY pairs and strong liquidity during Asian market hours.</p>
-                </div>
-            </div>
-
             <div class="sessions-image-container scroll-reveal">
-                <img src="sessionexample.png" alt="FX Sesh Sessions Example" class="sessions-image">
+                <img src="sessionexample2.png?v=3" alt="FX Sesh Sessions Example" class="sessions-image">
             </div>
         </div>
     </section>
@@ -1717,63 +1747,41 @@
     <!-- Premium Section -->
     <section class="premium" id="premium">
         <div class="premium-content">
-            <h2 class="scroll-reveal" style="color: var(--primary-blue);">
-                Unlock Premium Features
-            </h2>
-
-            <div class="premium-feature premium-intro scroll-reveal">
-                <p>
-                    Take your trading to the next level with advanced features designed for serious traders.
+            <div class="premium-copy">
+                <div class="premium-kicker scroll-reveal">Premium Access</div>
+                <h2 class="scroll-reveal">Trade With More Signal, Less Noise.</h2>
+                <p class="premium-lead scroll-reveal">
+                    Built for traders who want better timing, cleaner focus, and a faster read on the sessions that matter most.
                 </p>
-            </div>
 
-            <div class="premium-features">
-                <div class="premium-feature scroll-reveal">
-                    <h4><i class="fas fa-bolt"></i> Pre-Alerts</h4>
-                    <p>Get notified before sessions open so you're always prepared.</p>
-                </div>
-
-                <div class="premium-feature scroll-reveal">
-                    <h4><i class="fas fa-exchange-alt"></i> Overlap Notifications</h4>
-                    <p>Track high-volatility periods when sessions overlap (London-New York, Tokyo-London, Sydney-Tokyo).</p>
-                </div>
-
-                <div class="premium-feature scroll-reveal">
-                    <h4><i class="fas fa-ban"></i> Ad-Free Experience</h4>
-                    <p>Focus on trading without interruptions. Enjoy a clean, distraction-free interface.</p>
-                </div>
-
-                <div class="premium-feature scroll-reveal">
-                    <h4><i class="fas fa-mobile-alt"></i> Homepage Widget</h4>
-                    <p>Glance at live session status right from your home screen with the FX Sesh widget.</p>
+                <div class="premium-plan scroll-reveal">
+                    <div class="premium-plan-label">FX Sesh Premium</div>
+                    <div class="premium-price">$4.99 <span>Monthly subscription. Cancel anytime.</span></div>
+                    <p class="premium-plan-note">
+                        Unlock overlap intelligence, proactive alerts, an ad-free experience, and the home screen widget for a sharper trading workflow.
+                    </p>
+                    <a href="#premium" class="premium-cta"><i class="fas fa-crown"></i> Start Premium</a>
+                    <p class="premium-fine-print">Premium is currently in beta and will expand over time.</p>
                 </div>
             </div>
 
-            <div class="premium-offer scroll-reveal">
-                <div class="premium-offer-badge">FX Sesh Premium</div>
-                <div class="premium-price">$4.99 <span>/month</span></div>
-                <p class="premium-offer-description">Unlock overlap intelligence, proactive alerts, an ad-free experience, and the exclusive FX Sesh home widget—the full toolkit for traders who demand precision.</p>
-                <a href="#download" class="premium-cta"><i class="fas fa-crown"></i> Start Premium</a>
-                <p class="premium-fine-print">Monthly subscription • Cancel anytime</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Download Section -->
-    <section class="features" id="download" style="background: white; padding: 6rem 2rem;">
-        <div class="section-header scroll-reveal">
-            <h2><span class="navy-gradient-text">Get Started Today!</span></h2>
-            <p>Download FX Sesh and start tracking forex sessions like a pro.</p>
-        </div>
-
-        <div style="text-align: center; margin-top: 3rem;">
-            <div class="hero-buttons">
-                <a href="#" class="btn-primary download-btn">
-                    <i class="fab fa-apple"></i> App Store
-                </a>
-                <a href="#" class="btn-primary download-btn">
-                    <i class="fab fa-google-play"></i> Google Play
-                </a>
+            <div class="premium-list">
+                <div class="premium-row scroll-reveal">
+                    <div class="premium-row-title">Pre-Alerts</div>
+                    <div class="premium-row-copy">Get warned before sessions open so your charts, watchlist, and plan are ready before the market accelerates.</div>
+                </div>
+                <div class="premium-row scroll-reveal">
+                    <div class="premium-row-title">Overlap Notifications</div>
+                    <div class="premium-row-copy">Track the highest-energy windows, including London-New York, Tokyo-London, and Sydney-Tokyo, without constantly checking the clock.</div>
+                </div>
+                <div class="premium-row scroll-reveal">
+                    <div class="premium-row-title">Ad-Free Experience</div>
+                    <div class="premium-row-copy">Stay fully focused on timing, notes, and session flow with a cleaner interface and fewer interruptions.</div>
+                </div>
+                <div class="premium-row scroll-reveal">
+                    <div class="premium-row-title">Home Screen Widget</div>
+                    <div class="premium-row-copy">See live session status at a glance from your home screen, so market context is visible before you even open the app.</div>
+                </div>
             </div>
         </div>
     </section>
@@ -1781,17 +1789,45 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="#features">Features</a>
-                <a href="#sessions">Sessions</a>
-                <a href="#premium">Premium</a>
-                <a href="#download">Download</a>
-                <a href="https://fxseshonline.github.io/fx-sesh-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-                <a href="https://fxseshonline.github.io/fx-sesh-support/" target="_blank" rel="noopener noreferrer">Support</a>
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#top" class="footer-mark"><img src="forexseshlogowhite.png" alt="FX Sesh"></a>
+                    <p class="footer-tagline">Precision timing for serious forex traders.</p>
+                    <a class="footer-email" href="mailto:fxseshonline@gmail.com">fxseshonline@gmail.com</a>
+                </div>
+
+                <div class="footer-column">
+                    <div class="footer-heading">Explore</div>
+                    <div class="footer-links">
+                        <a href="#features">Features</a>
+                        <a href="#sessions">Sessions</a>
+                        <a href="#premium">Premium</a>
+                        <a href="#premium">Download</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <div class="footer-heading">Resources</div>
+                    <div class="footer-links">
+                        <a href="https://fxseshonline.github.io/fx-sesh-privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                        <a href="https://fxseshonline.github.io/fx-sesh-support/" target="_blank" rel="noopener noreferrer">Support</a>
+                        <a href="mailto:fxseshonline@gmail.com">Contact</a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <div class="footer-heading">Platforms</div>
+                    <div class="footer-downloads">
+                        <a href="#premium">App Store</a>
+                        <a href="#premium">Google Play</a>
+                        <a href="#premium">Premium Access</a>
+                    </div>
+                </div>
             </div>
-            <p style="color: var(--text-muted-light); margin-top: 2rem;">
-                © 2025 FX Sesh. All rights reserved.
-            </p>
+            <div class="footer-bottom">
+                <span>© 2025 FX Sesh. All rights reserved.</span>
+                <span>Built for timing, focus, and session awareness.</span>
+            </div>
         </div>
     </footer>
 
@@ -2078,11 +2114,6 @@
             });
         }
 
-        // Initialize carousels on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            createStrictCarousel('.features-grid', '.feature-card:not(.cloned)', 3000);
-            createStrictCarousel('.sessions-grid', '.session-card', 3000);
-        });
 
         // Hero scroll indicator behavior
         (function () {
@@ -2147,36 +2178,6 @@
             io.observe(sessions);
         })();
 
-        // Clip session example image to show only top half (desktop only)
-        function clipSessionImage() {
-            const sessionsImage = document.querySelector('.sessions-image');
-            const sessionsImageContainer = document.querySelector('.sessions-image-container');
-            
-            if (sessionsImage && sessionsImageContainer) {
-                // Desktop ONLY
-                if (window.innerWidth > 768) {
-                    if (sessionsImage.complete && sessionsImage.naturalHeight > 0) {
-                        const containerWidth = sessionsImageContainer.offsetWidth;
-                        const aspectRatio = sessionsImage.naturalWidth / sessionsImage.naturalHeight;
-                        // Container height is half of what the full image height would be at this width
-                        const containerHeight = (containerWidth / aspectRatio) / 2;
-                        
-                        sessionsImageContainer.style.height = containerHeight + 'px';
-                        sessionsImage.style.height = (containerHeight * 2) + 'px';
-                        sessionsImage.style.objectPosition = 'top center';
-                    } else {
-                        // If image not loaded yet, wait for it
-                        sessionsImage.addEventListener('load', clipSessionImage);
-                    }
-                }
-                // ❌ REMOVE mobile reset completely - CSS handles mobile
-            }
-        }
-        
-        // Run on page load
-        window.addEventListener('load', clipSessionImage);
-        // Also run on resize to adjust if needed
-        window.addEventListener('resize', clipSessionImage);
     </script>
 </body>
 </html>
