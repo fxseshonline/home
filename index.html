@@ -1075,7 +1075,7 @@
             }
 
             .sessions .section-header h2 {
-                font-size: 3.08rem;
+                font-size: 4rem;
                 line-height: 1.2;
             }
 
@@ -1087,12 +1087,14 @@
             /* Keep the section itself from ever widening the page */
             .sessions {
                 overflow-x: clip; /* better than hidden on modern browsers */
-                padding-bottom: 0 !important; /* attach image to section bottom */
+                padding-bottom: 2rem !important;
+                min-height: 85vh;
             }
 
             .sessions-content {
                 display: flex;
                 flex-direction: column;
+                min-height: 80vh;
             }
 
             /* 1️⃣ Title — larger, centered, less gap below */
@@ -1108,8 +1110,8 @@
                 order: 1;
                 text-align: center;
                 margin-bottom: 0.5rem;
-                padding: 0 1rem;
-                font-size: clamp(2.35rem, 11vw, 3.85rem) !important;
+                padding: 0 1.5rem;
+                font-size: clamp(2.6rem, 13vw, 4.23rem) !important;
                 line-height: 1.15 !important;
             }
 
@@ -1175,14 +1177,14 @@
                 font-size: 0.82rem;
             }
 
-            /* 4️⃣ Image — larger phone, less empty gap */
+            /* 4️⃣ Image — pinned to bottom of section */
             .sessions-image-container {
                 order: 4;
                 display: flex;
                 justify-content: center;
                 align-items: flex-end;
-                padding: 0 1rem 0 1rem;
-                margin-top: 0.25rem;
+                padding: 0 1rem 0 0;
+                margin-top: auto;
                 width: 100%;
                 min-height: 0;
                 box-sizing: border-box;
@@ -1190,9 +1192,9 @@
             }
 
             .sessions-image {
-                width: 90%;
-                max-width: 480px;
-                min-width: 330px;
+                width: 98%;
+                max-width: 468px;
+                min-width: 338px;
                 height: auto;
                 object-fit: contain;
                 object-position: bottom center;
@@ -1342,13 +1344,21 @@
         /* ✅ FINAL MOBILE SESSIONS OVERRIDE — paste at VERY END of CSS */
         @media (max-width: 768px) {
 
-            /* Keep the section from ever widening the page */
-            .sessions { overflow-x: clip !important; }
+            /* Section: phone pinned to bottom with no gap; margin separates from next section */
+            .sessions {
+                overflow-x: clip !important;
+                overflow-y: visible !important;
+                position: relative !important;
+                min-height: 85vh !important;
+                padding-bottom: 0 !important;
+                margin-bottom: 2rem !important;
+            }
 
-            /* Ensure we are using the "ordered column" system */
             .sessions-content {
-                display: flex !important;
-                flex-direction: column !important;
+                display: grid !important;
+                grid-template-rows: auto 1fr !important;
+                position: relative !important;
+                min-height: 85vh !important;
             }
 
             /* Title container must exist (undo display: contents conflicts) */
@@ -1356,7 +1366,7 @@
                 display: flex !important;
                 flex-direction: column !important;
                 align-items: flex-start !important;
-                order: 1 !important;
+                grid-row: 1 !important;
 
                 /* Remove padding to prevent double gutter effect */
                 padding-left: 0 !important;
@@ -1400,30 +1410,38 @@
                 margin: 0 !important;
             }
 
-            /* Image: larger phone, no big gap — sits close under title */
+            /* Image: pinned to bottom of the section (stays in-flow) */
             .sessions-image-container{
-                order: 2 !important;
+                position: static !important;
+                grid-row: 2 !important;
                 min-height: 0 !important;
-                overflow: hidden !important;
+                overflow: visible !important;
                 display: flex !important;
                 align-items: flex-end !important;
                 justify-content: center !important;
-                margin-top: 0.75rem !important;
-                margin-bottom: 0 !important;
-                padding: 0 1rem !important;
+                margin: 0 !important;
+                align-self: end !important;
+                padding: 0 1.25rem 0 0 !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
             }
 
             .sessions-image{
-                width: 90% !important;
-                max-width: 480px !important;
-                min-width: 330px !important;
+                width: 98% !important;
+                max-width: 468px !important;
+                min-width: 338px !important;
                 height: auto !important;
                 object-fit: contain !important;
                 object-position: bottom center !important;
                 display: block !important;
                 margin: 0 auto !important;
+                vertical-align: bottom !important;
+            }
+
+            /* Prevent scroll-reveal from delaying or hiding the pinned phone on mobile */
+            .sessions-image-container.scroll-reveal {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
             }
 
             /* REMOVE monitor card from Sessions on mobile */
@@ -1527,12 +1545,16 @@
 
         @media (max-width: 768px) {
             .sessions {
-                padding-top: 5rem;
+                padding-top: 3rem;
+                padding-bottom: 0;
+                margin-bottom: 2rem;
             }
 
             .sessions .section-header h2 {
-                font-size: clamp(2.35rem, 11vw, 3.85rem) !important;
+                font-size: clamp(2.6rem, 13vw, 4.23rem) !important;
                 line-height: 1.15 !important;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
             }
 
             .session-intro p,
@@ -1549,9 +1571,9 @@
             }
 
             .sessions-image {
-                width: 90% !important;
-                max-width: 480px !important;
-                min-width: 330px !important;
+                width: 98% !important;
+                max-width: 468px !important;
+                min-width: 338px !important;
                 height: auto !important;
                 object-fit: contain !important;
                 object-position: bottom center !important;
