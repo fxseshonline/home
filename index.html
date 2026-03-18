@@ -931,7 +931,12 @@
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+            @media (max-width: 768px) {
+            .sessions {
+                padding-top: 3rem;
+                padding-bottom: 2rem;
+            }
+
             .hero {
                 padding-top: calc(3rem + env(safe-area-inset-top));
                 padding-bottom: calc(3rem + env(safe-area-inset-bottom));
@@ -1070,7 +1075,7 @@
             }
 
             .sessions .section-header h2 {
-                font-size: 2rem;
+                font-size: 3.08rem;
                 line-height: 1.2;
             }
 
@@ -1090,19 +1095,22 @@
                 flex-direction: column;
             }
 
-            /* 1️⃣ Title */
+            /* 1️⃣ Title — larger, centered, less gap below */
             .sessions .section-header {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 order: 1;
+                text-align: center;
             }
 
             .sessions .section-header h2 {
                 order: 1;
                 text-align: center;
-                margin-bottom: 1rem;
-                padding: 0 1.5rem;
+                margin-bottom: 0.5rem;
+                padding: 0 1rem;
+                font-size: clamp(2.35rem, 11vw, 3.85rem) !important;
+                line-height: 1.15 !important;
             }
 
             /* 2️⃣ Monitor card */
@@ -1167,26 +1175,29 @@
                 font-size: 0.82rem;
             }
 
-            /* 4️⃣ Image */
+            /* 4️⃣ Image — larger phone, less empty gap */
             .sessions-image-container {
                 order: 4;
                 display: flex;
                 justify-content: center;
                 align-items: flex-end;
-                padding: 0 2rem 0 2rem;
-                margin-top: 0.6rem;
+                padding: 0 1rem 0 1rem;
+                margin-top: 0.25rem;
                 width: 100%;
+                min-height: 0;
                 box-sizing: border-box;
                 overflow: hidden;
             }
 
             .sessions-image {
-                width: 88%;
-                max-width: 340px;
+                width: 90%;
+                max-width: 480px;
+                min-width: 330px;
                 height: auto;
                 object-fit: contain;
+                object-position: bottom center;
                 display: block;
-                transform: translateY(20px);
+                transform: translateY(0);
             }
 
             .sessions-image {
@@ -1389,24 +1400,25 @@
                 margin: 0 !important;
             }
 
-            /* Image: full width below title on mobile */
+            /* Image: larger phone, no big gap — sits close under title */
             .sessions-image-container{
                 order: 2 !important;
-                min-height: 460px;
+                min-height: 0 !important;
                 overflow: hidden !important;
                 display: flex !important;
                 align-items: flex-end !important;
                 justify-content: center !important;
-                margin-top: 1.5rem !important;
+                margin-top: 0.75rem !important;
                 margin-bottom: 0 !important;
-                padding: 0 !important;
+                padding: 0 1rem !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
             }
 
             .sessions-image{
-                width: 92% !important;
-                max-width: 800px !important;
+                width: 90% !important;
+                max-width: 480px !important;
+                min-width: 330px !important;
                 height: auto !important;
                 object-fit: contain !important;
                 object-position: bottom center !important;
@@ -1519,8 +1531,8 @@
             }
 
             .sessions .section-header h2 {
-                font-size: 2.25rem !important;
-                line-height: 0.98 !important;
+                font-size: clamp(2.35rem, 11vw, 3.85rem) !important;
+                line-height: 1.15 !important;
             }
 
             .session-intro p,
@@ -1532,13 +1544,14 @@
             }
 
             .sessions-image-container {
-                min-height: 460px !important;
+                min-height: 0 !important;
                 align-items: flex-end !important;
             }
 
             .sessions-image {
-                width: 92% !important;
-                max-width: 800px !important;
+                width: 90% !important;
+                max-width: 480px !important;
+                min-width: 330px !important;
                 height: auto !important;
                 object-fit: contain !important;
                 object-position: bottom center !important;
